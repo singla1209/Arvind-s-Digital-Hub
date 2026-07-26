@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1">
+
+<title>
+
+Dashboard | Arvind Digital Hub
+
+</title>
+
+<link rel="icon" href="assets/images/favicon.png">
+
+<script type="module">
+
+import { auth } from "./assets/js/firebase.js";
+
+import {
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+window.location.href="login.html";
+
+}
+
+});
+
+</script>
+
+<!-- Bootstrap -->
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<!-- Bootstrap Icons -->
+
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<!-- Google Font -->
+
+<link
+href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="assets/css/style.css">
+
+<link
+rel="stylesheet"
+href="assets/css/dashboard.css">
+
+</head>
+
+<body>
+
+<!-- Overlay -->
+
+<div id="overlay"></div>
+
+<!-- Sidebar -->
+
+<div
+class="sidebar"
+id="sidebar">
+
+<div class="sidebar-header">
+
+<img
+src="assets/images/logo.png"
+class="logo">
+
+<h4>
+
+Arvind Digital Hub
+
+</h4>
+
+<button
+id="closeMenu">
+
+<i class="bi bi-x-lg"></i>
+
+</button>
+
+</div>
+
+<ul>
+
+<li>
+
+<a href="dashboard.html">
+
+<i class="bi bi-house-fill"></i>
+
+Dashboard
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="bi bi-folder-fill"></i>
+
+Documents
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="bi bi-file-earmark-excel-fill"></i>
+
+Excel Hub
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="bi bi-code-slash"></i>
+
+Python Programs
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#">
+
+<i class="bi bi-download"></i>
+
+Downloads
+
+</a>
+
+</li>
+
+<li>
+
+<a href="profile.html">
+
+<i class="bi bi-person-circle"></i>
+
+Profile
+
+</a>
+
+</li>
+
+<li>
+
+<a href="settings.html">
+
+<i class="bi bi-gear-fill"></i>
+
+Settings
+
+</a>
+
+</li>
+
+<li>
+
+<a href="index.html">
+
+<i class="bi bi-box-arrow-right"></i>
+
+Logout
+
+</a>
+
+</li>
+
+</ul>
+
+</div>
+
+<!-- Header -->
+
+<header class="topbar">
+
+<button
+id="menuBtn"
+class="menu-btn">
+
+<i class="bi bi-list"></i>
+
+</button>
+
+<h3>
+
+Arvind Digital Hub
+
+</h3>
+
+<div class="top-icons">
+
+<i class="bi bi-bell"></i>
+
+<img
+src="assets/images/user.png"
+class="user-photo">
+
+</div>
+
+</header>
+
+<!-- Main -->
+
+<div class="container py-4">
+
+<h2 class="fw-bold">
+
+Welcome, Arvind 👋
+
+</h2>
+
+<p class="text-muted">
+
+Knowledge • Tools • Learning • Resources
+
+</p>
+
+<div class="search-box mt-4">
+
+<input
+type="text"
+class="form-control form-control-lg"
+placeholder="Search documents, Excel files, Python tools...">
+
+</div>
+<!-- =====================================
+HERO SLIDER
+====================================== -->
+
+<div id="homeSlider"
+class="carousel slide mt-4"
+data-bs-ride="carousel">
+
+<div class="carousel-inner rounded-4 shadow">
+
+<div class="carousel-item active">
+
+<img
+src="assets/images/banner1.jpg"
+class="d-block w-100"
+alt="Banner 1">
+
+<div class="carousel-caption text-start">
+
+<h2>Welcome to</h2>
+
+<h1>Arvind Digital Hub</h1>
+
+<p>
+Knowledge • Tools • Learning • Resources
+</p>
+
+<a
+href="#resources"
+class="btn btn-primary">
+
+Explore Now
+
+</a>
+
+</div>
+
+</div>
+
+<div class="carousel-item">
+
+<img
+src="assets/images/banner2.jpg"
+class="d-block w-100"
+alt="Banner 2">
+
+<div class="carousel-caption text-start">
+
+<h2>Excel Resources</h2>
+
+<h1>Templates & Formulas</h1>
+
+<p>
+
+Learn Excel from Beginner to Advanced
+
+</p>
+
+<a
+href="#"
+class="btn btn-success">
+
+View Excel
+
+</a>
+
+</div>
+
+</div>
+
+<div class="carousel-item">
+
+<img
+src="assets/images/banner3.jpg"
+class="d-block w-100"
+alt="Banner 3">
+
+<div class="carousel-caption text-start">
+
+<h2>Python</h2>
+
+<h1>Projects & Programs</h1>
+
+<p>
+
+Download ready-to-use Python codes
+
+</p>
+
+<a
+href="#"
+class="btn btn-warning">
+
+Explore Python
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<button
+class="carousel-control-prev"
+type="button"
+data-bs-target="#homeSlider"
+data-bs-slide="prev">
+
+<span class="carousel-control-prev-icon"></span>
+
+</button>
+
+<button
+class="carousel-control-next"
+type="button"
+data-bs-target="#homeSlider"
+data-bs-slide="next">
+
+<span class="carousel-control-next-icon"></span>
+
+</button>
+
+</div>
+
+<!-- =====================================
+QUICK ACCESS
+====================================== -->
+
+<div class="row mt-5 g-4">
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card quick-card text-center p-4">
+
+<i class="bi bi-folder-fill display-4 text-primary"></i>
+
+<h5 class="mt-3">
+
+My Documents
+
+</h5>
+
+<p>
+
+Personal documents and files
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card quick-card text-center p-4">
+
+<i class="bi bi-file-earmark-excel-fill display-4 text-success"></i>
+
+<h5 class="mt-3">
+
+Excel Hub
+
+</h5>
+
+<p>
+
+Templates, formulas and VBA
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card quick-card text-center p-4">
+
+<i class="bi bi-code-slash display-4 text-warning"></i>
+
+<h5 class="mt-3">
+
+Python
+
+</h5>
+
+<p>
+
+Scripts and useful projects
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card quick-card text-center p-4">
+
+<i class="bi bi-download display-4 text-info"></i>
+
+<h5 class="mt-3">
+
+Downloads
+
+</h5>
+
+<p>
+
+Latest downloadable resources
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card quick-card text-center p-4">
+
+<i class="bi bi-book-fill display-4 text-danger"></i>
+
+<h5 class="mt-3">
+
+Tutorials
+
+</h5>
+
+<p>
+
+Step-by-step learning guides
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card quick-card text-center p-4">
+
+<i class="bi bi-star-fill display-4 text-warning"></i>
+
+<h5 class="mt-3">
+
+Favorites
+
+</h5>
+
+<p>
+
+Saved resources and bookmarks
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- =====================================
+STATISTICS
+====================================== -->
+
+<div class="row mt-5 g-4">
+
+<div class="col-md-3 col-6">
+
+<div class="card stat-card text-center p-4">
+
+<h2 class="counter"
+data-target="250">
+
+0
+
+</h2>
+
+<p>
+
+Resources
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3 col-6">
+
+<div class="card stat-card text-center p-4">
+
+<h2 class="counter"
+data-target="1500">
+
+0
+
+</h2>
+
+<p>
+
+Downloads
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3 col-6">
+
+<div class="card stat-card text-center p-4">
+
+<h2 class="counter"
+data-target="80">
+
+0
+
+</h2>
+
+<p>
+
+Excel Files
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-md-3 col-6">
+
+<div class="card stat-card text-center p-4">
+
+<h2 class="counter"
+data-target="120">
+
+0
+
+</h2>
+
+<p>
+
+Python Programs
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+<!-- =====================================
+LATEST RESOURCES
+====================================== -->
+
+<section id="resources" class="mt-5">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<h3 class="fw-bold">
+
+Latest Resources
+
+</h3>
+
+<a href="#" class="btn btn-outline-primary">
+
+View All
+
+</a>
+
+</div>
+
+<div class="row g-4">
+
+<!-- Card 1 -->
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card resource-card h-100 shadow-sm">
+
+<img
+src="assets/images/excel.jpg"
+class="card-img-top"
+alt="Excel">
+
+<div class="card-body">
+
+<span class="badge bg-success mb-2">
+
+Excel
+
+</span>
+
+<h5>
+
+Advanced Excel Dashboard
+
+</h5>
+
+<p>
+
+Professional dashboard with charts,
+Pivot Tables and KPI reports.
+
+</p>
+
+<div class="d-flex justify-content-between">
+
+<a href="#" class="btn btn-primary">
+
+View
+
+</a>
+
+<a href="#" class="btn btn-outline-secondary">
+
+Download
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Card 2 -->
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card resource-card h-100 shadow-sm">
+
+<img
+src="assets/images/python.jpg"
+class="card-img-top"
+alt="Python">
+
+<div class="card-body">
+
+<span class="badge bg-warning text-dark mb-2">
+
+Python
+
+</span>
+
+<h5>
+
+Python Automation Toolkit
+
+</h5>
+
+<p>
+
+Useful automation scripts for office,
+Excel and daily work.
+
+</p>
+
+<div class="d-flex justify-content-between">
+
+<a href="#" class="btn btn-primary">
+
+View
+
+</a>
+
+<a href="#" class="btn btn-outline-secondary">
+
+Download
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Card 3 -->
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card resource-card h-100 shadow-sm">
+
+<img
+src="assets/images/document.jpg"
+class="card-img-top"
+alt="Documents">
+
+<div class="card-body">
+
+<span class="badge bg-primary mb-2">
+
+Documents
+
+</span>
+
+<h5>
+
+Important Document Templates
+
+</h5>
+
+<p>
+
+Editable templates for office,
+personal and business use.
+
+</p>
+
+<div class="d-flex justify-content-between">
+
+<a href="#" class="btn btn-primary">
+
+View
+
+</a>
+
+<a href="#" class="btn btn-outline-secondary">
+
+Download
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+FEATURED DOWNLOADS
+====================================== -->
+
+<section class="mt-5">
+
+<h3 class="fw-bold mb-4">
+
+Featured Downloads
+
+</h3>
+
+<div class="list-group shadow-sm">
+
+<a href="#"
+class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+
+<div>
+
+<i class="bi bi-file-earmark-excel-fill text-success me-2"></i>
+
+GST Calculator (Excel)
+
+</div>
+
+<span class="badge bg-primary">
+
+New
+
+</span>
+
+</a>
+
+<a href="#"
+class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+
+<div>
+
+<i class="bi bi-code-square text-warning me-2"></i>
+
+Invoice Generator (Python)
+
+</div>
+
+<span class="badge bg-success">
+
+Popular
+
+</span>
+
+</a>
+
+<a href="#"
+class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+
+<div>
+
+<i class="bi bi-file-earmark-text-fill text-danger me-2"></i>
+
+Resume Templates
+
+</div>
+
+<span class="badge bg-info">
+
+Free
+
+</span>
+
+</a>
+
+<a href="#"
+class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+
+<div>
+
+<i class="bi bi-filetype-pdf text-danger me-2"></i>
+
+Income Tax Guide PDF
+
+</div>
+
+<span class="badge bg-secondary">
+
+PDF
+
+</span>
+
+</a>
+
+</div>
+
+</section>
+
+<!-- =====================================
+LATEST UPDATES
+====================================== -->
+
+<section class="mt-5">
+
+<h3 class="fw-bold mb-4">
+
+Latest Updates
+
+</h3>
+
+<div class="alert alert-primary">
+
+<strong>New:</strong>
+
+Advanced Excel Formula Pack has been added.
+
+</div>
+
+<div class="alert alert-success">
+
+<strong>Updated:</strong>
+
+Python Automation Scripts Version 2.0
+
+</div>
+
+<div class="alert alert-warning">
+
+<strong>Coming Soon:</strong>
+
+Interactive Learning Dashboard and AI Tools.
+
+</div>
+
+</section>
+<!-- =====================================
+RECENT ACTIVITY
+====================================== -->
+
+<section class="mt-5">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<h3 class="fw-bold">
+
+Recent Activity
+
+</h3>
+
+<a href="#" class="btn btn-outline-secondary btn-sm">
+
+View All
+
+</a>
+
+</div>
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<div class="d-flex mb-4">
+
+<div class="me-3">
+
+<span class="badge bg-primary rounded-circle p-3">
+
+<i class="bi bi-download"></i>
+
+</span>
+
+</div>
+
+<div>
+
+<h6 class="mb-1">
+
+Downloaded Excel Dashboard Template
+
+</h6>
+
+<small class="text-muted">
+
+Today • 10:25 AM
+
+</small>
+
+</div>
+
+</div>
+
+<div class="d-flex mb-4">
+
+<div class="me-3">
+
+<span class="badge bg-success rounded-circle p-3">
+
+<i class="bi bi-code-slash"></i>
+
+</span>
+
+</div>
+
+<div>
+
+<h6 class="mb-1">
+
+Viewed Python Automation Project
+
+</h6>
+
+<small class="text-muted">
+
+Yesterday • 08:45 PM
+
+</small>
+
+</div>
+
+</div>
+
+<div class="d-flex">
+
+<div class="me-3">
+
+<span class="badge bg-warning rounded-circle p-3">
+
+<i class="bi bi-file-earmark-text"></i>
+
+</span>
+
+</div>
+
+<div>
+
+<h6 class="mb-1">
+
+Opened Personal Documents
+
+</h6>
+
+<small class="text-muted">
+
+2 days ago
+
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+UPCOMING TASKS
+====================================== -->
+
+<section class="mt-5">
+
+<h3 class="fw-bold mb-4">
+
+Upcoming Tasks
+
+</h3>
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<div class="form-check mb-3">
+
+<input class="form-check-input" type="checkbox">
+
+<label class="form-check-label">
+
+Complete Excel VBA Tutorial
+
+</label>
+
+</div>
+
+<div class="form-check mb-3">
+
+<input class="form-check-input" type="checkbox">
+
+<label class="form-check-label">
+
+Upload New Python Program
+
+</label>
+
+</div>
+
+<div class="form-check mb-3">
+
+<input class="form-check-input" type="checkbox">
+
+<label class="form-check-label">
+
+Organize Personal Documents
+
+</label>
+
+</div>
+
+<div class="form-check">
+
+<input class="form-check-input" type="checkbox">
+
+<label class="form-check-label">
+
+Review Download Section
+
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+FAVORITE RESOURCES
+====================================== -->
+
+<section class="mt-5">
+
+<h3 class="fw-bold mb-4">
+
+Favorite Resources
+
+</h3>
+
+<div class="row g-4">
+
+<div class="col-md-4">
+
+<div class="card h-100 shadow-sm">
+
+<div class="card-body text-center">
+
+<i class="bi bi-star-fill display-4 text-warning"></i>
+
+<h5 class="mt-3">
+
+Excel Formula Pack
+
+</h5>
+
+<p>
+
+Most frequently used Excel formulas.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card h-100 shadow-sm">
+
+<div class="card-body text-center">
+
+<i class="bi bi-star-fill display-4 text-warning"></i>
+
+<h5 class="mt-3">
+
+Python Utilities
+
+</h5>
+
+<p>
+
+Automation scripts for daily work.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-4">
+
+<div class="card h-100 shadow-sm">
+
+<div class="card-body text-center">
+
+<i class="bi bi-star-fill display-4 text-warning"></i>
+
+<h5 class="mt-3">
+
+Document Templates
+
+</h5>
+
+<p>
+
+Personal and office document collection.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+PROFILE SUMMARY
+====================================== -->
+
+<section class="mt-5">
+
+<div class="card shadow">
+
+<div class="card-body">
+
+<div class="row align-items-center">
+
+<div class="col-md-3 text-center">
+
+<img
+src="assets/images/user.png"
+class="rounded-circle"
+width="120"
+height="120"
+alt="Profile">
+
+</div>
+
+<div class="col-md-9">
+
+<h3>
+
+Welcome Back,
+<span id="userName">User</span>
+
+</h3>
+
+<p class="text-muted">
+
+Manage your documents, Excel resources,
+Python programs and downloads from one place.
+
+</p>
+
+<div class="row mt-4">
+
+<div class="col-4 text-center">
+
+<h4 class="text-primary">
+
+250+
+
+</h4>
+
+<small>
+
+Resources
+
+</small>
+
+</div>
+
+<div class="col-4 text-center">
+
+<h4 class="text-success">
+
+1500+
+
+</h4>
+
+<small>
+
+Downloads
+
+</small>
+
+</div>
+
+<div class="col-4 text-center">
+
+<h4 class="text-warning">
+
+98%
+
+</h4>
+
+<small>
+
+Profile Complete
+
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+<!-- =====================================
+RESOURCE CATEGORIES
+====================================== -->
+
+<section class="mt-5">
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<h3 class="fw-bold">
+
+Browse Categories
+
+</h3>
+
+<a href="#" class="btn btn-outline-primary btn-sm">
+
+View All
+
+</a>
+
+</div>
+
+<div class="row g-4">
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card category-card text-center p-4 shadow-sm">
+
+<i class="bi bi-file-earmark-text display-3 text-primary"></i>
+
+<h5 class="mt-3">
+
+Documents
+
+</h5>
+
+<p>
+
+Forms, letters and useful files
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card category-card text-center p-4 shadow-sm">
+
+<i class="bi bi-file-earmark-excel display-3 text-success"></i>
+
+<h5 class="mt-3">
+
+Excel
+
+</h5>
+
+<p>
+
+Templates, dashboards and VBA
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card category-card text-center p-4 shadow-sm">
+
+<i class="bi bi-code-square display-3 text-warning"></i>
+
+<h5 class="mt-3">
+
+Python
+
+</h5>
+
+<p>
+
+Automation and projects
+
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card category-card text-center p-4 shadow-sm">
+
+<i class="bi bi-tools display-3 text-danger"></i>
+
+<h5 class="mt-3">
+
+Utilities
+
+</h5>
+
+<p>
+
+Daily productivity tools
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+RECOMMENDED RESOURCES
+====================================== -->
+
+<section class="mt-5">
+
+<h3 class="fw-bold mb-4">
+
+Recommended For You
+
+</h3>
+
+<div class="row g-4">
+
+<div class="col-lg-6">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<span class="badge bg-success">
+
+Excel
+
+</span>
+
+<h4 class="mt-3">
+
+Professional MIS Dashboard
+
+</h4>
+
+<p>
+
+Interactive dashboard with Pivot Tables,
+Charts and KPIs.
+
+</p>
+
+<a href="#" class="btn btn-primary">
+
+Explore
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-6">
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<span class="badge bg-warning text-dark">
+
+Python
+
+</span>
+
+<h4 class="mt-3">
+
+Office Automation Toolkit
+
+</h4>
+
+<p>
+
+Automate repetitive office work using
+Python scripts.
+
+</p>
+
+<a href="#" class="btn btn-primary">
+
+Explore
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+QUICK SHORTCUTS
+====================================== -->
+
+<section class="mt-5">
+
+<h3 class="fw-bold mb-4">
+
+Quick Shortcuts
+
+</h3>
+
+<div class="row g-3">
+
+<div class="col-md-3 col-6">
+
+<button class="btn btn-outline-primary w-100 py-3">
+
+<i class="bi bi-upload"></i><br>
+
+Upload
+
+</button>
+
+</div>
+
+<div class="col-md-3 col-6">
+
+<button class="btn btn-outline-success w-100 py-3">
+
+<i class="bi bi-download"></i><br>
+
+Downloads
+
+</button>
+
+</div>
+
+<div class="col-md-3 col-6">
+
+<button class="btn btn-outline-warning w-100 py-3">
+
+<i class="bi bi-star"></i><br>
+
+Favorites
+
+</button>
+
+</div>
+
+<div class="col-md-3 col-6">
+
+<button class="btn btn-outline-danger w-100 py-3">
+
+<i class="bi bi-gear"></i><br>
+
+Settings
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =====================================
+CALL TO ACTION
+====================================== -->
+
+<section class="mt-5">
+
+<div class="card bg-primary text-white shadow">
+
+<div class="card-body text-center py-5">
+
+<h2>
+
+Ready to Explore More?
+
+</h2>
+
+<p class="mt-3">
+
+Discover documents, Excel dashboards,
+Python programs and productivity resources
+designed to save your time.
+
+</p>
+
+<a
+href="#resources"
+class="btn btn-light btn-lg mt-3">
+
+Start Exploring
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+<!-- =====================================
+FOOTER
+====================================== -->
+
+<footer class="footer mt-5">
+
+<div class="container">
+
+<div class="row gy-4">
+
+<div class="col-lg-4">
+
+<h4>
+
+Arvind Digital Hub
+
+</h4>
+
+<p>
+
+Your all-in-one platform for documents,
+Excel resources, Python programs,
+downloads and productivity tools.
+
+</p>
+
+</div>
+
+<div class="col-lg-4">
+
+<h5>
+
+Quick Links
+
+</h5>
+
+<ul class="list-unstyled">
+
+<li>
+
+<a href="dashboard.html">
+
+Dashboard
+
+</a>
+
+</li>
+
+<li>
+
+<a href="#resources">
+
+Resources
+
+</a>
+
+</li>
+
+<li>
+
+<a href="downloads.html">
+
+Downloads
+
+</a>
+
+</li>
+
+<li>
+
+<a href="profile.html">
+
+Profile
+
+</a>
+
+</li>
+
+<li>
+
+<a href="settings.html">
+
+Settings
+
+</a>
+
+</li>
+
+</ul>
+
+</div>
+
+<div class="col-lg-4">
+
+<h5>
+
+Contact
+
+</h5>
+
+<p>
+
+<i class="bi bi-envelope-fill"></i>
+
+support@arvinddigitalhub.com
+
+</p>
+
+<p>
+
+<i class="bi bi-globe"></i>
+
+www.arvinddigitalhub.com
+
+</p>
+
+<div class="mt-3">
+
+<a href="#" class="me-3">
+
+<i class="bi bi-facebook fs-4"></i>
+
+</a>
+
+<a href="#" class="me-3">
+
+<i class="bi bi-youtube fs-4"></i>
+
+</a>
+
+<a href="#" class="me-3">
+
+<i class="bi bi-github fs-4"></i>
+
+</a>
+
+<a href="#">
+
+<i class="bi bi-linkedin fs-4"></i>
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="text-center py-3">
+
+© 2026
+
+<strong>
+
+Arvind Digital Hub
+
+</strong>
+
+All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+<!-- =====================================
+BOTTOM MOBILE NAVIGATION
+====================================== -->
+
+<nav class="bottom-nav">
+
+<a href="dashboard.html" class="active">
+
+<i class="bi bi-house-fill"></i>
+
+<span>Home</span>
+
+</a>
+
+<a href="#resources">
+
+<i class="bi bi-search"></i>
+
+<span>Search</span>
+
+</a>
+
+<a href="downloads.html">
+
+<i class="bi bi-download"></i>
+
+<span>Downloads</span>
+
+</a>
+
+<a href="profile.html">
+
+<i class="bi bi-person-circle"></i>
+
+<span>Profile</span>
+
+</a>
+
+<a href="settings.html">
+
+<i class="bi bi-gear-fill"></i>
+
+<span>Settings</span>
+
+</a>
+
+</nav>
+
+<!-- =====================================
+BACK TO TOP
+====================================== -->
+
+<button
+id="backToTop"
+class="btn btn-primary rounded-circle">
+
+<i class="bi bi-arrow-up"></i>
+
+</button>
+
+<!-- =====================================
+SCRIPTS
+====================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="assets/js/menu.js"></script>
+
+<script src="assets/js/slider.js"></script>
+
+<script src="assets/js/app.js"></script>
+<script type="module" src="assets/js/logout.js"></script>
+<script type="module" src="assets/js/user.js"></script>
+
+</body>
+
+</html>
