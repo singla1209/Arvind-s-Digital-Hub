@@ -41,6 +41,8 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+console.log("firebase.js loaded");
+
 const auth = getAuth(app);
 
 const db = getFirestore(app);
