@@ -35,7 +35,10 @@ logoutBtn.addEventListener("click", async function(e){
 
     await signOut(auth);
 
-    window.location.href = "login.html";
+// Give Firebase a moment to update auth state
+setTimeout(() => {
+    window.location.href = "index.html";
+}, 300);
 
 });
 
