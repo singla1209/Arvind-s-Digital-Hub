@@ -12,17 +12,21 @@ const logoutBtn = document.getElementById("logoutBtn");
 
 onAuthStateChanged(auth, (user) => {
 
+    console.log("User =", user);
+
+    alert(user ? "USER IS LOGGED IN" : "USER IS LOGGED OUT");
+
     if (user) {
 
-        if(menuLogin) menuLogin.style.display = "none";
-        if(menuRegister) menuRegister.style.display = "none";
-        if(menuLogout) menuLogout.style.display = "block";
+        if (menuLogin) menuLogin.style.display = "none";
+        if (menuRegister) menuRegister.style.display = "none";
+        if (menuLogout) menuLogout.style.display = "block";
 
     } else {
 
-        if(menuLogin) menuLogin.style.display = "block";
-        if(menuRegister) menuRegister.style.display = "block";
-        if(menuLogout) menuLogout.style.display = "none";
+        if (menuLogin) menuLogin.style.display = "block";
+        if (menuRegister) menuRegister.style.display = "block";
+        if (menuLogout) menuLogout.style.display = "none";
 
     }
 
