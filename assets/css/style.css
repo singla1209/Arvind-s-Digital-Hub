@@ -1,0 +1,1692 @@
+/*==================================================
+ACCOUNTS EXPERT
+STYLE.CSS
+PART 1/6
+==================================================*/
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/*========================
+ROOT
+========================*/
+
+:root{
+
+--primary:#0d6efd;
+--secondary:#1f2937;
+--success:#16a34a;
+--danger:#dc2626;
+--warning:#f59e0b;
+--light:#f5f7fb;
+--white:#ffffff;
+--dark:#111827;
+--border:#e5e7eb;
+--text:#4b5563;
+
+--radius:18px;
+--shadow:0 10px 25px rgba(0,0,0,.08);
+--transition:.35s ease;
+
+}
+
+/*========================
+RESET
+========================*/
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Poppins',sans-serif;
+background:var(--light);
+color:var(--dark);
+overflow-x:hidden;
+
+}
+
+a{
+
+text-decoration:none;
+transition:var(--transition);
+
+}
+
+img{
+
+max-width:100%;
+display:block;
+
+}
+
+ul{
+
+list-style:none;
+margin:0;
+padding:0;
+
+}
+
+button{
+
+border:none;
+outline:none;
+background:none;
+
+}
+
+.container{
+
+max-width:1200px;
+
+}
+
+/*========================
+PRELOADER
+========================*/
+
+#preloader{
+
+position:fixed;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+
+}
+
+.loader{
+
+width:55px;
+height:55px;
+border-radius:50%;
+border:6px solid #ddd;
+border-top:6px solid var(--primary);
+animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/*========================
+TOP HEADER
+========================*/
+
+.topbar{
+
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:65px;
+background:#fff;
+display:flex;
+align-items:center;
+z-index:999;
+box-shadow:var(--shadow);
+
+}
+
+.topbar h5{
+
+font-weight:700;
+font-size:20px;
+color:var(--dark);
+
+}
+
+#menuBtn{
+
+font-size:24px;
+color:var(--primary);
+cursor:pointer;
+
+}
+
+.notification{
+
+font-size:22px;
+color:var(--primary);
+cursor:pointer;
+
+}
+
+/*========================
+MAIN CONTENT
+========================*/
+
+.main-content{
+
+padding-top:85px;
+padding-bottom:90px;
+
+}
+
+/*========================
+COMMON TITLES
+========================*/
+
+.section-title{
+
+font-size:24px;
+font-weight:700;
+margin-bottom:20px;
+
+}
+
+.text-muted{
+
+color:var(--text)!important;
+
+}
+
+/*========================
+BUTTONS
+========================*/
+
+.btn{
+
+border-radius:12px;
+font-weight:600;
+padding:12px 20px;
+transition:var(--transition);
+
+}
+
+.btn-primary{
+
+background:var(--primary);
+border:none;
+
+}
+
+.btn-primary:hover{
+
+transform:translateY(-2px);
+
+}
+
+.btn-success{
+
+background:var(--success);
+border:none;
+
+}
+
+.btn-success:hover{
+
+transform:translateY(-2px);
+
+}
+/*==================================================
+STYLE.CSS
+PART 2/6
+Sidebar • Navigation • Overlay • Banner
+==================================================*/
+
+/*========================
+OVERLAY
+========================*/
+
+#overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.45);
+opacity:0;
+visibility:hidden;
+transition:.35s;
+z-index:998;
+}
+
+#overlay.active{
+opacity:1;
+visibility:visible;
+}
+
+/*========================
+SIDEBAR
+========================*/
+
+.sidebar{
+position:fixed;
+top:0;
+left:-320px;
+width:300px;
+height:100vh;
+background:#fff;
+overflow-y:auto;
+transition:.35s;
+z-index:9999;
+box-shadow:0 20px 40px rgba(0,0,0,.18);
+}
+
+.sidebar.active{
+left:0;
+}
+
+.sidebar-header{
+background:linear-gradient(135deg,#0d6efd,#4f8cff);
+padding:28px 20px;
+text-align:center;
+position:relative;
+color:#fff;
+}
+
+.sidebar-header .logo{
+width:80px;
+height:80px;
+object-fit:contain;
+margin:auto;
+margin-bottom:10px;
+background:#fff;
+padding:10px;
+border-radius:50%;
+}
+
+.sidebar-header h4{
+font-size:22px;
+font-weight:700;
+margin:0;
+}
+
+#closeMenu{
+position:absolute;
+right:18px;
+top:18px;
+font-size:22px;
+cursor:pointer;
+}
+
+.profile{
+padding:22px;
+text-align:center;
+border-bottom:1px solid #ececec;
+background:#fafafa;
+}
+
+.profile img{
+width:80px;
+height:80px;
+border-radius:50%;
+object-fit:cover;
+margin:auto;
+margin-bottom:12px;
+border:4px solid #0d6efd;
+}
+
+.profile h6{
+margin:0;
+font-size:18px;
+font-weight:700;
+}
+
+.profile p{
+margin-top:6px;
+font-size:14px;
+color:#666;
+}
+
+.sidebar ul{
+padding:12px 0;
+}
+
+.sidebar ul li{
+margin:2px 12px;
+}
+
+.sidebar ul li a{
+display:flex;
+align-items:center;
+gap:14px;
+padding:14px 18px;
+border-radius:14px;
+color:#333;
+font-weight:500;
+transition:.3s;
+}
+
+.sidebar ul li a i{
+width:24px;
+font-size:18px;
+color:#0d6efd;
+text-align:center;
+}
+
+.sidebar ul li a:hover{
+background:#0d6efd;
+color:#fff;
+transform:translateX(5px);
+}
+
+.sidebar ul li a:hover i{
+color:#fff;
+}
+
+/*========================
+SCROLLBAR
+========================*/
+
+.sidebar::-webkit-scrollbar{
+width:8px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+background:#c8c8c8;
+border-radius:20px;
+}
+
+.sidebar::-webkit-scrollbar-track{
+background:#f5f5f5;
+}
+
+/*========================
+BANNER SLIDER
+========================*/
+
+.banner-img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:20px;
+}
+
+.carousel{
+overflow:hidden;
+border-radius:20px;
+box-shadow:0 15px 30px rgba(0,0,0,.12);
+background:#fff;
+}
+
+.carousel-inner{
+border-radius:20px;
+}
+
+.carousel-item{
+transition:transform .8s ease-in-out;
+}
+
+.carousel-indicators{
+margin-bottom:10px;
+}
+
+.carousel-indicators button{
+width:10px !important;
+height:10px !important;
+border-radius:50%;
+background:#fff !important;
+opacity:.6;
+}
+
+.carousel-indicators .active{
+opacity:1;
+background:#0d6efd !important;
+}
+
+/*========================
+SEARCH BOX
+========================*/
+
+.search-box{
+margin-top:24px;
+margin-bottom:12px;
+}
+
+.search-box .input-group{
+background:#fff;
+border-radius:50px;
+overflow:hidden;
+box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+
+.search-box .input-group-text{
+background:#fff;
+border:none;
+padding-left:20px;
+color:#0d6efd;
+font-size:18px;
+}
+
+.search-box .form-control{
+border:none;
+padding:14px;
+font-size:15px;
+box-shadow:none;
+}
+
+.search-box .form-control:focus{
+box-shadow:none;
+}
+
+/*========================
+SECTION HEADINGS
+========================*/
+
+.section-heading{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:30px 0 18px;
+}
+
+.section-heading h5{
+font-size:22px;
+font-weight:700;
+margin:0;
+}
+
+.section-heading a{
+font-weight:600;
+color:#0d6efd;
+}
+
+.section-heading a:hover{
+text-decoration:underline;
+}
+/*==================================================
+STYLE.CSS
+PART 3/6
+Course Cards • Featured Courses • Stats
+==================================================*/
+
+/*========================
+COURSE GRID
+========================*/
+
+.row.g-3{
+margin-top:5px;
+}
+
+.course-card{
+
+background:#fff;
+border-radius:20px;
+padding:18px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.35s;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+border:1px solid #edf0f5;
+
+}
+
+.course-card:hover{
+
+transform:translateY(-8px);
+box-shadow:0 18px 35px rgba(0,0,0,.15);
+
+}
+
+.course-card img{
+
+width:90px;
+height:90px;
+margin:auto;
+object-fit:contain;
+margin-bottom:15px;
+
+}
+
+.course-card h6{
+
+font-size:18px;
+font-weight:700;
+margin-bottom:8px;
+color:#111827;
+
+}
+
+.course-card p{
+
+font-size:14px;
+color:#6b7280;
+margin-bottom:15px;
+min-height:42px;
+
+}
+
+.course-card .btn{
+
+border-radius:12px;
+font-size:14px;
+font-weight:600;
+
+}
+
+/*========================
+COURSE BADGES
+========================*/
+
+.course-badge{
+
+display:inline-block;
+padding:6px 14px;
+border-radius:30px;
+background:#e8f1ff;
+color:#0d6efd;
+font-size:12px;
+font-weight:600;
+margin-bottom:12px;
+
+}
+
+.badge-popular{
+
+background:#dcfce7;
+color:#15803d;
+
+}
+
+.badge-new{
+
+background:#fef3c7;
+color:#b45309;
+
+}
+
+/*========================
+FEATURED COURSE
+========================*/
+
+.featured-section{
+
+margin-top:40px;
+
+}
+
+.featured-section .card{
+
+border:none;
+border-radius:24px;
+overflow:hidden;
+box-shadow:0 18px 35px rgba(0,0,0,.10);
+
+}
+
+.featured-section .card-img-top{
+
+height:220px;
+object-fit:cover;
+
+}
+
+.featured-section .card-body{
+
+padding:25px;
+
+}
+
+.featured-section h5{
+
+font-weight:700;
+margin-bottom:12px;
+
+}
+
+.featured-section p{
+
+color:#6b7280;
+line-height:1.7;
+
+}
+
+/*========================
+MINI COURSE CARD
+========================*/
+
+.course-mini-card{
+
+display:flex;
+align-items:center;
+gap:18px;
+background:#fff;
+padding:15px;
+border-radius:18px;
+box-shadow:0 10px 22px rgba(0,0,0,.08);
+transition:.35s;
+height:100%;
+
+}
+
+.course-mini-card:hover{
+
+transform:translateY(-5px);
+
+}
+
+.course-mini-card img{
+
+width:70px;
+height:70px;
+object-fit:contain;
+border-radius:12px;
+background:#f8fafc;
+padding:8px;
+
+}
+
+.course-mini-card h6{
+
+margin:0;
+font-size:17px;
+font-weight:700;
+
+}
+
+.course-mini-card p{
+
+margin-top:5px;
+font-size:13px;
+color:#6b7280;
+
+}
+
+/*========================
+CATEGORY BOX
+========================*/
+
+.category-card{
+
+background:#fff;
+border-radius:18px;
+padding:20px;
+text-align:center;
+box-shadow:0 10px 20px rgba(0,0,0,.08);
+transition:.3s;
+
+}
+
+.category-card:hover{
+
+background:#0d6efd;
+color:#fff;
+
+}
+
+.category-card i{
+
+font-size:38px;
+margin-bottom:12px;
+color:#0d6efd;
+
+}
+
+.category-card:hover i{
+
+color:#fff;
+
+}
+
+/*========================
+STATISTICS
+========================*/
+
+.stats-section{
+
+margin-top:45px;
+
+}
+
+.stat-card{
+
+background:linear-gradient(135deg,#0d6efd,#2563eb);
+color:#fff;
+padding:25px;
+border-radius:22px;
+text-align:center;
+box-shadow:0 15px 30px rgba(13,110,253,.25);
+
+}
+
+.stat-card h2{
+
+font-size:34px;
+font-weight:700;
+margin-bottom:8px;
+
+}
+
+.stat-card p{
+
+margin:0;
+font-size:15px;
+opacity:.95;
+
+}
+
+/*========================
+WHY CHOOSE US
+========================*/
+
+.why-card{
+
+background:#fff;
+border-radius:20px;
+padding:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+margin-bottom:18px;
+transition:.35s;
+
+}
+
+.why-card:hover{
+
+transform:translateY(-6px);
+
+}
+
+.why-card i{
+
+font-size:42px;
+color:#0d6efd;
+margin-bottom:15px;
+
+}
+
+.why-card h5{
+
+font-weight:700;
+margin-bottom:10px;
+
+}
+
+.why-card p{
+
+font-size:14px;
+color:#6b7280;
+line-height:1.7;
+
+}
+/*==================================================
+STYLE.CSS
+PART 4/6
+Bottom Navigation • Footer • Floating Buttons
+==================================================*/
+
+/*========================
+BOTTOM NAVIGATION
+========================*/
+
+.bottom-nav{
+
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:#ffffff;
+display:flex;
+justify-content:space-around;
+align-items:center;
+box-shadow:0 -6px 20px rgba(0,0,0,.08);
+z-index:999;
+
+}
+
+.bottom-nav a{
+
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+color:#6b7280;
+font-size:13px;
+font-weight:600;
+transition:.30s;
+
+}
+
+.bottom-nav a i{
+
+font-size:22px;
+margin-bottom:4px;
+
+}
+
+.bottom-nav a:hover{
+
+color:#0d6efd;
+
+}
+
+.bottom-nav a.active{
+
+color:#0d6efd;
+
+}
+
+.bottom-nav a.active i{
+
+transform:scale(1.15);
+
+}
+
+/*========================
+FOOTER
+========================*/
+
+.footer{
+
+margin-top:70px;
+background:#111827;
+color:#ffffff;
+padding:60px 20px 90px;
+text-align:center;
+
+}
+
+.footer-logo{
+
+width:90px;
+margin:auto;
+margin-bottom:20px;
+
+}
+
+.footer h5{
+
+font-size:24px;
+font-weight:700;
+margin-bottom:15px;
+
+}
+
+.footer p{
+
+font-size:15px;
+color:#d1d5db;
+line-height:1.8;
+
+}
+
+/*========================
+SOCIAL ICONS
+========================*/
+
+.social-icons{
+
+display:flex;
+justify-content:center;
+gap:16px;
+margin-top:25px;
+
+}
+
+.social-icons a{
+
+width:48px;
+height:48px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#1f2937;
+color:#fff;
+font-size:18px;
+transition:.35s;
+
+}
+
+.social-icons a:hover{
+
+background:#0d6efd;
+transform:translateY(-5px);
+
+}
+
+/*========================
+COPYRIGHT
+========================*/
+
+.copyright{
+
+margin-top:35px;
+font-size:14px;
+color:#9ca3af;
+
+}
+
+/*========================
+WHATSAPP BUTTON
+========================*/
+
+.whatsapp-btn{
+
+position:fixed;
+right:20px;
+bottom:95px;
+width:58px;
+height:58px;
+border-radius:50%;
+background:#25D366;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:30px;
+color:#fff;
+box-shadow:0 12px 25px rgba(37,211,102,.35);
+transition:.35s;
+z-index:999;
+
+}
+
+.whatsapp-btn:hover{
+
+transform:scale(1.1);
+color:#fff;
+
+}
+
+/*========================
+BACK TO TOP
+========================*/
+
+#backToTop{
+
+position:fixed;
+left:20px;
+bottom:95px;
+width:50px;
+height:50px;
+border:none;
+border-radius:50%;
+background:#0d6efd;
+color:#fff;
+font-size:18px;
+cursor:pointer;
+display:none;
+box-shadow:0 10px 20px rgba(13,110,253,.35);
+transition:.35s;
+z-index:999;
+
+}
+
+#backToTop:hover{
+
+transform:translateY(-4px);
+
+}
+
+/*========================
+COMMON CARD
+========================*/
+
+.card{
+
+border:none;
+border-radius:20px;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.card:hover{
+
+transform:translateY(-5px);
+transition:.35s;
+
+}
+
+/*========================
+CUSTOM SCROLLBAR
+========================*/
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#f3f4f6;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#0d6efd;
+border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#0b5ed7;
+
+}
+
+/*========================
+SELECTION
+========================*/
+
+::selection{
+
+background:#0d6efd;
+color:#fff;
+
+}
+/*==================================================
+STYLE.CSS
+PART 5/6
+Animations • Responsive Design
+==================================================*/
+
+/*========================
+FADE ANIMATIONS
+========================*/
+
+@keyframes fadeUp{
+
+0%{
+opacity:0;
+transform:translateY(40px);
+}
+
+100%{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes fadeLeft{
+
+0%{
+opacity:0;
+transform:translateX(-40px);
+}
+
+100%{
+opacity:1;
+transform:translateX(0);
+}
+
+}
+
+@keyframes fadeRight{
+
+0%{
+opacity:0;
+transform:translateX(40px);
+}
+
+100%{
+opacity:1;
+transform:translateX(0);
+}
+
+}
+
+@keyframes zoomIn{
+
+0%{
+opacity:0;
+transform:scale(.85);
+}
+
+100%{
+opacity:1;
+transform:scale(1);
+}
+
+}
+
+.fade-up{
+animation:fadeUp .8s ease forwards;
+}
+
+.fade-left{
+animation:fadeLeft .8s ease forwards;
+}
+
+.fade-right{
+animation:fadeRight .8s ease forwards;
+}
+
+.zoom-in{
+animation:zoomIn .7s ease forwards;
+}
+
+/*========================
+HOVER EFFECTS
+========================*/
+
+.course-card,
+.course-mini-card,
+.stat-card,
+.category-card,
+.why-card,
+.card{
+transition:all .35s ease;
+}
+
+.course-card:hover,
+.course-mini-card:hover,
+.category-card:hover,
+.why-card:hover,
+.stat-card:hover{
+
+transform:translateY(-8px);
+
+}
+
+img{
+transition:.35s ease;
+}
+
+.course-card:hover img,
+.course-mini-card:hover img{
+
+transform:scale(1.08);
+
+}
+
+.btn{
+transition:.3s ease;
+}
+
+.btn:hover{
+
+transform:translateY(-2px);
+
+}
+
+/*========================
+TABLET
+========================*/
+
+@media (max-width:992px){
+
+.container{
+max-width:100%;
+padding-left:18px;
+padding-right:18px;
+}
+
+.banner-img{
+height:200px;
+}
+
+.featured-section .card-img-top{
+height:200px;
+}
+
+.footer{
+padding:50px 20px 90px;
+}
+
+}
+
+/*========================
+MOBILE
+========================*/
+
+@media (max-width:768px){
+
+.topbar{
+height:60px;
+}
+
+.main-content{
+padding-top:78px;
+padding-bottom:88px;
+}
+
+.topbar h5{
+font-size:18px;
+}
+
+.banner-img{
+height:180px;
+}
+
+.course-card{
+padding:15px;
+border-radius:16px;
+}
+
+.course-card img{
+width:75px;
+height:75px;
+}
+
+.course-card h6{
+font-size:16px;
+}
+
+.course-card p{
+font-size:13px;
+}
+
+.course-mini-card{
+padding:12px;
+gap:12px;
+}
+
+.course-mini-card img{
+width:60px;
+height:60px;
+}
+
+.course-mini-card h6{
+font-size:15px;
+}
+
+.featured-section .card-img-top{
+height:180px;
+}
+
+.sidebar{
+width:280px;
+}
+
+.bottom-nav{
+height:68px;
+}
+
+.bottom-nav a span{
+font-size:11px;
+}
+
+.whatsapp-btn{
+width:54px;
+height:54px;
+bottom:85px;
+}
+
+#backToTop{
+width:46px;
+height:46px;
+bottom:85px;
+}
+
+}
+
+/*========================
+SMALL MOBILE
+========================*/
+
+@media (max-width:576px){
+
+.banner-img{
+height:160px;
+}
+
+.section-heading h5{
+font-size:18px;
+}
+
+.footer h5{
+font-size:20px;
+}
+
+.footer p{
+font-size:14px;
+}
+
+.course-card{
+padding:14px;
+}
+
+.course-card img{
+width:68px;
+height:68px;
+}
+
+.course-card h6{
+font-size:15px;
+}
+
+.course-card p{
+font-size:12px;
+}
+
+.course-mini-card{
+flex-direction:column;
+text-align:center;
+}
+
+.course-mini-card img{
+margin:auto;
+}
+
+.stat-card h2{
+font-size:28px;
+}
+
+.stat-card p{
+font-size:13px;
+}
+
+.social-icons{
+gap:12px;
+}
+
+.social-icons a{
+width:42px;
+height:42px;
+font-size:16px;
+}
+
+}
+
+/*========================
+LARGE SCREEN
+========================*/
+
+@media (min-width:1400px){
+
+.container{
+max-width:1320px;
+}
+
+.banner-img{
+height:320px;
+}
+
+.featured-section .card-img-top{
+height:300px;
+}
+
+.course-card img{
+width:110px;
+height:110px;
+}
+
+.course-card h6{
+font-size:20px;
+}
+
+}
+
+/*========================
+PRINT
+========================*/
+
+@media print{
+
+.bottom-nav,
+.sidebar,
+.topbar,
+.whatsapp-btn,
+#backToTop{
+display:none !important;
+}
+
+body{
+background:#fff;
+}
+
+.main-content{
+padding:0;
+}
+
+}
+/*==================================================
+STYLE.CSS
+PART 6/6
+Dark Mode • Utilities • Forms • Final
+==================================================*/
+
+/*========================
+UTILITY CLASSES
+========================*/
+
+.text-primary{color:#0d6efd!important;}
+.text-success{color:#198754!important;}
+.text-danger{color:#dc3545!important;}
+.text-warning{color:#ffc107!important;}
+.text-dark{color:#212529!important;}
+.text-white{color:#fff!important;}
+
+.bg-primary{background:#0d6efd!important;}
+.bg-success{background:#198754!important;}
+.bg-danger{background:#dc3545!important;}
+.bg-warning{background:#ffc107!important;}
+.bg-light{background:#f8f9fa!important;}
+.bg-dark{background:#212529!important;}
+
+.rounded-10{border-radius:10px;}
+.rounded-15{border-radius:15px;}
+.rounded-20{border-radius:20px;}
+.rounded-25{border-radius:25px;}
+.rounded-circle{border-radius:50%;}
+
+.shadow-sm{
+box-shadow:0 5px 12px rgba(0,0,0,.08)!important;
+}
+
+.shadow-md{
+box-shadow:0 12px 25px rgba(0,0,0,.12)!important;
+}
+
+.shadow-lg{
+box-shadow:0 18px 40px rgba(0,0,0,.18)!important;
+}
+
+.w-100{width:100%;}
+.h-100{height:100%;}
+
+.d-none{display:none;}
+.d-flex{display:flex;}
+.justify-center{justify-content:center;}
+.align-center{align-items:center;}
+
+.mt-10{margin-top:10px;}
+.mt-20{margin-top:20px;}
+.mt-30{margin-top:30px;}
+.mt-40{margin-top:40px;}
+
+.mb-10{margin-bottom:10px;}
+.mb-20{margin-bottom:20px;}
+.mb-30{margin-bottom:30px;}
+.mb-40{margin-bottom:40px;}
+
+/*========================
+FORM DESIGN
+========================*/
+
+.form-control{
+
+border-radius:12px;
+border:1px solid #dcdcdc;
+padding:12px 15px;
+box-shadow:none;
+
+}
+
+.form-control:focus{
+
+border-color:#0d6efd;
+box-shadow:0 0 0 .2rem rgba(13,110,253,.15);
+
+}
+
+.form-label{
+
+font-weight:600;
+margin-bottom:8px;
+
+}
+
+/*========================
+LOGIN CARD
+========================*/
+
+.login-card{
+
+max-width:450px;
+margin:60px auto;
+background:#fff;
+padding:35px;
+border-radius:20px;
+box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.login-card img{
+
+width:90px;
+margin:auto;
+margin-bottom:20px;
+
+}
+
+/*========================
+PROFILE
+========================*/
+
+.profile-card{
+
+background:#fff;
+padding:25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.profile-card img{
+
+width:110px;
+height:110px;
+border-radius:50%;
+object-fit:cover;
+border:4px solid #0d6efd;
+margin:auto;
+
+}
+
+/*========================
+DOWNLOAD ITEM
+========================*/
+
+.download-item{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px;
+background:#fff;
+border-radius:15px;
+margin-bottom:15px;
+box-shadow:0 8px 20px rgba(0,0,0,.06);
+
+}
+
+/*========================
+PROGRESS BAR
+========================*/
+
+.progress{
+
+height:10px;
+border-radius:20px;
+overflow:hidden;
+background:#e9ecef;
+
+}
+
+.progress-bar{
+
+background:#0d6efd;
+
+}
+
+/*========================
+DARK MODE
+========================*/
+
+body.dark{
+
+background:#111827;
+color:#fff;
+
+}
+
+body.dark .topbar,
+body.dark .sidebar,
+body.dark .footer,
+body.dark .course-card,
+body.dark .course-mini-card,
+body.dark .card,
+body.dark .profile-card,
+body.dark .download-item{
+
+background:#1f2937;
+color:#fff;
+
+}
+
+body.dark p{
+
+color:#d1d5db;
+
+}
+
+body.dark .form-control{
+
+background:#374151;
+border:1px solid #4b5563;
+color:#fff;
+
+}
+
+body.dark .bottom-nav{
+
+background:#1f2937;
+
+}
+
+body.dark .bottom-nav a{
+
+color:#d1d5db;
+
+}
+
+body.dark .bottom-nav a.active{
+
+color:#4dabff;
+
+}
+
+/*========================
+TRANSITIONS
+========================*/
+
+*{
+
+transition:background .3s,color .3s,border .3s;
+
+}
+
+/*========================
+END
+========================*/
