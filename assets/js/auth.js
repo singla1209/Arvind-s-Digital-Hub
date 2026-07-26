@@ -3,7 +3,7 @@ import {
     onAuthStateChanged,
     signOut
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-alert("AUTH.JS IS RUNNING");
+
 
 const menuLogin = document.getElementById("menuLogin");
 const menuRegister = document.getElementById("menuRegister");
