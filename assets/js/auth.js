@@ -1,5 +1,4 @@
 import { auth } from "./firebase.js";
-
 import {
     onAuthStateChanged,
     signOut
@@ -14,28 +13,33 @@ onAuthStateChanged(auth, (user) => {
 
     if (user) {
 
-        if (menuLogin) menuLogin.hidden = true;
-        if (menuRegister) menuRegister.hidden = true;
-        if (menuLogout) menuLogout.hidden = false;
+        if(menuLogin) menuLogin.style.display = "none";
+        if(menuRegister) menuRegister.style.display = "none";
+        if(menuLogout) menuLogout.style.display = "block";
 
     } else {
 
-        if (menuLogin) menuLogin.hidden = false;
-        if (menuRegister) menuRegister.hidden = false;
-        if (menuLogout) menuLogout.hidden = true;
+        if(menuLogin) menuLogin.style.display = "block";
+        if(menuRegister) menuRegister.style.display = "block";
+        if(menuLogout) menuLogout.style.display = "none";
 
     }
 
 });
 
-if (logoutBtn) {
+if(logoutBtn){
 
-    logoutBtn.addEventListener("click", async (e) => {
+logoutBtn.addEventListener("click", async function(e){
 
-        e.preventDefault();
+    e.preventDefault();
 
-        await signOut(auth);
+    await signOut(auth);
 
-    });
+// Give Firebase a moment to update auth state
+setTimeout(() => {
+    window.location.href = "index.html";
+}, 300);
+
+});
 
 }
