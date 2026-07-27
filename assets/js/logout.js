@@ -16,7 +16,7 @@ try{
 
 await signOut(auth);
 
-window.location.href="login.html";
+window.location.href="lndex.html";
 
 }
 
