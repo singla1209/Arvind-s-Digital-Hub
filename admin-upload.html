@@ -11,23 +11,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 <!-- Auth guard: only the admin UID may view this page -->
-<script type="module">
-import { auth } from "./assets/js/firebase.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+import { db } from "./firebase.js";
+import { supabase } from "./supabase.js";
 
-// TODO: replace with your real UID (Firebase Console > Authentication > Users)
-const ADMIN_UID = "dnC5ocJgS4aeNgMqFm7W9d3RaM32";
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  query,
+  orderBy,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
-  if (user.uid !== ADMIN_UID) {
-    window.location.href = "dashboard.html";
-  }
-});
-</script>
+const form = document.getElementById("uploadForm");
+const submitBtn = document.getElementById("submitBtn");
+const progressWrap = document.getElementById("progressWrap");
+const progressBar = document.getElementById("progressBar");
+const statusMsg = document.getElementById("statusMsg");
+const fileList = document.getElementById("fileList");
 
 <style>
 body { background:#f4f6fb; }
@@ -105,123 +108,7 @@ body { background:#f4f6fb; }
 
 </div>
 
-<script type="module">
-import { db, storage } from "./assets/js/firebase.js";
-import {
-  collection, addDoc, deleteDoc, doc,
-  serverTimestamp, query, orderBy, getDocs
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
-import {
-  ref, uploadBytesResumable, getDownloadURL, deleteObject
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-storage.js";
 
-const form = document.getElementById("uploadForm");
-const submitBtn = document.getElementById("submitBtn");
-const progressWrap = document.getElementById("progressWrap");
-const progressBar = document.getElementById("progressBar");
-const statusMsg = document.getElementById("statusMsg");
-const fileList = document.getElementById("fileList");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const title = document.getElementById("title").value.trim();
-  const description = document.getElementById("description").value.trim();
-  const category = document.getElementById("category").value;
-  const file = document.getElementById("fileInput").files[0];
-
-  if (!file) return;
-
-  submitBtn.disabled = true;
-  statusMsg.innerHTML = "";
-  progressWrap.style.display = "block";
-
-  const storagePath = `resources/${category}/${Date.now()}_${file.name}`;
-  const storageRef = ref(storage, storagePath);
-  const uploadTask = uploadBytesResumable(storageRef, file);
-
-  uploadTask.on(
-    "state_changed",
-    (snapshot) => {
-      const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-      progressBar.style.width = pct + "%";
-      progressBar.textContent = pct + "%";
-    },
-    (error) => {
-      statusMsg.innerHTML = `<div class="alert alert-danger">Upload failed: ${error.message}</div>`;
-      submitBtn.disabled = false;
-    },
-    async () => {
-      const fileURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-      await addDoc(collection(db, "resources"), {
-        title,
-        description,
-        category,
-        fileURL,
-        storagePath,
-        fileType: file.type,
-        size: file.size,
-        uploadedAt: serverTimestamp()
-      });
-
-      statusMsg.innerHTML = `<div class="alert alert-success">Uploaded successfully.</div>`;
-      form.reset();
-      progressWrap.style.display = "none";
-      submitBtn.disabled = false;
-      loadFiles();
-    }
-  );
-});
-
-async function loadFiles() {
-  fileList.innerHTML = `<div class="text-muted text-center py-3">Loading...</div>`;
-
-  const q = query(collection(db, "resources"), orderBy("uploadedAt", "desc"));
-  const snap = await getDocs(q);
-
-  if (snap.empty) {
-    fileList.innerHTML = `<div class="text-muted text-center py-3">No files yet.</div>`;
-    return;
-  }
-
-  fileList.innerHTML = "";
-
-  snap.forEach((docSnap) => {
-    const item = docSnap.data();
-
-    const row = document.createElement("div");
-    row.className = "list-group-item d-flex justify-content-between align-items-center file-row";
-    row.innerHTML = `
-      <div>
-        <strong>${item.title}</strong>
-        <span class="badge bg-light text-dark ms-2">${item.category}</span>
-      </div>
-      <div>
-        <a href="${item.fileURL}" target="_blank" class="btn btn-sm btn-outline-primary me-2">View</a>
-        <button class="btn btn-sm btn-outline-danger btn-delete">Delete</button>
-      </div>
-    `;
-
-    row.querySelector(".btn-delete").addEventListener("click", async () => {
-      if (!confirm(`Delete "${item.title}"?`)) return;
-
-      try {
-        await deleteObject(ref(storage, item.storagePath));
-      } catch (err) {
-        console.warn("Storage file already missing or failed to delete:", err.message);
-      }
-
-      await deleteDoc(doc(db, "resources", docSnap.id));
-      loadFiles();
-    });
-
-    fileList.appendChild(row);
-  });
-}
-
-loadFiles();
-</script>
 
 </body>
 </html>
