@@ -11,6 +11,28 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 <!-- Auth guard: only the admin UID may view this page -->
+  import { db } from "./firebase.js";
+import { supabase } from "./supabase.js";
+
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  query,
+  orderBy,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+
+const form = document.getElementById("uploadForm");
+const submitBtn = document.getElementById("submitBtn");
+const progressWrap = document.getElementById("progressWrap");
+const progressBar = document.getElementById("progressBar");
+const statusMsg = document.getElementById("statusMsg");
+const fileList = document.getElementById("fileList");
+
+  
 <script type="module">
 import { auth } from "./assets/js/firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
