@@ -168,3 +168,29 @@ async function loadResources() {
 }
 
 loadResources();
+
+
+/*====================================
+SEARCH RESOURCES
+====================================*/
+
+const searchInput = document.getElementById("resourceSearch");
+
+if (searchInput) {
+
+    searchInput.addEventListener("input", function () {
+
+        const term = this.value.toLowerCase().trim();
+
+        document.querySelectorAll("#resourcesContainer .col-lg-4").forEach(card => {
+
+            const text = card.textContent.toLowerCase();
+
+            card.style.display = text.includes(term) ? "" : "none";
+
+        });
+
+    });
+
+}
+
