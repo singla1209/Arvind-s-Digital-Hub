@@ -15,6 +15,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const container = document.getElementById("resourcesContainer");
+let allResources = [];
 
 // Maps a category name to a Bootstrap badge color + fallback icon
 const CATEGORY_STYLES = {
@@ -149,6 +150,11 @@ async function loadResources() {
   try {
     const q = query(collection(db, "resources"), orderBy("uploadedAt", "desc"));
     const snap = await getDocs(q);
+    allResources = [];
+
+snap.forEach((doc) => {
+    allResources.push(doc.data());
+});
 
     if (snap.empty) {
       container.innerHTML = `
@@ -158,13 +164,8 @@ async function loadResources() {
       return;
     }
 
-    let html = "";
-    snap.forEach((doc) => {
-      html += cardHTML(doc.data());
-    });
-
-    container.innerHTML = html;
-
+    renderResources(allResources);
+    
   } catch (error) {
     console.error("Failed to load resources:", error);
     container.innerHTML = `
@@ -174,8 +175,56 @@ async function loadResources() {
   }
 }
 
-loadResources();
+function renderResources(list) {
 
+    if (list.length === 0) {
+
+        container.innerHTML = `
+        <div class="col-12 text-center text-muted py-5">
+            No matching resources found.
+        </div>`;
+        return;
+    }
+
+    let html = "";
+
+    list.forEach(item => {
+
+        html += cardHTML(item);
+
+    });
+
+    container.innerHTML = html;
+
+}
+
+function searchResources(keyword) {
+
+    keyword = keyword.trim().toLowerCase();
+
+    if (keyword === "") {
+
+        renderResources(allResources);
+        return;
+
+    }
+
+    const filtered = allResources.filter(item => {
+
+        return (
+            (item.title || "").toLowerCase().includes(keyword) ||
+            (item.description || "").toLowerCase().includes(keyword) ||
+            (item.category || "").toLowerCase().includes(keyword) ||
+            formatFileSize(item.size).toLowerCase().includes(keyword)
+        );
+
+    });
+
+    renderResources(filtered);
+
+}
+
+loadResources();
 
 /*====================================
 SEARCH RESOURCES
@@ -187,17 +236,8 @@ if (searchInput) {
 
     searchInput.addEventListener("input", function () {
 
-        const term = this.value.toLowerCase().trim();
-
-        document.querySelectorAll("#resourcesContainer .col-lg-4").forEach(card => {
-
-            const text = card.textContent.toLowerCase();
-
-            card.style.display = text.includes(term) ? "" : "none";
-
-        });
+        searchResources(this.value);
 
     });
 
 }
-
