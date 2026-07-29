@@ -628,17 +628,21 @@ LATEST RESOURCES
 
 <section id="resources" class="mt-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 
-        <h3 class="fw-bold">
-            Latest Resources
-        </h3>
+    <h3 class="fw-bold mb-0">
+        Latest Resources
+    </h3>
 
-        <a href="#" class="btn btn-outline-primary">
-            View All
-        </a>
-
+    <div class="position-relative" style="min-width:280px;">
+        <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-secondary"></i>
+        <input type="text"
+               id="resourceSearch"
+               class="form-control ps-5"
+               placeholder="Search resources...">
     </div>
+
+</div>
 
     <!-- Resources loaded automatically from Firestore -->
 
