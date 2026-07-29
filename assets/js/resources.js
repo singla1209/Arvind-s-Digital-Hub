@@ -80,19 +80,17 @@ ${escapeHtml(item.description)}
 
 </p>
 
-<div class="small text-secondary mb-3">
+<div class="small text-secondary mb-3 d-flex flex-column gap-1">
 
-<div>
+    <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-calendar3"></i>
+        <span>${escapeHtml(item.uploadDate || "")}</span>
+    </div>
 
-📅 ${escapeHtml(item.uploadDate || "")}
-
-</div>
-
-<div>
-
-📦 ${formatFileSize(item.size)}
-
-</div>
+    <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-box-seam"></i>
+        <span>${formatFileSize(item.size)}</span>
+    </div>
 
 </div>
 
