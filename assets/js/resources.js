@@ -6,6 +6,7 @@ and renders them as cards on the dashboard.
 ==================================================*/
 
 import { db } from "./firebase.js";
+console.log("Resources.js Version 2");
 import {
   collection,
   query,
