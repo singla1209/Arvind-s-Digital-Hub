@@ -31,24 +31,109 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-function cardHTML(item) {
-  const style = CATEGORY_STYLES[item.category] || CATEGORY_STYLES.Other;
+function formatFileSize(bytes) {
 
-  return `
-    <div class="col-lg-4 col-md-6">
-      <div class="card resource-card h-100 shadow-sm">
-        <div class="card-body">
-          <span class="badge ${style.badge} mb-2">${escapeHtml(item.category || "Other")}</span>
-          <h5><i class="bi ${style.icon} me-1"></i>${escapeHtml(item.title)}</h5>
-          <p>${escapeHtml(item.description)}</p>
-          <div class="d-flex justify-content-between">
-            <a href="${item.fileURL}" target="_blank" rel="noopener" class="btn btn-primary">View</a>
-            <a href="${item.fileURL}" download class="btn btn-outline-secondary">Download</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
+    if (!bytes) return "";
+
+    if (bytes < 1024) return bytes + " B";
+
+    if (bytes < 1024 * 1024)
+        return (bytes / 1024).toFixed(1) + " KB";
+
+    if (bytes < 1024 * 1024 * 1024)
+        return (bytes / 1024 / 1024).toFixed(2) + " MB";
+
+    return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB";
+
+}
+
+function cardHTML(item) {
+
+    const style =
+        CATEGORY_STYLES[item.category] || CATEGORY_STYLES.Other;
+
+    return `
+
+<div class="col-lg-4 col-md-6">
+
+<div class="card resource-card h-100 shadow-sm">
+
+<div class="card-body d-flex flex-column">
+
+<span class="badge ${style.badge} mb-2">
+
+${escapeHtml(item.category || "Other")}
+
+</span>
+
+<h5 class="fw-bold">
+
+<i class="bi ${style.icon} me-2"></i>
+
+${escapeHtml(item.title)}
+
+</h5>
+
+<p class="text-muted mb-3">
+
+${escapeHtml(item.description)}
+
+</p>
+
+<div class="small text-secondary mb-3">
+
+<div>
+
+📅 ${escapeHtml(item.uploadDate || "")}
+
+</div>
+
+<div>
+
+📦 ${formatFileSize(item.size)}
+
+</div>
+
+</div>
+
+<div class="mt-auto d-grid gap-2">
+
+<a href="${item.fileURL}"
+
+target="_blank"
+
+rel="noopener"
+
+class="btn btn-primary">
+
+<i class="bi bi-eye-fill me-1"></i>
+
+View
+
+</a>
+
+<a href="${item.fileURL}"
+
+download
+
+class="btn btn-outline-secondary">
+
+<i class="bi bi-download me-1"></i>
+
+Download
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
 }
 
 async function loadResources() {
