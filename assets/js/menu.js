@@ -5,6 +5,11 @@ Professional Sidebar Menu
 ==================================================*/
 
 "use strict";
+import { auth } from "./firebase.js";
+
+import { onAuthStateChanged }
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
 
 /*====================================
 ELEMENTS
@@ -189,6 +194,32 @@ window.addEventListener("resize", function () {
     }
 
 });
+
+/*====================================
+SHOW ADMIN MENU
+====================================*/
+
+const ADMIN_UID = "dnC5ocJgS4aeNgMqFm7W9d3RaM32";
+
+const adminMenu = document.getElementById("adminMenu");
+
+if (adminMenu) {
+
+    onAuthStateChanged(auth, (user) => {
+
+        if (user && user.uid === ADMIN_UID) {
+
+            adminMenu.style.display = "block";
+
+        } else {
+
+            adminMenu.style.display = "none";
+
+        }
+
+    });
+
+}
 
 /*====================================
 END
