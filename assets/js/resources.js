@@ -52,6 +52,14 @@ function cardHTML(item) {
     const style =
         CATEGORY_STYLES[item.category] || CATEGORY_STYLES.Other;
 
+  let uploadDate = "";
+
+if (item.uploadedAt && item.uploadedAt.toDate) {
+
+    uploadDate = item.uploadedAt.toDate().toLocaleDateString("en-GB");
+
+}
+
     return `
 
 <div class="col-lg-4 col-md-6">
@@ -84,7 +92,7 @@ ${escapeHtml(item.description)}
 
     <div class="d-flex align-items-center gap-2">
         <i class="bi bi-calendar3"></i>
-        <span>${escapeHtml(item.uploadDate || "")}</span>
+        <span>${uploadDate}</span>
     </div>
 
     <div class="d-flex align-items-center gap-2">
