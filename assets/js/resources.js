@@ -11,7 +11,10 @@ import {
   collection,
   query,
   orderBy,
-  getDocs
+  getDocs,
+  doc,
+  updateDoc,
+  increment
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const container = document.getElementById("resourcesContainer");
@@ -152,10 +155,15 @@ async function loadResources() {
     const snap = await getDocs(q);
     allResources = [];
 
-snap.forEach((doc) => {
-    allResources.push(doc.data());
-});
+snap.forEach((docSnap) => {
 
+    const item = docSnap.data();
+
+    item.id = docSnap.id;
+
+    allResources.push(item);
+
+});
     if (snap.empty) {
       container.innerHTML = `
         <div class="col-12 text-center text-muted py-4">
