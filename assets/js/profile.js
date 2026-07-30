@@ -74,6 +74,23 @@ if (!snap.exists()) {
 
 }
 
+const data = (await getDoc(userRef)).data();
+
+document.getElementById("profileName").textContent =
+    data.name || "User";
+
+document.getElementById("profilePhone").textContent =
+    data.phone || "Not Added";
+
+document.getElementById("profileCompany").textContent =
+    data.company || "Not Added";
+
+document.getElementById("profileDesignation").textContent =
+    data.designation || "Not Added";
+
+document.getElementById("profileAbout").textContent =
+    data.about || "Not Added";
+
     /* Member Since */
 
     if (user.metadata.creationTime) {
