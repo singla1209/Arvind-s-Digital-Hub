@@ -14,6 +14,7 @@ import {
     doc,
     getDoc,
     setDoc,
+    updateDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
@@ -128,5 +129,29 @@ editProfileBtn.addEventListener("click", () => {
     editProfileBtn.classList.add("d-none");
     saveProfileBtn.classList.remove("d-none");
     cancelProfileBtn.classList.remove("d-none");
+
+});
+
+saveProfileBtn.addEventListener("click", async () => {
+
+    const user = auth.currentUser;
+
+    if (!user) return;
+
+    await updateDoc(doc(db, "users", user.uid), {
+
+        phone: document.getElementById("editPhone").value.trim(),
+
+        company: document.getElementById("editCompany").value.trim(),
+
+        designation: document.getElementById("editDesignation").value.trim(),
+
+        about: document.getElementById("editAbout").value.trim()
+
+    });
+
+    alert("Profile updated successfully.");
+
+    location.reload();
 
 });
