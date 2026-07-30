@@ -163,3 +163,13 @@ saveProfileBtn.addEventListener("click", async () => {
     location.reload();
 
 });
+
+/*====================================
+CANCEL PROFILE EDIT
+====================================*/
+
+cancelProfileBtn.addEventListener("click", () => {
+
+    location.reload();
+
+});
