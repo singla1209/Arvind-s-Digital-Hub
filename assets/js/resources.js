@@ -123,11 +123,13 @@ View
 
 </a>
 
-<a href="${item.fileURL}"
+<a href="#"
 
-download
+class="btn btn-outline-secondary download-btn"
 
-class="btn btn-outline-secondary">
+data-id="${item.id}"
+
+data-url="${item.fileURL}">
 
 <i class="bi bi-download me-1"></i>
 
@@ -203,6 +205,11 @@ function renderResources(list) {
     });
 
     container.innerHTML = html;
+  container.querySelectorAll(".download-btn").forEach(btn => {
+
+    btn.addEventListener("click", handleDownload);
+
+});
 
 }
 
