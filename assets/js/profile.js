@@ -114,6 +114,12 @@ document.getElementById("profileAbout").textContent =
 
 editProfileBtn.addEventListener("click", () => {
 
+    profileName.innerHTML =
+`<input type="text"
+class="form-control"
+id="editName"
+value="${profileName.textContent === "User" ? "" : profileName.textContent}">`;
+
     profilePhone.innerHTML =
         `<input type="text" class="form-control" id="editPhone" value="${profilePhone.textContent === "Not Added" ? "" : profilePhone.textContent}">`;
 
@@ -139,6 +145,8 @@ saveProfileBtn.addEventListener("click", async () => {
     if (!user) return;
 
     await updateDoc(doc(db, "users", user.uid), {
+
+        name: document.getElementById("editName").value.trim(),
 
         phone: document.getElementById("editPhone").value.trim(),
 
