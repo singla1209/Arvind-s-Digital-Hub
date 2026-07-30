@@ -105,6 +105,11 @@ ${escapeHtml(item.description)}
         <span>${formatFileSize(item.size)}</span>
     </div>
 
+    <div class="d-flex align-items-center gap-2">
+        <i class="bi bi-download"></i>
+        <span>${item.downloads || 0} Downloads</span>
+    </div>
+
 </div>
 
 <div class="mt-auto d-grid gap-2">
