@@ -4,11 +4,18 @@ assets/js/profile.js
 User Profile
 ==================================================*/
 
-import { auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+    doc,
+    getDoc,
+    setDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 /*====================================
 ELEMENTS
@@ -22,7 +29,7 @@ const memberSince = document.getElementById("memberSince");
 AUTH CHECK
 ====================================*/
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
 
@@ -40,6 +47,32 @@ onAuthStateChanged(auth, (user) => {
 
     profileEmail.textContent =
         user.email;
+
+    const userRef = doc(db, "users", user.uid);
+
+const snap = await getDoc(userRef);
+
+if (!snap.exists()) {
+
+    await setDoc(userRef, {
+
+        name: user.displayName || "",
+
+        email: user.email,
+
+        phone: "",
+
+        company: "",
+
+        designation: "",
+
+        about: "",
+
+        createdAt: serverTimestamp()
+
+    });
+
+}
 
     /* Member Since */
 
