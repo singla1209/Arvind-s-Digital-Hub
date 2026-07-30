@@ -24,6 +24,14 @@ ELEMENTS
 const profileName = document.getElementById("profileName");
 const profileEmail = document.getElementById("profileEmail");
 const memberSince = document.getElementById("memberSince");
+const profilePhone = document.getElementById("profilePhone");
+const profileCompany = document.getElementById("profileCompany");
+const profileDesignation = document.getElementById("profileDesignation");
+const profileAbout = document.getElementById("profileAbout");
+
+const editProfileBtn = document.getElementById("editProfileBtn");
+const saveProfileBtn = document.getElementById("saveProfileBtn");
+const cancelProfileBtn = document.getElementById("cancelProfileBtn");
 
 /*====================================
 AUTH CHECK
@@ -100,5 +108,25 @@ document.getElementById("profileAbout").textContent =
             .toLocaleDateString("en-GB");
 
     }
+
+});
+
+editProfileBtn.addEventListener("click", () => {
+
+    profilePhone.innerHTML =
+        `<input type="text" class="form-control" id="editPhone" value="${profilePhone.textContent === "Not Added" ? "" : profilePhone.textContent}">`;
+
+    profileCompany.innerHTML =
+        `<input type="text" class="form-control" id="editCompany" value="${profileCompany.textContent === "Not Added" ? "" : profileCompany.textContent}">`;
+
+    profileDesignation.innerHTML =
+        `<input type="text" class="form-control" id="editDesignation" value="${profileDesignation.textContent === "Not Added" ? "" : profileDesignation.textContent}">`;
+
+    profileAbout.innerHTML =
+        `<textarea class="form-control" id="editAbout" rows="4">${profileAbout.textContent === "Not Added" ? "" : profileAbout.textContent}</textarea>`;
+
+    editProfileBtn.classList.add("d-none");
+    saveProfileBtn.classList.remove("d-none");
+    cancelProfileBtn.classList.remove("d-none");
 
 });
