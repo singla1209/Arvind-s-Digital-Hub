@@ -239,6 +239,33 @@ function searchResources(keyword) {
 
 }
 
+async function handleDownload(e) {
+
+    e.preventDefault();
+
+    const btn = e.currentTarget;
+
+    const id = btn.dataset.id;
+
+    const url = btn.dataset.url;
+
+    try {
+
+        await updateDoc(doc(db, "resources", id), {
+
+            downloads: increment(1)
+
+        });
+
+    } catch (err) {
+
+        console.error("Download counter failed:", err);
+
+    }
+
+    window.open(url, "_blank");
+
+}
 loadResources();
 
 /*====================================
