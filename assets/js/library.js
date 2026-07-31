@@ -332,6 +332,9 @@ if (resourceInfo) {
 
 }
 renderPagination(totalPages);
+
+setupPaginationEvents(totalPages);
+
 renderResources(pageData);
 
 }
