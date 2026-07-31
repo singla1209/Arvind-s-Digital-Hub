@@ -218,13 +218,15 @@ function searchResources(keyword) {
 
     keyword = keyword.trim().toLowerCase();
 
+    // No search → show only latest 6 resources
     if (keyword === "") {
 
-        renderResources(allResources);
+        renderResources(allResources.slice(0, 6));
         return;
 
     }
 
+    // Search → show all matching resources
     const filtered = allResources.filter(item => {
 
         return (
@@ -236,10 +238,10 @@ function searchResources(keyword) {
 
     });
 
+    // Show all matching results
     renderResources(filtered);
 
 }
-
 async function handleDownload(e) {
 
     e.preventDefault();
