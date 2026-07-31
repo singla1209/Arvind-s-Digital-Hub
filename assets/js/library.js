@@ -229,6 +229,44 @@ snap.forEach((docSnap) => {
   }
 }
 
+
+function updateResources() {
+
+    let list = [...allResources];
+
+    /* SEARCH */
+
+    const keyword = searchInput.value.trim().toLowerCase();
+
+    if (keyword !== "") {
+
+        list = list.filter(item =>
+
+            (item.title || "").toLowerCase().includes(keyword) ||
+            (item.description || "").toLowerCase().includes(keyword) ||
+            (item.category || "").toLowerCase().includes(keyword) ||
+            formatFileSize(item.size).toLowerCase().includes(keyword)
+
+        );
+
+    }
+
+    /* CATEGORY */
+
+    if (categoryFilter.value !== "") {
+
+        list = list.filter(item =>
+
+            item.category === categoryFilter.value
+
+        );
+
+    }
+
+    renderResources(list);
+
+}
+
 function renderResources(list) {
 
     if (list.length === 0) {
