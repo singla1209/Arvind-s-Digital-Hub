@@ -57,7 +57,35 @@ async function loadResource() {
 
         }
 
-        console.log("Resource Loaded:", snap.data());
+        const data = snap.data();
+
+console.log("Resource Loaded:", data);
+
+title.textContent =
+    data.title || "Untitled";
+
+category.textContent =
+    data.category || "Other";
+
+description.textContent =
+    data.description || "No description available.";
+
+date.textContent =
+    data.uploadedAt
+        ? data.uploadedAt.toDate().toLocaleDateString("en-GB")
+        : "-";
+
+size.textContent =
+    formatFileSize(data.size);
+
+downloads.textContent =
+    data.downloads || 0;
+
+uploader.textContent =
+    "Admin";
+
+downloadBtn.href =
+    data.fileURL;
 
     }
 
