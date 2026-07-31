@@ -251,19 +251,49 @@ function updateResources() {
 
     }
 
-    /* CATEGORY */
+   /* CATEGORY */
 
-    if (categoryFilter.value !== "") {
+if (categoryFilter.value !== "") {
 
-        list = list.filter(item =>
+    list = list.filter(item =>
 
-            item.category === categoryFilter.value
+        item.category === categoryFilter.value
 
+    );
+
+}
+
+/* SORT */
+
+switch (sortSelect.value) {
+
+    case "oldest":
+
+        list.reverse();
+        break;
+
+    case "title":
+
+        list.sort((a, b) =>
+            (a.title || "").localeCompare(b.title || "")
         );
+        break;
 
-    }
+    case "downloads":
 
-    renderResources(list);
+        list.sort((a, b) =>
+            (b.downloads || 0) - (a.downloads || 0)
+        );
+        break;
+
+    case "latest":
+    default:
+        // Already ordered by uploadedAt desc from Firestore
+        break;
+
+}
+
+renderResources(list);
 
 }
 
