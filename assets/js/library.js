@@ -18,6 +18,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const container = document.getElementById("resourcesContainer");
+const categoryFilter = document.getElementById("categoryFilter");
+const sortSelect = document.getElementById("sortResources");
 let allResources = [];
 
 // Maps a category name to a Bootstrap badge color + fallback icon
