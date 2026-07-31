@@ -382,6 +382,52 @@ function renderPagination(totalPages) {
 
 }
 
+function setupPaginationEvents(totalPages) {
+
+    if (!pagination) return;
+
+    pagination.querySelectorAll(".page-link").forEach(link => {
+
+        link.addEventListener("click", function (e) {
+
+            e.preventDefault();
+
+            const page = this.dataset.page;
+
+            if (page === "prev") {
+
+                if (currentPage > 1) {
+
+                    currentPage--;
+
+                }
+
+            }
+
+            else if (page === "next") {
+
+                if (currentPage < totalPages) {
+
+                    currentPage++;
+
+                }
+
+            }
+
+            else {
+
+                currentPage = Number(page);
+
+            }
+
+            updateResources();
+
+        });
+
+    });
+
+}
+
 function renderResources(list) {
 
     if (list.length === 0) {
@@ -529,3 +575,14 @@ if (sortSelect) {
 
 }
 
+if (pageSizeSelect) {
+
+    pageSizeSelect.addEventListener("change", function () {
+
+        currentPage = 1;
+
+        updateResources();
+
+    });
+
+}
