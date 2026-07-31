@@ -185,7 +185,14 @@ Download
 
 }
 
-async function loadResources() {
+  let currentPage = 1;
+const ITEMS_PER_PAGE = 9;
+
+async function loadResources() 
+
+
+
+{
   if (!container) return;
 
   try {
