@@ -336,6 +336,50 @@ renderResources(pageData);
 
 }
 
+function renderPagination(totalPages) {
+
+    if (!pagination) return;
+
+    pagination.innerHTML = "";
+
+    if (totalPages <= 1) return;
+
+    /* Previous */
+
+    pagination.innerHTML += `
+        <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
+            <a class="page-link" href="#" data-page="prev">
+                Previous
+            </a>
+        </li>
+    `;
+
+    /* Page Numbers */
+
+    for (let i = 1; i <= totalPages; i++) {
+
+        pagination.innerHTML += `
+            <li class="page-item ${i === currentPage ? "active" : ""}">
+                <a class="page-link" href="#" data-page="${i}">
+                    ${i}
+                </a>
+            </li>
+        `;
+
+    }
+
+    /* Next */
+
+    pagination.innerHTML += `
+        <li class="page-item ${currentPage === totalPages ? "disabled" : ""}">
+            <a class="page-link" href="#" data-page="next">
+                Next
+            </a>
+        </li>
+    `;
+
+}
+
 function renderResources(list) {
 
     if (list.length === 0) {
