@@ -432,3 +432,15 @@ if (categoryFilter) {
 
 }
 
+if (sortSelect) {
+
+    sortSelect.addEventListener("change", function () {
+
+        currentPage = 1;
+
+        updateResources();
+
+    });
+
+}
+
