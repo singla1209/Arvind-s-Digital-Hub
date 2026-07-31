@@ -217,7 +217,7 @@ snap.forEach((docSnap) => {
       return;
     }
 
-    renderResources(allResources);
+     updateResources();
     loadCategories();
     
   } catch (error) {
@@ -382,7 +382,9 @@ if (searchInput) {
 
     searchInput.addEventListener("input", function () {
 
-        searchResources(this.value);
+        currentPage = 1;
+
+        updateResources();
 
     });
 
@@ -392,7 +394,9 @@ if (categoryFilter) {
 
     categoryFilter.addEventListener("change", function () {
 
-        filterResources();
+        currentPage = 1;
+
+        updateResources();
 
     });
 
