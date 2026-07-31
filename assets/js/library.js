@@ -20,6 +20,8 @@ import {
 const container = document.getElementById("resourcesContainer");
 const categoryFilter = document.getElementById("categoryFilter");
 const sortSelect = document.getElementById("sortResources");
+const resourceInfo = document.getElementById("resourceInfo");
+const pageSizeSelect = document.getElementById("pageSize");
 
 function loadCategories() {
 
@@ -290,6 +292,23 @@ switch (sortSelect.value) {
     default:
         // Already ordered by uploadedAt desc from Firestore
         break;
+
+}
+
+const total = list.length;
+
+const pageSize = Number(pageSizeSelect.value);
+
+const start = 1;
+
+const end = Math.min(pageSize, total);
+
+if (resourceInfo) {
+
+    resourceInfo.textContent =
+        total === 0
+            ? "Showing 0–0 of 0 resources"
+            : `Showing ${start}–${end} of ${total} resources`;
 
 }
 
