@@ -31,6 +31,25 @@ const downloads = document.getElementById("resourceDownloads");
 const uploader = document.getElementById("resourceUploader");
 const downloadBtn = document.getElementById("downloadBtn");
 
+function formatFileSize(bytes) {
+
+    if (!bytes) return "-";
+
+    if (bytes < 1024)
+        return bytes + " Bytes";
+
+    if (bytes < 1024 * 1024)
+        return (bytes / 1024).toFixed(1) + " KB";
+
+    if (bytes < 1024 * 1024 * 1024)
+        return (bytes / 1024 / 1024).toFixed(2) + " MB";
+
+    return (bytes / 1024 / 1024 / 1024).toFixed(2) + " GB";
+
+}
+
+
+
 async function loadResource() {
 
     if (!resourceId) {
