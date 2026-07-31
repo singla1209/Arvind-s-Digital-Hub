@@ -22,13 +22,17 @@ const heroCategoryCount =
 
 function animateCounter(element, target) {
 
+    element.textContent = "0";
+
     let current = 0;
 
-    const duration = 1200;
+    const duration = 2000;   // 2 seconds
 
-    const stepTime = 20;
+    const fps = 30;
 
-    const increment = Math.max(1, Math.ceil(target / (duration / stepTime)));
+    const totalSteps = Math.max(1, Math.floor(duration / (1000 / fps)));
+
+    const increment = target / totalSteps;
 
     const timer = setInterval(() => {
 
@@ -36,15 +40,17 @@ function animateCounter(element, target) {
 
         if (current >= target) {
 
-            current = target;
+            element.textContent = target;
 
             clearInterval(timer);
 
+        } else {
+
+            element.textContent = Math.floor(current);
+
         }
 
-        element.textContent = current;
-
-    }, stepTime);
+    }, 1000 / fps);
 
 }
 async function loadHeroStatistics() {
@@ -76,12 +82,16 @@ async function loadHeroStatistics() {
 
         });
 
-        animateCounter(heroResourceCount, resources);
+      setTimeout(() => {
 
-        animateCounter(heroDownloadCount, downloads);
+    animateCounter(heroResourceCount, resources);
 
-        animateCounter(heroCategoryCount, categories.size);
+    animateCounter(heroDownloadCount, downloads);
 
+    animateCounter(heroCategoryCount, categories.size);
+
+}, 300);
+        
     }
 
     catch (err) {
