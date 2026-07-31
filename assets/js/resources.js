@@ -175,7 +175,7 @@ snap.forEach((docSnap) => {
       return;
     }
 
-    renderResources(allResources);
+   renderResources(allResources.slice(0, 6));
     
   } catch (error) {
     console.error("Failed to load resources:", error);
