@@ -3,28 +3,70 @@ ARVIND DIGITAL HUB
 assets/js/resource.js
 ==================================================*/
 
-console.log("Resource Details Page Loaded");
+import { db } from "./firebase.js";
+
+import {
+    doc,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 /*====================================
-GET RESOURCE ID FROM URL
+GET RESOURCE ID
 ====================================*/
 
 const params = new URLSearchParams(window.location.search);
 
 const resourceId = params.get("id");
 
-console.log("Resource ID:", resourceId);
-
 /*====================================
-CHECK URL
+ELEMENTS
 ====================================*/
 
-if (!resourceId) {
+const title = document.getElementById("resourceTitle");
+const category = document.getElementById("resourceCategory");
+const description = document.getElementById("resourceDescription");
+const date = document.getElementById("resourceDate");
+const size = document.getElementById("resourceSize");
+const downloads = document.getElementById("resourceDownloads");
+const uploader = document.getElementById("resourceUploader");
+const downloadBtn = document.getElementById("downloadBtn");
 
-    document.getElementById("resourceTitle").textContent =
-        "Resource Not Found";
+async function loadResource() {
 
-    document.getElementById("resourceDescription").textContent =
-        "No resource ID was supplied in the URL.";
+    if (!resourceId) {
+
+        title.textContent = "Resource Not Found";
+        description.textContent = "No resource ID was supplied.";
+
+        return;
+
+    }
+
+    try {
+
+        const docRef = doc(db, "resources", resourceId);
+
+        const snap = await getDoc(docRef);
+
+        if (!snap.exists()) {
+
+            title.textContent = "Resource Not Found";
+            description.textContent = "This resource does not exist.";
+
+            return;
+
+        }
+
+        console.log("Resource Loaded:", snap.data());
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
 
 }
+
+loadResource();
