@@ -20,6 +20,33 @@ const heroDownloadCount =
 const heroCategoryCount =
     document.getElementById("heroCategoryCount");
 
+function animateCounter(element, target) {
+
+    let current = 0;
+
+    const duration = 1200;
+
+    const stepTime = 20;
+
+    const increment = Math.max(1, Math.ceil(target / (duration / stepTime)));
+
+    const timer = setInterval(() => {
+
+        current += increment;
+
+        if (current >= target) {
+
+            current = target;
+
+            clearInterval(timer);
+
+        }
+
+        element.textContent = current;
+
+    }, stepTime);
+
+}
 async function loadHeroStatistics() {
 
     try {
@@ -49,11 +76,11 @@ async function loadHeroStatistics() {
 
         });
 
-        heroResourceCount.textContent = resources;
+        animateCounter(heroResourceCount, resources);
 
-        heroDownloadCount.textContent = downloads;
+        animateCounter(heroDownloadCount, downloads);
 
-        heroCategoryCount.textContent = categories.size;
+        animateCounter(heroCategoryCount, categories.size);
 
     }
 
