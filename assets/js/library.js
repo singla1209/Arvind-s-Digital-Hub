@@ -276,6 +276,28 @@ function searchResources(keyword) {
 
 }
 
+function filterResources() {
+
+    const selectedCategory = categoryFilter.value;
+
+    if (selectedCategory === "") {
+
+        renderResources(allResources);
+        return;
+
+    }
+
+    const filtered = allResources.filter(item =>
+
+        item.category === selectedCategory
+
+    );
+
+    renderResources(filtered);
+
+}
+
+
 async function handleDownload(e) {
 
     e.preventDefault();
@@ -320,3 +342,14 @@ if (searchInput) {
     });
 
 }
+
+if (categoryFilter) {
+
+    categoryFilter.addEventListener("change", function () {
+
+        filterResources();
+
+    });
+
+}
+
