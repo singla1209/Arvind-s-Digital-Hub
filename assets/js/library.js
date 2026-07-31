@@ -22,6 +22,7 @@ const categoryFilter = document.getElementById("categoryFilter");
 const sortSelect = document.getElementById("sortResources");
 const resourceInfo = document.getElementById("resourceInfo");
 const pageSizeSelect = document.getElementById("pageSize");
+const pagination = document.getElementById("pagination");
 
 function loadCategories() {
 
