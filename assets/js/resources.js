@@ -114,12 +114,8 @@ ${escapeHtml(item.description)}
 
 <div class="mt-auto d-grid gap-2">
 
-<a href="${item.fileURL}"
-
-target="_blank"
-
-rel="noopener"
-
+<a
+href="resource.html?id=${item.id}"
 class="btn btn-primary">
 
 <i class="bi bi-eye-fill me-1"></i>
