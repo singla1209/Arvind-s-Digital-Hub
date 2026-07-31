@@ -299,20 +299,39 @@ const total = list.length;
 
 const pageSize = Number(pageSizeSelect.value);
 
-const start = 1;
+const totalPages = Math.ceil(total / pageSize) || 1;
 
-const end = Math.min(pageSize, total);
+if (currentPage > totalPages) {
 
-if (resourceInfo) {
-
-    resourceInfo.textContent =
-        total === 0
-            ? "Showing 0–0 of 0 resources"
-            : `Showing ${start}–${end} of ${total} resources`;
+    currentPage = totalPages;
 
 }
 
-renderResources(list);
+const startIndex = (currentPage - 1) * pageSize;
+
+const endIndex = startIndex + pageSize;
+
+const pageData = list.slice(startIndex, endIndex);
+
+/* Showing text */
+
+if (resourceInfo) {
+
+    if (total === 0) {
+
+        resourceInfo.textContent =
+            "Showing 0–0 of 0 resources";
+
+    } else {
+
+        resourceInfo.textContent =
+            `Showing ${startIndex + 1}–${Math.min(endIndex, total)} of ${total} resources`;
+
+    }
+
+}
+
+renderResources(pageData);
 
 }
 
