@@ -20,6 +20,39 @@ import {
 const container = document.getElementById("resourcesContainer");
 const categoryFilter = document.getElementById("categoryFilter");
 const sortSelect = document.getElementById("sortResources");
+
+function loadCategories() {
+
+    const categories = new Set();
+
+    allResources.forEach(item => {
+
+        if (item.category) {
+
+            categories.add(item.category);
+
+        }
+
+    });
+
+    categoryFilter.innerHTML = `
+        <option value="">All Categories</option>
+    `;
+
+    [...categories]
+        .sort()
+        .forEach(category => {
+
+            categoryFilter.innerHTML += `
+                <option value="${category}">
+                    ${category}
+                </option>
+            `;
+
+        });
+
+}
+
 let allResources = [];
 
 // Maps a category name to a Bootstrap badge color + fallback icon
