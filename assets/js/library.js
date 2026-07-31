@@ -331,10 +331,12 @@ if (resourceInfo) {
     }
 
 }
-
+renderPagination(totalPages);
 renderResources(pageData);
 
 }
+
+
 
 function renderPagination(totalPages) {
 
