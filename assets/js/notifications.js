@@ -64,7 +64,8 @@ async function loadNotifications() {
 
 <div
 class="notification-item p-3 border-bottom"
-data-id="${item.resourceId}">
+data-id="${item.resourceId}"
+data-notification="${item.notificationId}">
 
 <div class="d-flex align-items-start">
 
@@ -159,12 +160,14 @@ document.addEventListener("click", async function (e) {
 
     if (!card) return;
 
-    const id = card.dataset.id;
+    const resourceId = card.dataset.id;
 
-    if (!id) return;
+    const notificationId = card.dataset.notification;
 
-    await markNotificationRead(id);
+    if (!resourceId || !notificationId) return;
 
-    window.location.href = `resource.html?id=${id}`;
+    await markNotificationRead(notificationId);
+
+    window.location.href = `resource.html?id=${resourceId}`;
 
 });
