@@ -24,9 +24,32 @@ async function loadNotifications() {
     try {
 
        const snap = await getDocs(collection(db, "notifications"));
+        const user = auth.currentUser;
+
+let readNotifications = new Set();
+
+if (user) {
+
+    const readSnap = await getDocs(collection(db, "userNotifications"));
+
+    readSnap.forEach(doc => {
+
+        const data = doc.data();
+
+        if (data.uid === user.uid) {
+
+            readNotifications.add(data.notificationId);
+
+        }
+
+    });
+
+}
         if (notificationBadge) {
 
-    if (snap.empty) {
+    const unreadCount = snap.size - readNotifications.size;
+
+    if (unreadCount <= 0) {
 
         notificationBadge.style.display = "none";
 
@@ -34,7 +57,7 @@ async function loadNotifications() {
 
         notificationBadge.style.display = "inline-block";
 
-        notificationBadge.textContent = snap.size;
+        notificationBadge.textContent = unreadCount;
 
     }
 
@@ -59,6 +82,7 @@ async function loadNotifications() {
     const item = docSnap.data();
 
     item.notificationId = docSnap.id;
+            const isRead = readNotifications.has(item.notificationId);
 
            notificationList.innerHTML += `
 
@@ -101,11 +125,13 @@ Just now
 
 <div>
 
+${!isRead ? `
 <span class="badge bg-success">
 
 NEW
 
 </span>
+` : ""}
 
 </div>
 
