@@ -67,7 +67,8 @@ async function loadNotifications() {
 
     try {
 
-       const snap = await getDocs(collection(db, "notifications"));
+        const snap = await getDocs(collection(db, "notifications"));
+        const notifications = snap.docs.slice(0, 10);
         const user = auth.currentUser;
 
 let readNotifications = new Set();
