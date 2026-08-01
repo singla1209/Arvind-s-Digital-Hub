@@ -38,22 +38,57 @@ async function loadNotifications() {
 
             const item = doc.data();
 
-            notificationList.innerHTML += `
+           notificationList.innerHTML += `
 
-            <div class="p-3 border-bottom">
+<div class="notification-item p-3 border-bottom">
 
-                <strong>${item.title}</strong>
+<div class="d-flex align-items-start">
 
-                <div class="small text-muted">
+<div class="me-3">
 
-                    ${item.message}
+<i class="bi bi-file-earmark-arrow-down-fill text-primary fs-4"></i>
 
-                </div>
+</div>
 
-            </div>
+<div class="flex-grow-1">
 
-            `;
+<div class="fw-semibold">
 
+${item.title}
+
+</div>
+
+<div class="text-muted small">
+
+${item.message}
+
+</div>
+
+<div class="small text-secondary mt-1">
+
+<i class="bi bi-clock me-1"></i>
+
+Just now
+
+</div>
+
+</div>
+
+<div>
+
+<span class="badge bg-success">
+
+NEW
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+`;
         });
 
     }
