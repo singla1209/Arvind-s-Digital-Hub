@@ -54,6 +54,19 @@ function loadCategories() {
 
         });
 
+  // Auto-select category from URL
+const params = new URLSearchParams(window.location.search);
+
+const category = params.get("category");
+
+if (category) {
+
+    categoryFilter.value = category;
+
+    updateResources();
+
+}
+
 }
 
 let allResources = [];
