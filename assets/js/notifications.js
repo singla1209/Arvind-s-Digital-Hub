@@ -54,9 +54,11 @@ async function loadNotifications() {
 
         notificationList.innerHTML = "";
 
-        snap.forEach(doc => {
+        snap.forEach(docSnap => {
 
-            const item = doc.data();
+    const item = docSnap.data();
+
+    item.notificationId = docSnap.id;
 
            notificationList.innerHTML += `
 
