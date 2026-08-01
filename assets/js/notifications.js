@@ -17,6 +17,45 @@ const notificationList =
 const notificationBadge =
     document.getElementById("notificationBadge");
 
+function timeAgo(timestamp) {
+
+    if (!timestamp || !timestamp.toDate) {
+
+        return "Just now";
+
+    }
+
+    const now = new Date();
+
+    const time = timestamp.toDate();
+
+    const seconds = Math.floor((now - time) / 1000);
+
+    if (seconds < 60)
+        return "Just now";
+
+    const minutes = Math.floor(seconds / 60);
+
+    if (minutes < 60)
+        return minutes + (minutes === 1 ? " minute ago" : " minutes ago");
+
+    const hours = Math.floor(minutes / 60);
+
+    if (hours < 24)
+        return hours + (hours === 1 ? " hour ago" : " hours ago");
+
+    const days = Math.floor(hours / 24);
+
+    if (days === 1)
+        return "Yesterday";
+
+    if (days < 7)
+        return days + " days ago";
+
+    return time.toLocaleDateString("en-GB");
+
+}
+
 async function loadNotifications() {
 
     if (!notificationList) return;
@@ -117,7 +156,7 @@ ${item.message}
 
 <i class="bi bi-clock me-1"></i>
 
-Just now
+${timeAgo(item.createdAt)}
 
 </div>
 
