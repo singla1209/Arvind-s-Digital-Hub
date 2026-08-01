@@ -137,7 +137,7 @@ lastNotificationCount = unreadCount;
 
         notificationList.innerHTML = "";
 
-        snap.forEach(docSnap => {
+       notifications.forEach(docSnap => {
 
     const item = docSnap.data();
 
