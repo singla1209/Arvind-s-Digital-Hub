@@ -151,7 +151,7 @@ async function markNotificationRead(notificationId) {
 
 }
 
-document.addEventListener("click", function (e) {
+document.addEventListener("click", async function (e) {
 
     const card = e.target.closest(".notification-item");
 
@@ -160,6 +160,8 @@ document.addEventListener("click", function (e) {
     const id = card.dataset.id;
 
     if (!id) return;
+
+    await markNotificationRead(id);
 
     window.location.href = `resource.html?id=${id}`;
 
