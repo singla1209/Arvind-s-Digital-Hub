@@ -57,7 +57,9 @@ async function loadNotifications() {
 
            notificationList.innerHTML += `
 
-<div class="notification-item p-3 border-bottom">
+<div
+class="notification-item p-3 border-bottom"
+data-id="${item.resourceId}">
 
 <div class="d-flex align-items-start">
 
@@ -119,3 +121,17 @@ NEW
 }
 
 loadNotifications();
+
+document.addEventListener("click", function (e) {
+
+    const card = e.target.closest(".notification-item");
+
+    if (!card) return;
+
+    const id = card.dataset.id;
+
+    if (!id) return;
+
+    window.location.href = `resources.html?id=${id}`;
+
+});
