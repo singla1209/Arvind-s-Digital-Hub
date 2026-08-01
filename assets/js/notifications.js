@@ -18,6 +18,10 @@ const notificationList =
 const notificationBadge =
     document.getElementById("notificationBadge");
 
+const notificationBtn = document.getElementById("notificationBtn");
+
+let lastNotificationCount = null;
+
 function timeAgo(timestamp) {
 
     if (!timestamp || !timestamp.toDate) {
@@ -88,6 +92,19 @@ if (user) {
         if (notificationBadge) {
 
     const unreadCount = snap.size - readNotifications.size;
+            if (lastNotificationCount !== null && unreadCount > lastNotificationCount) {
+
+    notificationBtn.classList.add("bell-shake");
+
+    setTimeout(() => {
+
+        notificationBtn.classList.remove("bell-shake");
+
+    }, 700);
+
+}
+
+lastNotificationCount = unreadCount;
 
     if (unreadCount <= 0) {
 
