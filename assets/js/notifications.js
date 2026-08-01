@@ -18,7 +18,7 @@ const notificationList =
 const notificationBadge =
     document.getElementById("notificationBadge");
 
-const notificationBtn = document.getElementById("notificationBtn");
+const notificationBell = document.getElementById("notificationBell");
 
 let lastNotificationCount = null;
 
@@ -94,11 +94,11 @@ if (user) {
     const unreadCount = snap.size - readNotifications.size;
             if (lastNotificationCount !== null && unreadCount > lastNotificationCount) {
 
-    notificationBtn.classList.add("bell-shake");
+  notificationBell.classList.add("bell-shake");
 
     setTimeout(() => {
 
-        notificationBtn.classList.remove("bell-shake");
+       notificationBell.classList.remove("bell-shake");
 
     }, 700);
 
