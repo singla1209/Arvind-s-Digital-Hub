@@ -277,31 +277,51 @@ form.addEventListener("submit", async (e) => {
 
     const fileURL = data.publicUrl;
 
-    await addDoc(
-        collection(db, "resources"),
-        {
+   const docRef = await addDoc(
+    collection(db, "resources"),
+    {
 
-            title,
+        title,
 
-            description,
+        description,
 
-            category,
+        category,
 
-            fileURL,
+        fileURL,
 
-            storagePath,
+        storagePath,
 
-            fileType: file.type,
+        fileType: file.type,
 
-            size: file.size,
+        size: file.size,
 
-			downloads: 0,
+        downloads: 0,
 
-            uploadedAt: serverTimestamp()
+        uploadedAt: serverTimestamp()
 
-        }
-    );
+    }
+);
 
+// Create notification automatically
+
+await addDoc(
+    collection(db, "notifications"),
+    {
+
+        title: `New ${category} Uploaded`,
+
+        message: title,
+
+        resourceId: docRef.id,
+
+        category: category,
+
+        createdAt: serverTimestamp(),
+
+        active: true
+
+    }
+);
     progressBar.style.width = "100%";
 
     progressBar.textContent = "100%";
