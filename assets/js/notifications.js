@@ -11,6 +11,8 @@ import {
 
 const notificationList =
     document.getElementById("notificationList");
+const notificationBadge =
+    document.getElementById("notificationBadge");
 
 async function loadNotifications() {
 
@@ -19,6 +21,21 @@ async function loadNotifications() {
     try {
 
        const snap = await getDocs(collection(db, "notifications"));
+        if (notificationBadge) {
+
+    if (snap.empty) {
+
+        notificationBadge.style.display = "none";
+
+    } else {
+
+        notificationBadge.style.display = "inline-block";
+
+        notificationBadge.textContent = snap.size;
+
+    }
+
+}
 
         if (snap.empty) {
 
