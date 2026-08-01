@@ -18,14 +18,7 @@ async function loadNotifications() {
 
     try {
 
-        const q = query(
-            collection(db, "notifications"),
-            where("active", "==", true),
-            orderBy("createdAt", "desc"),
-            limit(5)
-        );
-
-        const snap = await getDocs(q);
+       const snap = await getDocs(collection(db, "notifications"));
 
         if (snap.empty) {
 
