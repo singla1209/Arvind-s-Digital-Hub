@@ -2316,6 +2316,55 @@ display:block!important;
 
 }
 
+/*====================================
+NOTIFICATIONS
+====================================*/
+
+.notification-item{
+
+cursor:pointer;
+transition:.25s;
+background:#fff;
+
+}
+
+.notification-item:hover{
+
+background:#f8f9fa;
+
+}
+
+.notification-item i{
+
+transition:.25s;
+
+}
+
+.notification-item:hover i{
+
+transform:scale(1.15);
+
+}
+
+#notificationList{
+
+max-height:420px;
+overflow-y:auto;
+
+}
+
+#notificationList::-webkit-scrollbar{
+
+width:6px;
+
+}
+
+#notificationList::-webkit-scrollbar-thumb{
+
+background:#d0d0d0;
+border-radius:20px;
+
+}
 /*==============================
 END OF FILE
 ==================================================*/
