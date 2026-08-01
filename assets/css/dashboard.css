@@ -2366,36 +2366,57 @@ border-radius:20px;
 
 }
 
-
 /*====================================
 NOTIFICATION BELL ANIMATION
 ====================================*/
 
 @keyframes bellShake {
 
-0%   { transform: rotate(0deg); }
+0% {
+    transform: rotate(0deg) scale(1);
+}
 
-15%  { transform: rotate(15deg); }
+15% {
+    transform: rotate(20deg) scale(1.2);
+}
 
-30%  { transform: rotate(-15deg); }
+30% {
+    transform: rotate(-20deg) scale(1.2);
+}
 
-45%  { transform: rotate(12deg); }
+45% {
+    transform: rotate(16deg) scale(1.15);
+}
 
-60%  { transform: rotate(-12deg); }
+60% {
+    transform: rotate(-16deg) scale(1.15);
+}
 
-75%  { transform: rotate(8deg); }
+75% {
+    transform: rotate(10deg) scale(1.1);
+}
 
-90%  { transform: rotate(-8deg); }
+90% {
+    transform: rotate(-10deg) scale(1.05);
+}
 
-100% { transform: rotate(0deg); }
+100% {
+    transform: rotate(0deg) scale(1);
+}
+
+}
+
+#notificationBell{
+
+display:inline-block;
+
+transform-origin:top center;
 
 }
 
 .bell-shake{
 
-animation: bellShake .7s ease;
-
-transform-origin: top center;
+animation:bellShake .9s ease;
 
 }
 
