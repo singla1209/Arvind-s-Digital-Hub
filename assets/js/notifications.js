@@ -94,7 +94,9 @@ if (user) {
     const unreadCount = snap.size - readNotifications.size;
             if (lastNotificationCount !== null && unreadCount > lastNotificationCount) {
 
-  notificationBell.classList.add("bell-shake");
+  console.log("Bell animation triggered");
+
+notificationBell.classList.add("bell-shake");
 
     setTimeout(() => {
 
