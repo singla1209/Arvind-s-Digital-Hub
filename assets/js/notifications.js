@@ -132,6 +132,6 @@ document.addEventListener("click", function (e) {
 
     if (!id) return;
 
-    window.location.href = `resources.html?id=${id}`;
+    window.location.href = `resource.html?id=${id}`;
 
 });
