@@ -135,7 +135,31 @@ data-notification="${item.notificationId}">
 
 <div class="me-3">
 
-<i class="bi bi-file-earmark-arrow-down-fill text-primary fs-4"></i>
+<i class="bi ${
+
+item.category === "Excel"
+
+? "bi-file-earmark-excel-fill text-success"
+
+: item.category === "Python"
+
+? "bi-code-slash text-warning"
+
+: item.category === "Documents"
+
+? "bi-file-earmark-text-fill text-primary"
+
+: item.category === "Image"
+
+? "bi-image-fill text-info"
+
+: item.category === "Video"
+
+? "bi-camera-video-fill text-danger"
+
+: "bi-file-earmark-fill text-secondary"
+
+} fs-4"></i>
 
 </div>
 
