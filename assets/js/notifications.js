@@ -125,6 +125,32 @@ NEW
 
 loadNotifications();
 
+async function markNotificationRead(notificationId) {
+
+    const user = auth.currentUser;
+
+    if (!user) return;
+
+    await setDoc(
+
+        doc(db, "userNotifications", `${user.uid}_${notificationId}`),
+
+        {
+
+            uid: user.uid,
+
+            notificationId,
+
+            read: true,
+
+            readAt: new Date()
+
+        }
+
+    );
+
+}
+
 document.addEventListener("click", function (e) {
 
     const card = e.target.closest(".notification-item");
