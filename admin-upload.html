@@ -205,7 +205,8 @@ import {
   serverTimestamp,
   query,
   orderBy,
-  getDocs
+  getDocs,
+  where,
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const form = document.getElementById("uploadForm");
@@ -456,15 +457,38 @@ async function loadFiles() {
 
                 }
 
-                await deleteDoc(
+              /*====================================
+DELETE RELATED NOTIFICATIONS
+====================================*/
 
-                    doc(
-                        db,
-                        "resources",
-                        docSnap.id
-                    )
+const notificationQuery = query(
+    collection(db, "notifications"),
+    where("resourceId", "==", docSnap.id)
+);
 
-                );
+const notificationSnap = await getDocs(notificationQuery);
+
+for (const notificationDoc of notificationSnap.docs) {
+
+    await deleteDoc(
+        doc(db, "notifications", notificationDoc.id)
+    );
+
+}
+
+/*====================================
+DELETE RESOURCE
+====================================*/
+
+await deleteDoc(
+
+    doc(
+        db,
+        "resources",
+        docSnap.id
+    )
+
+);
 
                 statusMsg.innerHTML =
                 `<div class="alert alert-success">
