@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">await supabase.storage
 <head>
 
 <meta charset="UTF-8">
@@ -437,10 +437,13 @@ async function loadFiles() {
 
                 try {
 
+					console.log("Deleting Storage Path:", item.storagePath);
+
                     const { error } =
                     await supabase.storage
                     .from("resources")
                     .remove([item.storagePath]);
+					console.log("Supabase delete error:", error);
 
                     if (error) {
 
