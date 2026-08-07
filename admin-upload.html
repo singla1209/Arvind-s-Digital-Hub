@@ -464,6 +464,8 @@ async function loadFiles() {
 DELETE RELATED NOTIFICATIONS
 ====================================*/
 
+console.log("Resource document ID:", docSnap.id);
+
 const notificationQuery = query(
     collection(db, "notifications"),
     where("resourceId", "==", docSnap.id)
@@ -471,7 +473,11 @@ const notificationQuery = query(
 
 const notificationSnap = await getDocs(notificationQuery);
 
+console.log("Notifications found:", notificationSnap.size);
+
 for (const notificationDoc of notificationSnap.docs) {
+
+    console.log("Deleting notification:", notificationDoc.id);
 
     await deleteDoc(
         doc(db, "notifications", notificationDoc.id)
