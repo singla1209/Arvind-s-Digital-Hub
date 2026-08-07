@@ -654,6 +654,69 @@ ${formatFileSize(file.size)}
 
     }
 );
+	/*====================================
+BULK UPLOAD TO SUPABASE
+====================================*/
+
+bulkUploadBtn.addEventListener(
+    "click",
+    async () => {
+
+        if (bulkFiles.files.length === 0) {
+
+            alert("Please select files.");
+
+            return;
+
+        }
+
+        bulkUploadBtn.disabled = true;
+
+        statusMsg.innerHTML =
+        `<div class="alert alert-info">
+            Uploading files...
+        </div>`;
+
+        for (const file of bulkFiles.files) {
+
+            const fileName =
+            `${Date.now()}_${file.name}`;
+
+            const storagePath =
+            `${bulkCategory.value}/${fileName}`;
+
+            const { error } =
+            await supabase.storage
+            .from("resources")
+            .upload(
+                storagePath,
+                file
+            );
+
+            if (error) {
+
+                console.error(error);
+
+            } else {
+
+                console.log(
+                    "Uploaded:",
+                    storagePath
+                );
+
+            }
+
+        }
+
+        statusMsg.innerHTML =
+        `<div class="alert alert-success">
+            Files uploaded successfully to Supabase.
+        </div>`;
+
+        bulkUploadBtn.disabled = false;
+
+    }
+);
 	
 </script>
 
