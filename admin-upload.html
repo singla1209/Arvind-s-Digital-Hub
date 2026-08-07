@@ -279,66 +279,86 @@ const fileList = document.getElementById("fileList");
 /*====================================
 COMMON FILE UPLOAD FUNCTION
 ====================================*/
+/*====================================
+COMMON FILE UPLOAD FUNCTION
+====================================*/
 
-async function uploadSingleFile(
-    title,
-    description,
-    category,
-    file
-) {
+async function uploadSingleFile(title, description, category, file) {
 
-    // We will move the upload code here
+    const storagePath =
+    `${category}/${Date.now()}_${file.name}`;
 
-	const fileName =
-`${Date.now()}_${file.name}`;
+    const { error } =
+    await supabase.storage
+    .from("resources")
+    .upload(storagePath, file);
 
-const storagePath =
-`${category}/${fileName}`;
+    if (error) throw error;
 
-const { error } =
-await supabase.storage
-.from("resources")
-.upload(
-    storagePath,
-    file
-);
-
-if (error) {
-
-    throw error;
-
-}
-	const { data } =
+    const { data } =
     supabase.storage
     .from("resources")
     .getPublicUrl(storagePath);
 
-const fileURL = data.publicUrl;
+    const fileURL = data.publicUrl;
 
-const docRef = await addDoc(
-    collection(db, "resources"),
-    {
+    const docRef = await addDoc(
+        collection(db, "resources"),
+        {
 
-        title,
+            title,
 
-        description,
+            description,
 
-        category,
+            category,
 
-        fileURL,
+            fileURL,
 
-        storagePath,
+            storagePath,
 
-        fileType: file.type,
+            fileType: file.type,
 
-        size: file.size,
+            size: file.size,
 
-        downloads: 0,
+            downloads: 0,
 
-        uploadedAt: serverTimestamp()
+            uploadedAt: serverTimestamp()
 
-    }
-);
+        }
+    );
+
+    await addDoc(
+        collection(db, "notifications"),
+        {
+
+            title: `New ${category} Uploaded`,
+
+            message: title,
+
+            resourceId: docRef.id,
+
+            category,
+
+            createdAt: serverTimestamp(),
+
+            active: true
+
+        }
+    );
+
+    await addDoc(
+        collection(db, "userNotifications"),
+        {
+
+            resourceId: docRef.id,
+
+            createdAt: serverTimestamp(),
+
+            readBy: []
+
+        }
+    );
+
 }
 
 form.addEventListener("submit", async (e) => {
