@@ -169,6 +169,30 @@ Upload
 
 <h4 class="mb-3">Bulk Upload</h4>
 
+	<div class="mb-3">
+
+    <label class="form-label">Category</label>
+
+    <select
+        id="bulkCategory"
+        class="form-select">
+
+        <option value="Excel">Excel</option>
+
+        <option value="Python">Python</option>
+
+        <option value="Documents">Documents</option>
+
+        <option value="Image">Image</option>
+
+        <option value="Video">Video</option>
+
+        <option value="Other">Other</option>
+
+    </select>
+
+</div>
+
 <div class="mb-3">
     <label class="form-label">Select Multiple Files</label>
 
@@ -586,6 +610,8 @@ document.getElementById("bulkFileList");
 
 const bulkUploadBtn =
 document.getElementById("bulkUploadBtn");
+const bulkCategory =
+document.getElementById("bulkCategory");	
 
 bulkFiles.addEventListener(
     "change",
