@@ -276,6 +276,71 @@ const progressBar = document.getElementById("progressBar");
 const statusMsg = document.getElementById("statusMsg");
 const fileList = document.getElementById("fileList");
 
+/*====================================
+COMMON FILE UPLOAD FUNCTION
+====================================*/
+
+async function uploadSingleFile(
+    title,
+    description,
+    category,
+    file
+) {
+
+    // We will move the upload code here
+
+	const fileName =
+`${Date.now()}_${file.name}`;
+
+const storagePath =
+`${category}/${fileName}`;
+
+const { error } =
+await supabase.storage
+.from("resources")
+.upload(
+    storagePath,
+    file
+);
+
+if (error) {
+
+    throw error;
+
+}
+	const { data } =
+    supabase.storage
+    .from("resources")
+    .getPublicUrl(storagePath);
+
+const fileURL = data.publicUrl;
+
+const docRef = await addDoc(
+    collection(db, "resources"),
+    {
+
+        title,
+
+        description,
+
+        category,
+
+        fileURL,
+
+        storagePath,
+
+        fileType: file.type,
+
+        size: file.size,
+
+        downloads: 0,
+
+        uploadedAt: serverTimestamp()
+
+    }
+);
+}
+
 form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
