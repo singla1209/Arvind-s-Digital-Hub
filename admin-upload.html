@@ -165,147 +165,6 @@ Upload
 
 </form>
 
-
-	<!-- ================================
-     BULK UPLOAD
-================================ -->
-
-<hr class="my-4">
-
-<div class="card mt-4">
-
-    <div class="card-header">
-        <h5 class="mb-0">
-            <i class="bi bi-files"></i>
-            Bulk Upload
-        </h5>
-    </div>
-
-    <div class="card-body">
-
-        <div class="mb-3">
-
-            <label class="form-label">
-                Category
-            </label>
-
-            <select
-                id="bulkCategory"
-                class="form-select">
-
-                <option value="Excel">Excel</option>
-                <option value="Python">Python</option>
-                <option value="Documents">Documents</option>
-                <option value="Image">Image</option>
-                <option value="Video">Video</option>
-                <option value="Other">Other</option>
-
-            </select>
-
-        </div>
-
-        <div class="mb-3">
-
-            <label class="form-label">
-                Description
-            </label>
-
-            <input
-                type="text"
-                id="bulkDescription"
-                class="form-control"
-                placeholder="Description for all files">
-
-        </div>
-
-        <div class="mb-3">
-
-            <label class="form-label">
-                Select Multiple Files
-            </label>
-
-            <input
-                type="file"
-                id="bulkFiles"
-                class="form-control"
-                multiple>
-
-        </div>
-
-        <div
-            id="bulkFileInfo"
-            class="text-muted mb-3">
-
-            No files selected.
-
-        </div>
-
-        <div
-            id="bulkProgressWrap"
-            style="display:none;">
-
-            <div class="progress">
-
-                <div
-                    id="bulkProgressBar"
-                    class="progress-bar progress-bar-striped progress-bar-animated"
-                    style="width:0%;">
-
-                    0%
-
-                </div>
-
-            </div>
-
-            <div
-                id="bulkProgressText"
-                class="small text-muted mt-2">
-
-                Preparing upload...
-
-            </div>
-
-        </div>
-
-        <div class="mt-3">
-
-            <button
-                type="button"
-                id="bulkUploadBtn"
-                class="btn btn-success"
-                disabled>
-
-                <i class="bi bi-cloud-arrow-up"></i>
-
-                Upload All
-
-            </button>
-
-            <button
-                type="button"
-                id="bulkClearBtn"
-                class="btn btn-secondary ms-2">
-
-                Clear
-
-            </button>
-
-        </div>
-
-        <div
-            id="bulkStatusMsg"
-            class="mt-3">
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- ================================
-     END BULK UPLOAD
-================================ -->
-
 <hr class="my-5">
 
 <h4 class="mb-3">Bulk Upload</h4>
@@ -421,372 +280,67 @@ const fileList = document.getElementById("fileList");
 COMMON FILE UPLOAD FUNCTION
 ====================================*/
 
+async function uploadSingleFile(
+    title,
+    description,
+    category,
+    file
+) {
 
-async function uploadSingleFile(title, description, category, file) {
+    // We will move the upload code here
 
-    const storagePath =
-    `${category}/${Date.now()}_${file.name}`;
+	const fileName =
+`${Date.now()}_${file.name}`;
 
-    const { error } =
-    await supabase.storage
-    .from("resources")
-    .upload(storagePath, file);
+const storagePath =
+`${category}/${fileName}`;
 
-    if (error) throw error;
+const { error } =
+await supabase.storage
+.from("resources")
+.upload(
+    storagePath,
+    file
+);
 
-    const { data } =
+if (error) {
+
+    throw error;
+
+}
+	const { data } =
     supabase.storage
     .from("resources")
     .getPublicUrl(storagePath);
 
-    const fileURL = data.publicUrl;
+const fileURL = data.publicUrl;
 
-    const docRef = await addDoc(
-        collection(db, "resources"),
-        {
+const docRef = await addDoc(
+    collection(db, "resources"),
+    {
 
-            title,
+        title,
 
-            description,
+        description,
 
-            category,
+        category,
 
-            fileURL,
+        fileURL,
 
-            storagePath,
+        storagePath,
 
-            fileType: file.type,
+        fileType: file.type,
 
-            size: file.size,
+        size: file.size,
 
-            downloads: 0,
+        downloads: 0,
 
-            uploadedAt: serverTimestamp()
+        uploadedAt: serverTimestamp()
 
-        }
-    );
-
-    await addDoc(
-        collection(db, "notifications"),
-        {
-
-            title: `New ${category} Uploaded`,
-
-            message: title,
-
-            resourceId: docRef.id,
-
-            category,
-
-            createdAt: serverTimestamp(),
-
-            active: true
-
-        }
-    );
-
-    await addDoc(
-        collection(db, "userNotifications"),
-        {
-
-            resourceId: docRef.id,
-
-            createdAt: serverTimestamp(),
-
-            readBy: []
-
-        }
-    );
-
+    }
+);
 }
-/*====================================
-BULK UPLOAD
-====================================*/
 
-const bulkCategory =
-    document.getElementById("bulkCategory");
-
-const bulkDescription =
-    document.getElementById("bulkDescription");
-
-const bulkFiles =
-    document.getElementById("bulkFiles");
-
-const bulkFileInfo =
-    document.getElementById("bulkFileInfo");
-
-const bulkUploadBtn =
-    document.getElementById("bulkUploadBtn");
-
-const bulkClearBtn =
-    document.getElementById("bulkClearBtn");
-
-const bulkProgressWrap =
-    document.getElementById("bulkProgressWrap");
-
-const bulkProgressBar =
-    document.getElementById("bulkProgressBar");
-
-const bulkProgressText =
-    document.getElementById("bulkProgressText");
-
-const bulkStatusMsg =
-    document.getElementById("bulkStatusMsg");
-
-
-/*====================================
-SHOW SELECTED FILES
-====================================*/
-
-bulkFiles.addEventListener("change", () => {
-
-    const files = Array.from(bulkFiles.files);
-
-    if (files.length === 0) {
-
-        bulkFileInfo.textContent =
-            "No files selected.";
-
-        bulkUploadBtn.disabled = true;
-
-        return;
-
-    }
-
-    let totalSize = 0;
-
-    files.forEach(file => {
-
-        totalSize += file.size;
-
-    });
-
-    const totalMB =
-        (totalSize / (1024 * 1024)).toFixed(2);
-
-    bulkFileInfo.innerHTML =
-        `<strong>${files.length}</strong> file(s) selected
-         &nbsp; | &nbsp;
-         Total size: <strong>${totalMB} MB</strong>`;
-
-    bulkUploadBtn.disabled = false;
-
-});
-
-
-/*====================================
-CLEAR BULK SELECTION
-====================================*/
-
-bulkClearBtn.addEventListener("click", () => {
-
-    bulkFiles.value = "";
-
-    bulkFileInfo.textContent =
-        "No files selected.";
-
-    bulkUploadBtn.disabled = true;
-
-    bulkProgressWrap.style.display =
-        "none";
-
-    bulkProgressBar.style.width =
-        "0%";
-
-    bulkProgressBar.textContent =
-        "0%";
-
-    bulkProgressText.textContent =
-        "Preparing upload...";
-
-    bulkStatusMsg.innerHTML = "";
-
-});
-	/*====================================
-START BULK UPLOAD
-====================================*/
-
-bulkUploadBtn.addEventListener("click", async () => {
-
-    const files =
-        Array.from(bulkFiles.files);
-
-    const category =
-        bulkCategory.value;
-
-    const description =
-        bulkDescription.value.trim();
-
-    if (files.length === 0) {
-
-        alert("Please select at least one file.");
-
-        return;
-
-    }
-
-    /*--------------------------------
-    DISABLE BUTTON
-    --------------------------------*/
-
-    bulkUploadBtn.disabled = true;
-
-    bulkClearBtn.disabled = true;
-
-    bulkProgressWrap.style.display =
-        "block";
-
-    bulkStatusMsg.innerHTML = "";
-
-    let uploadedCount = 0;
-
-    let failedCount = 0;
-
-
-    /*--------------------------------
-    UPLOAD FILES ONE BY ONE
-    --------------------------------*/
-
-    for (let i = 0; i < files.length; i++) {
-
-        const file = files[i];
-
-        const currentNumber = i + 1;
-
-        const totalFiles = files.length;
-
-
-        /*----------------------------
-        UPDATE PROGRESS TEXT
-        ----------------------------*/
-
-        bulkProgressText.textContent =
-            `Uploading file ${currentNumber} of ${totalFiles}: ${file.name}`;
-
-
-        const percent =
-            Math.round(
-                (i / totalFiles) * 100
-            );
-
-
-        bulkProgressBar.style.width =
-            `${percent}%`;
-
-        bulkProgressBar.textContent =
-            `${percent}%`;
-
-
-        try {
-
-            /*------------------------
-            USE COMMON UPLOAD FUNCTION
-            ------------------------*/
-
-            await uploadSingleFile(
-
-                file.name,
-
-                description,
-
-                category,
-
-                file
-
-            );
-
-
-            uploadedCount++;
-
-
-        } catch (error) {
-
-            failedCount++;
-
-            console.error(
-                `Bulk upload failed for ${file.name}:`,
-                error
-            );
-
-        }
-
-    }
-
-
-    /*--------------------------------
-    UPLOAD FINISHED
-    --------------------------------*/
-
-    bulkProgressBar.style.width =
-        "100%";
-
-    bulkProgressBar.textContent =
-        "100%";
-
-    bulkProgressText.textContent =
-        "Bulk upload completed.";
-
-
-    /*--------------------------------
-    SHOW RESULT
-    --------------------------------*/
-
-    if (failedCount === 0) {
-
-        bulkStatusMsg.innerHTML =
-            `<div class="alert alert-success">
-
-                <strong>Upload completed successfully.</strong>
-
-                <br>
-
-                ${uploadedCount} file(s) uploaded.
-
-            </div>`;
-
-    } else {
-
-        bulkStatusMsg.innerHTML =
-            `<div class="alert alert-warning">
-
-                Upload completed with some errors.
-
-                <br>
-
-                Successfully uploaded:
-                <strong>${uploadedCount}</strong>
-
-                <br>
-
-                Failed:
-                <strong>${failedCount}</strong>
-
-            </div>`;
-
-    }
-
-
-    /*--------------------------------
-    RESET
-    --------------------------------*/
-
-    bulkFiles.value = "";
-
-    bulkFileInfo.textContent =
-        "No files selected.";
-
-    bulkUploadBtn.disabled = true;
-
-    bulkClearBtn.disabled = false;
-
-
-    /*--------------------------------
-    REFRESH EXISTING FILES
-    --------------------------------*/
-
-    await loadFiles();
-
-});
 form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
@@ -816,45 +370,86 @@ form.addEventListener("submit", async (e) => {
     progressBar.style.width = "10%";
 
     progressBar.textContent = "Uploading...";
-try {
 
-    await uploadSingleFile(
+    const storagePath =
+        `${category}/${Date.now()}_${file.name}`;
+
+    const { error } =
+        await supabase.storage
+        .from("resources")
+        .upload(storagePath, file);
+
+    if (error) {
+
+        statusMsg.innerHTML =
+        `<div class="alert alert-danger">
+            ${error.message}
+        </div>`;
+
+        progressWrap.style.display = "none";
+
+        submitBtn.disabled = false;
+
+        return;
+
+    }
+
+    progressBar.style.width = "80%";
+
+    const { data } =
+        supabase.storage
+        .from("resources")
+        .getPublicUrl(storagePath);
+
+    const fileURL = data.publicUrl;
+
+   const docRef = await addDoc(
+    collection(db, "resources"),
+    {
+
         title,
+
         description,
+
         category,
-        file
-    );
 
-    progressBar.style.width = "100%";
-    progressBar.textContent = "100%";
+        fileURL,
 
-    statusMsg.innerHTML =
-    `<div class="alert alert-success">
-        File uploaded successfully.
-    </div>`;
+        storagePath,
 
-    form.reset();
+        fileType: file.type,
 
-    loadFiles();
+        size: file.size,
 
-}
+        downloads: 0,
 
-catch (error) {
+        uploadedAt: serverTimestamp()
 
-    statusMsg.innerHTML =
-    `<div class="alert alert-danger">
-        ${error.message}
-    </div>`;
+    }
+);
 
-}
+// Create notification automatically
 
-/* PUT THESE TWO LINES HERE */
+await addDoc(
+    collection(db, "notifications"),
+    {
 
-progressWrap.style.display = "none";
+        title: `New ${category} Uploaded`,
 
-submitBtn.disabled = false;
+        message: title,
 
-});
+        resourceId: docRef.id,
+
+        category: category,
+
+        createdAt: serverTimestamp(),
+
+        active: true
+
+    }
+);
+
+
 	/*====================================
 CREATE USER NOTIFICATION
 ====================================*/
