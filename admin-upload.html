@@ -571,6 +571,64 @@ await deleteDoc(
 }
 loadFiles();
 
+/*====================================
+BULK FILE SELECT
+====================================*/
+
+const bulkFiles =
+document.getElementById("bulkFiles");
+
+const bulkCount =
+document.getElementById("bulkCount");
+
+const bulkFileList =
+document.getElementById("bulkFileList");
+
+const bulkUploadBtn =
+document.getElementById("bulkUploadBtn");
+
+bulkFiles.addEventListener(
+    "change",
+    () => {
+
+        bulkFileList.innerHTML = "";
+
+        bulkCount.textContent =
+        bulkFiles.files.length;
+
+        if (bulkFiles.files.length === 0) {
+
+            bulkUploadBtn.disabled = true;
+
+            return;
+
+        }
+
+        bulkUploadBtn.disabled = false;
+
+        [...bulkFiles.files].forEach(file => {
+
+            bulkFileList.innerHTML += `
+
+<div class="list-group-item d-flex justify-content-between">
+
+<span>${file.name}</span>
+
+<span class="text-muted">
+
+${formatFileSize(file.size)}
+
+</span>
+
+</div>
+
+`;
+
+        });
+
+    }
+);
+	
 </script>
 
 </body>
