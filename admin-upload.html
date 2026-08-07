@@ -602,6 +602,191 @@ bulkClearBtn.addEventListener("click", () => {
     bulkStatusMsg.innerHTML = "";
 
 });
+	/*====================================
+START BULK UPLOAD
+====================================*/
+
+bulkUploadBtn.addEventListener("click", async () => {
+
+    const files =
+        Array.from(bulkFiles.files);
+
+    const category =
+        bulkCategory.value;
+
+    const description =
+        bulkDescription.value.trim();
+
+    if (files.length === 0) {
+
+        alert("Please select at least one file.");
+
+        return;
+
+    }
+
+    /*--------------------------------
+    DISABLE BUTTON
+    --------------------------------*/
+
+    bulkUploadBtn.disabled = true;
+
+    bulkClearBtn.disabled = true;
+
+    bulkProgressWrap.style.display =
+        "block";
+
+    bulkStatusMsg.innerHTML = "";
+
+    let uploadedCount = 0;
+
+    let failedCount = 0;
+
+
+    /*--------------------------------
+    UPLOAD FILES ONE BY ONE
+    --------------------------------*/
+
+    for (let i = 0; i < files.length; i++) {
+
+        const file = files[i];
+
+        const currentNumber = i + 1;
+
+        const totalFiles = files.length;
+
+
+        /*----------------------------
+        UPDATE PROGRESS TEXT
+        ----------------------------*/
+
+        bulkProgressText.textContent =
+            `Uploading file ${currentNumber} of ${totalFiles}: ${file.name}`;
+
+
+        const percent =
+            Math.round(
+                (i / totalFiles) * 100
+            );
+
+
+        bulkProgressBar.style.width =
+            `${percent}%`;
+
+        bulkProgressBar.textContent =
+            `${percent}%`;
+
+
+        try {
+
+            /*------------------------
+            USE COMMON UPLOAD FUNCTION
+            ------------------------*/
+
+            await uploadSingleFile(
+
+                file.name,
+
+                description,
+
+                category,
+
+                file
+
+            );
+
+
+            uploadedCount++;
+
+
+        } catch (error) {
+
+            failedCount++;
+
+            console.error(
+                `Bulk upload failed for ${file.name}:`,
+                error
+            );
+
+        }
+
+    }
+
+
+    /*--------------------------------
+    UPLOAD FINISHED
+    --------------------------------*/
+
+    bulkProgressBar.style.width =
+        "100%";
+
+    bulkProgressBar.textContent =
+        "100%";
+
+    bulkProgressText.textContent =
+        "Bulk upload completed.";
+
+
+    /*--------------------------------
+    SHOW RESULT
+    --------------------------------*/
+
+    if (failedCount === 0) {
+
+        bulkStatusMsg.innerHTML =
+            `<div class="alert alert-success">
+
+                <strong>Upload completed successfully.</strong>
+
+                <br>
+
+                ${uploadedCount} file(s) uploaded.
+
+            </div>`;
+
+    } else {
+
+        bulkStatusMsg.innerHTML =
+            `<div class="alert alert-warning">
+
+                Upload completed with some errors.
+
+                <br>
+
+                Successfully uploaded:
+                <strong>${uploadedCount}</strong>
+
+                <br>
+
+                Failed:
+                <strong>${failedCount}</strong>
+
+            </div>`;
+
+    }
+
+
+    /*--------------------------------
+    RESET
+    --------------------------------*/
+
+    bulkFiles.value = "";
+
+    bulkFileInfo.textContent =
+        "No files selected.";
+
+    bulkUploadBtn.disabled = true;
+
+    bulkClearBtn.disabled = false;
+
+
+    /*--------------------------------
+    REFRESH EXISTING FILES
+    --------------------------------*/
+
+    await loadFiles();
+
+});
 form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
