@@ -165,6 +165,42 @@ Upload
 
 </form>
 
+<hr class="my-5">
+
+<h4 class="mb-3">Bulk Upload</h4>
+
+<div class="mb-3">
+    <label class="form-label">Select Multiple Files</label>
+
+    <input
+        type="file"
+        id="bulkFiles"
+        class="form-control"
+        multiple>
+</div>
+
+<div class="mb-3">
+    <div class="alert alert-info mb-0">
+        Selected Files:
+        <strong id="bulkCount">0</strong>
+    </div>
+</div>
+
+<div
+    id="bulkFileList"
+    class="list-group mb-3">
+</div>
+
+<button
+    type="button"
+    id="bulkUploadBtn"
+    class="btn btn-success"
+    disabled>
+
+    Upload All Files
+
+</button>
+	
 </div>
 
 </div>
