@@ -279,9 +279,7 @@ const fileList = document.getElementById("fileList");
 /*====================================
 COMMON FILE UPLOAD FUNCTION
 ====================================*/
-/*====================================
-COMMON FILE UPLOAD FUNCTION
-====================================*/
+
 
 async function uploadSingleFile(title, description, category, file) {
 
@@ -390,86 +388,45 @@ form.addEventListener("submit", async (e) => {
     progressBar.style.width = "10%";
 
     progressBar.textContent = "Uploading...";
+try {
 
-    const storagePath =
-        `${category}/${Date.now()}_${file.name}`;
-
-    const { error } =
-        await supabase.storage
-        .from("resources")
-        .upload(storagePath, file);
-
-    if (error) {
-
-        statusMsg.innerHTML =
-        `<div class="alert alert-danger">
-            ${error.message}
-        </div>`;
-
-        progressWrap.style.display = "none";
-
-        submitBtn.disabled = false;
-
-        return;
-
-    }
-
-    progressBar.style.width = "80%";
-
-    const { data } =
-        supabase.storage
-        .from("resources")
-        .getPublicUrl(storagePath);
-
-    const fileURL = data.publicUrl;
-
-   const docRef = await addDoc(
-    collection(db, "resources"),
-    {
-
+    await uploadSingleFile(
         title,
-
         description,
-
         category,
+        file
+    );
 
-        fileURL,
+    progressBar.style.width = "100%";
+    progressBar.textContent = "100%";
 
-        storagePath,
+    statusMsg.innerHTML =
+    `<div class="alert alert-success">
+        File uploaded successfully.
+    </div>`;
 
-        fileType: file.type,
+    form.reset();
 
-        size: file.size,
+    loadFiles();
 
-        downloads: 0,
+}
 
-        uploadedAt: serverTimestamp()
+catch (error) {
 
-    }
-);
+    statusMsg.innerHTML =
+    `<div class="alert alert-danger">
+        ${error.message}
+    </div>`;
 
-// Create notification automatically
+}
 
-await addDoc(
-    collection(db, "notifications"),
-    {
+/* PUT THESE TWO LINES HERE */
 
-        title: `New ${category} Uploaded`,
+progressWrap.style.display = "none";
 
-        message: title,
+submitBtn.disabled = false;
 
-        resourceId: docRef.id,
-
-        category: category,
-
-        createdAt: serverTimestamp(),
-
-        active: true
-
-    }
-);
-
-
+});
 	/*====================================
 CREATE USER NOTIFICATION
 ====================================*/
