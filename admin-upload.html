@@ -323,6 +323,24 @@ await addDoc(
 
     }
 );
+
+
+	/*====================================
+CREATE USER NOTIFICATION
+====================================*/
+
+await addDoc(
+    collection(db, "userNotifications"),
+    {
+
+        resourceId: docRef.id,
+
+        createdAt: serverTimestamp(),
+
+        readBy: []
+
+    }
+);
     progressBar.style.width = "100%";
 
     progressBar.textContent = "100%";
@@ -461,7 +479,7 @@ async function loadFiles() {
                 }
 
               /*====================================
-DELETE RELATED NOTIFICATIONS
+DELETE RELATED S
 ====================================*/
 
 console.log("Resource document ID:", docSnap.id);
