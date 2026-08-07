@@ -92,7 +92,9 @@ if (user) {
 }
         if (notificationBadge) {
 
-    const unreadCount = snap.size - readNotifications.size;
+  const unreadCount = notifications.filter(
+    docSnap => !readNotifications.has(docSnap.id)
+).length;
             if (lastNotificationCount !== null && unreadCount > lastNotificationCount) {
 
 
