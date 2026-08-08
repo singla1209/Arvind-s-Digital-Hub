@@ -2,7 +2,8 @@ import { auth, db } from "./firebase.js";
 
 import {
     onAuthStateChanged,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
 import {
