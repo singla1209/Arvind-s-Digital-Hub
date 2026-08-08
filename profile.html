@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -12,172 +11,567 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
 <style>
+:root{
+    --primary:#2563eb;
+    --primary-dark:#1d4ed8;
+    --text:#172033;
+    --muted:#667085;
+    --border:#e7eaf0;
+    --surface:#ffffff;
+    --bg:#f5f7fb;
+}
+
+*{box-sizing:border-box}
 
 body{
-    background:#f4f6fb;
+    min-height:100vh;
+    margin:0;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 10% 0%, rgba(37,99,235,.12), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(124,58,237,.10), transparent 28%),
+        var(--bg);
+    font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+.page-shell{
+    max-width:980px;
+    margin:0 auto;
+    padding:28px 16px 50px;
+}
+
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:22px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:800;
+    color:var(--text);
+    text-decoration:none;
+}
+
+.brand-icon{
+    width:42px;
+    height:42px;
+    display:grid;
+    place-items:center;
+    border-radius:13px;
+    color:#fff;
+    background:linear-gradient(135deg,var(--primary),#7c3aed);
+    box-shadow:0 10px 24px rgba(37,99,235,.25);
+}
+
+.back-btn{
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.8);
+    color:#344054;
+    border-radius:12px;
+    padding:10px 15px;
+    font-weight:600;
 }
 
 .profile-card{
-    max-width:700px;
-    margin:50px auto;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.8);
+    border-radius:24px;
+    background:var(--surface);
+    box-shadow:0 20px 60px rgba(16,24,40,.10);
+}
+
+.profile-cover{
+    height:175px;
+    position:relative;
+    background:
+        radial-gradient(circle at 15% 30%, rgba(255,255,255,.22) 0 8%, transparent 9%),
+        radial-gradient(circle at 85% 15%, rgba(255,255,255,.18) 0 12%, transparent 13%),
+        linear-gradient(120deg,#1d4ed8,#4f46e5 55%,#7c3aed);
+}
+
+.profile-cover:after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to bottom,transparent 45%,rgba(0,0,0,.10));
+}
+
+.profile-content{
+    padding:0 34px 34px;
+}
+
+.profile-header{
+    display:flex;
+    align-items:flex-end;
+    gap:24px;
+    margin-top:-70px;
+    position:relative;
+    z-index:2;
+}
+
+.photo-wrap{
+    position:relative;
+    flex:0 0 auto;
 }
 
 .profile-photo{
-    width:140px;
-    height:140px;
-    border-radius:50%;
+    width:150px;
+    height:150px;
+    display:block;
     object-fit:cover;
-    border:4px solid #0d6efd;
+    border-radius:50%;
+    border:6px solid #fff;
+    background:#eef2ff;
+    box-shadow:0 14px 35px rgba(16,24,40,.20);
+}
+
+.photo-edit{
+    position:absolute;
+    right:5px;
+    bottom:8px;
+    width:43px;
+    height:43px;
+    border:4px solid #fff;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:#fff;
+    background:var(--primary);
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(37,99,235,.35);
+    transition:.2s ease;
+}
+
+.photo-edit:hover{
+    transform:scale(1.08);
+    background:var(--primary-dark);
+}
+
+.profile-title{
+    padding-bottom:8px;
+}
+
+.profile-title h1{
+    margin:0 0 4px;
+    font-size:clamp(1.55rem,3vw,2.1rem);
+    font-weight:800;
+    letter-spacing:-.03em;
+}
+
+.profile-title p{
+    margin:0;
+    color:var(--muted);
+}
+
+.photo-help{
+    margin-top:8px;
+    font-size:.82rem;
+    color:var(--muted);
+}
+
+.profile-info{
+    margin-top:34px;
+    padding-top:26px;
+    border-top:1px solid var(--border);
+}
+
+.info-box{
+    height:100%;
+    padding:18px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    background:#fbfcfe;
+    transition:.2s ease;
+}
+
+.info-box:hover{
+    transform:translateY(-2px);
+    border-color:#cfd8ea;
+    box-shadow:0 8px 22px rgba(16,24,40,.05);
 }
 
 .info-label{
-    font-weight:600;
-    color:#555;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:7px;
+    font-size:.78rem;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:#667085;
 }
 
-</style>
+.info-label i{
+    color:var(--primary);
+}
 
+.info-value{
+    min-height:24px;
+    font-size:1rem;
+    font-weight:600;
+    color:#1d2939;
+    word-break:break-word;
+}
+
+.about-box{
+    min-height:105px;
+}
+
+.action-bar{
+    display:flex;
+    justify-content:flex-end;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:28px;
+    padding-top:24px;
+    border-top:1px solid var(--border);
+}
+
+.action-bar .btn{
+    border-radius:12px;
+    padding:11px 18px;
+    font-weight:700;
+}
+
+#photoInput{
+    display:none;
+}
+
+.photo-menu{
+    display:none;
+    position:absolute;
+    left:0;
+    top:calc(100% + 10px);
+    z-index:20;
+    min-width:170px;
+    padding:7px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:#fff;
+    box-shadow:0 14px 35px rgba(16,24,40,.16);
+}
+
+.photo-menu.show{display:block}
+
+.photo-menu button{
+    width:100%;
+    border:0;
+    background:transparent;
+    padding:9px 11px;
+    border-radius:9px;
+    text-align:left;
+    font-weight:600;
+    color:#344054;
+}
+
+.photo-menu button:hover{background:#f2f4f7}
+
+.photo-menu .danger{color:#dc2626}
+
+.toast-message{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:1000;
+    display:none;
+    max-width:330px;
+    padding:13px 16px;
+    border-radius:13px;
+    color:#fff;
+    background:#101828;
+    box-shadow:0 12px 30px rgba(16,24,40,.22);
+    font-weight:600;
+}
+
+@media (max-width:700px){
+    .page-shell{padding:16px 12px 35px}
+    .topbar{margin-bottom:14px}
+    .brand span{display:none}
+    .profile-cover{height:135px}
+    .profile-content{padding:0 18px 22px}
+    .profile-header{
+        display:block;
+        margin-top:-62px;
+        text-align:center;
+    }
+    .photo-wrap{display:inline-block}
+    .profile-photo{width:128px;height:128px}
+    .profile-title{padding-top:14px}
+    .profile-info{margin-top:24px;padding-top:20px}
+    .action-bar{justify-content:stretch}
+    .action-bar .btn{flex:1}
+}
+
+@media (max-width:420px){
+    .back-btn span{display:none}
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="page-shell">
 
-<div class="card shadow profile-card">
+    <div class="topbar">
+        <a href="dashboard.html" class="brand">
+            <span class="brand-icon"><i class="bi bi-person-badge"></i></span>
+            <span>Arvind Digital Hub</span>
+        </a>
 
-<div class="card-body p-4">
+        <a href="dashboard.html" class="btn back-btn">
+            <i class="bi bi-arrow-left me-1"></i>
+            <span>Back to Dashboard</span>
+        </a>
+    </div>
 
-<div class="text-center mb-4">
+    <main class="profile-card">
 
-<img
-id="profilePhoto"
-src="assets/images/user.png"
-class="profile-photo"
-alt="Profile">
+        <div class="profile-cover"></div>
 
-<div class="mt-3">
+        <div class="profile-content">
 
-<div class="info-label">
+            <section class="profile-header">
 
-Name
+                <div class="photo-wrap">
+                    <img
+                        id="profilePhoto"
+                        src="assets/images/user.png"
+                        class="profile-photo"
+                        alt="Profile photo"
+                    >
 
+                    <button
+                        type="button"
+                        class="photo-edit"
+                        id="photoEditBtn"
+                        aria-label="Change profile photo"
+                        title="Change profile photo"
+                    >
+                        <i class="bi bi-camera-fill"></i>
+                    </button>
+
+                    <div class="photo-menu" id="photoMenu">
+                        <button type="button" id="changePhotoBtn">
+                            <i class="bi bi-upload me-2"></i>Upload photo
+                        </button>
+                        <button type="button" id="removePhotoBtn" class="danger">
+                            <i class="bi bi-trash3 me-2"></i>Remove photo
+                        </button>
+                    </div>
+
+                    <input
+                        type="file"
+                        id="photoInput"
+                        accept="image/jpeg,image/png,image/webp"
+                    >
+                </div>
+
+                <div class="profile-title">
+                    <h1 id="profileName">Loading...</h1>
+                    <p id="profileEmail">Loading...</p>
+                    <div class="photo-help">
+                        JPG, PNG or WebP · Maximum 5 MB
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="profile-info">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <div class="info-box">
+                            <div class="info-label">
+                                <i class="bi bi-telephone"></i> Phone
+                            </div>
+                            <div id="profilePhone" class="info-value">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="info-box">
+                            <div class="info-label">
+                                <i class="bi bi-building"></i> Company
+                            </div>
+                            <div id="profileCompany" class="info-value">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="info-box">
+                            <div class="info-label">
+                                <i class="bi bi-briefcase"></i> Designation
+                            </div>
+                            <div id="profileDesignation" class="info-value">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="info-box">
+                            <div class="info-label">
+                                <i class="bi bi-calendar3"></i> Member Since
+                            </div>
+                            <div id="memberSince" class="info-value">-</div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="info-box about-box">
+                            <div class="info-label">
+                                <i class="bi bi-chat-left-text"></i> About Me
+                            </div>
+                            <div id="profileAbout" class="info-value">-</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <div class="action-bar">
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="editProfileBtn"
+                >
+                    <i class="bi bi-pencil-square me-1"></i>
+                    Edit Profile
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-success d-none"
+                    id="saveProfileBtn"
+                >
+                    <i class="bi bi-check-circle me-1"></i>
+                    Save
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-secondary d-none"
+                    id="cancelProfileBtn"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+        </div>
+    </main>
 </div>
 
-<div id="profileName">
+<div class="toast-message" id="toastMessage"></div>
 
-Loading...
+<script>
+/*
+ * Profile photo frontend:
+ * - Shows an instant preview
+ * - Saves the selected photo in localStorage
+ * - Keeps the existing profile.js responsible for profile data/editing
+ *
+ * For permanent server/database storage, profile.js/backend should also
+ * upload the selected file to your server or Firebase/Supabase storage.
+ */
+(function () {
+    const photo = document.getElementById("profilePhoto");
+    const input = document.getElementById("photoInput");
+    const editBtn = document.getElementById("photoEditBtn");
+    const menu = document.getElementById("photoMenu");
+    const changeBtn = document.getElementById("changePhotoBtn");
+    const removeBtn = document.getElementById("removePhotoBtn");
+    const toast = document.getElementById("toastMessage");
+    const defaultPhoto = "assets/images/user.png";
+    const storageKey = "arvindDigitalHubProfilePhoto";
 
-</div>
+    function showToast(message) {
+        toast.textContent = message;
+        toast.style.display = "block";
+        clearTimeout(window.profileToastTimer);
+        window.profileToastTimer = setTimeout(() => {
+            toast.style.display = "none";
+        }, 2600);
+    }
 
-</div>
-<p class="text-muted" id="profileEmail">
+    function closeMenu() {
+        menu.classList.remove("show");
+    }
 
-Loading...
+    const savedPhoto = localStorage.getItem(storageKey);
+    if (savedPhoto) {
+        photo.src = savedPhoto;
+    }
 
-</p>
+    editBtn.addEventListener("click", function (event) {
+        event.stopPropagation();
+        menu.classList.toggle("show");
+    });
 
-</div>
+    changeBtn.addEventListener("click", function () {
+        closeMenu();
+        input.click();
+    });
 
-<hr>
+    removeBtn.addEventListener("click", function () {
+        localStorage.removeItem(storageKey);
+        photo.src = defaultPhoto;
+        closeMenu();
+        showToast("Profile photo removed.");
+    });
 
-<div class="row gy-3">
+    input.addEventListener("change", function () {
+        const file = input.files && input.files[0];
+        if (!file) return;
 
-<div class="col-md-6">
+        const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
 
-<div class="info-label">Phone</div>
+        if (!allowedTypes.includes(file.type)) {
+            showToast("Please choose a JPG, PNG or WebP image.");
+            input.value = "";
+            return;
+        }
 
-<div id="profilePhone">-</div>
+        if (file.size > 5 * 1024 * 1024) {
+            showToast("Photo must be smaller than 5 MB.");
+            input.value = "";
+            return;
+        }
 
-</div>
+        const reader = new FileReader();
 
-<div class="col-md-6">
+        reader.onload = function (event) {
+            const imageData = event.target.result;
+            photo.src = imageData;
 
-<div class="info-label">Company</div>
+            try {
+                localStorage.setItem(storageKey, imageData);
+                showToast("Profile photo updated.");
+            } catch (error) {
+                showToast("Photo preview updated, but browser storage is full.");
+            }
+        };
 
-<div id="profileCompany">-</div>
+        reader.readAsDataURL(file);
+        input.value = "";
+    });
 
-</div>
-
-<div class="col-md-6">
-
-<div class="info-label">Designation</div>
-
-<div id="profileDesignation">-</div>
-
-</div>
-
-<div class="col-md-6">
-
-<div class="info-label">Member Since</div>
-
-<div id="memberSince">-</div>
-
-</div>
-
-<div class="col-12">
-
-<div class="info-label">About Me</div>
-
-<div id="profileAbout">-</div>
-
-</div>
-
-</div>
-
-    <div class="mb-4">
-
-<a
-href="dashboard.html"
-class="btn btn-outline-secondary">
-
-<i class="bi bi-arrow-left"></i>
-
-Back to Dashboard
-
-</a>
-
-</div>
-
-<div class="text-center mt-4">
-
-<button
-class="btn btn-primary"
-id="editProfileBtn">
-
-<i class="bi bi-pencil-square"></i>
-
-Edit Profile
-
-</button>
-
-<button
-class="btn btn-success d-none"
-id="saveProfileBtn">
-
-<i class="bi bi-check-circle"></i>
-
-Save
-
-</button>
-
-<button
-class="btn btn-secondary d-none"
-id="cancelProfileBtn">
-
-Cancel
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".photo-wrap")) {
+            closeMenu();
+        }
+    });
+})();
+</script>
 
 <script type="module" src="assets/js/profile.js"></script>
 
 </body>
-
 </html>
