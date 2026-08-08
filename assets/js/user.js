@@ -260,27 +260,27 @@ if (resetPasswordBtn) {
 
 
 // ======================================
-// LOGOUT
+// PROFILE LOGOUT
 // ======================================
 
-const logoutBtn =
-    document.getElementById("logoutBtn");
+const profileLogoutBtn =
+    document.getElementById("profileLogoutBtn");
 
 
-if (logoutBtn) {
+if (profileLogoutBtn) {
 
-    logoutBtn.addEventListener(
+    profileLogoutBtn.addEventListener(
         "click",
         async (event) => {
 
+            event.preventDefault();
             event.stopPropagation();
 
             try {
 
-                await auth.signOut();
+                await signOut(auth);
 
-                window.location.href =
-                    "index.html";
+                window.location.href = "index.html";
 
             } catch (error) {
 
@@ -288,6 +288,8 @@ if (logoutBtn) {
                     "Logout error:",
                     error
                 );
+
+                alert(error.message);
 
             }
 
