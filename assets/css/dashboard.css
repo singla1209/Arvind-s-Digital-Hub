@@ -2420,6 +2420,144 @@ animation:bellShake .9s ease;
 
 }
 
+
+
+/* =========================
+   USER PROFILE at top right corner 
+========================= */
+
+.user-profile {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+/* Small circle in top-right */
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: #0d6efd;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    user-select: none;
+}
+
+
+/* Profile popup */
+
+.user-profile-card {
+    position: absolute;
+
+    top: 50px;
+    right: 0;
+
+    width: 280px;
+
+    background: white;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.18);
+
+    display: none;
+
+    z-index: 9999;
+}
+
+
+/* Show popup */
+
+.user-profile-card.show {
+    display: block;
+}
+
+
+/* Large avatar */
+
+.profile-avatar-large {
+    width: 60px;
+    height: 60px;
+
+    border-radius: 50%;
+
+    background: #0d6efd;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 12px;
+
+    font-size: 25px;
+    font-weight: 600;
+}
+
+
+/* Name */
+
+.profile-name {
+    text-align: center;
+
+    font-size: 19px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+
+/* Email */
+
+.profile-email {
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #777;
+
+    margin-top: 4px;
+
+    word-break: break-word;
+}
+
+
+/* Label */
+
+.profile-label {
+    font-size: 12px;
+
+    color: #888;
+
+    margin-bottom: 3px;
+}
+
+
+/* Registered email */
+
+.profile-registered-email {
+    font-size: 14px;
+
+    color: #333;
+
+    word-break: break-word;
+}
+
 /*==============================
 END OF FILE
 ==================================================*/
