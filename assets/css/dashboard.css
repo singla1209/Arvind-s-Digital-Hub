@@ -2558,6 +2558,31 @@ animation:bellShake .9s ease;
     word-break: break-word;
 }
 
+.profile-action {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 10px 0;
+
+    font-size: 16px;
+    color: #374151;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.profile-action:hover {
+    color: #0d6efd;
+}
+
+.profile-action i {
+    font-size: 20px;
+    width: 25px;
+}
+
 /*==============================
 END OF FILE
 ==================================================*/
