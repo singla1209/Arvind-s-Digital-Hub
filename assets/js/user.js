@@ -200,3 +200,96 @@ if (userProfile && userProfileCard) {
     );
 
 }
+
+// ======================================
+// RESET PASSWORD
+// ======================================
+
+const resetPasswordBtn =
+    document.getElementById("resetPasswordBtn");
+
+
+if (resetPasswordBtn) {
+
+    resetPasswordBtn.addEventListener(
+        "click",
+        async (event) => {
+
+            event.stopPropagation();
+
+            const user = auth.currentUser;
+
+            if (!user || !user.email) {
+                return;
+            }
+
+            try {
+
+                await sendPasswordResetEmail(
+                    auth,
+                    user.email
+                );
+
+                alert(
+                    "Password reset link has been sent to your registered email."
+                );
+
+                userProfileCard.classList.remove(
+                    "show"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Password reset error:",
+                    error
+                );
+
+                alert(
+                    "Unable to send password reset email."
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ======================================
+// LOGOUT
+// ======================================
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+
+if (logoutBtn) {
+
+    logoutBtn.addEventListener(
+        "click",
+        async (event) => {
+
+            event.stopPropagation();
+
+            try {
+
+                await auth.signOut();
+
+                window.location.href =
+                    "index.html";
+
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+}
