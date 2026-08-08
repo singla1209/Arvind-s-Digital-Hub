@@ -519,6 +519,10 @@ async function uploadSingleFile(
 SINGLE FILE UPLOAD
 ==================================================*/
 
+/*====================================
+SINGLE FILE UPLOAD
+====================================*/
+
 form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
@@ -536,117 +540,96 @@ form.addEventListener("submit", async (e) => {
         document.getElementById("fileInput").files[0];
 
 
-    /*------------------------------------------
-    Validate File
-    ------------------------------------------*/
+    /*----------------------------------
+    Validate file
+    ----------------------------------*/
 
     if (!file) {
 
-        showMessage(
-            "danger",
-            "Please choose a file."
-        );
+        statusMsg.innerHTML = `
+            <div class="alert alert-danger">
+                Please select a file.
+            </div>
+        `;
 
         return;
     }
 
 
-    /*------------------------------------------
-    Disable Upload Button
-    ------------------------------------------*/
+    /*----------------------------------
+    Disable button
+    ----------------------------------*/
 
     submitBtn.disabled = true;
 
     statusMsg.innerHTML = "";
 
-
-    /*------------------------------------------
-    Show Progress
-    ------------------------------------------*/
-
-    showProgress(
-        10,
-        "Uploading..."
-    );
+    progressWrap.style.display = "block";
+    progressBar.style.width = "10%";
+    progressBar.textContent = "Uploading...";
 
 
     try {
 
-        /*--------------------------------------
-        Upload File
+        /*----------------------------------
+        Use common upload function
+        ----------------------------------*/
 
-        This function now handles:
-
-        1. Supabase upload
-        2. Public URL
-        3. Firebase resource
-        4. Firebase notification
-        5. Firebase userNotification
-        --------------------------------------*/
-
-        showProgress(
-            30,
-            "Uploading file..."
-        );
-
-        const result =
-            await uploadSingleFile(
-                title,
-                description,
-                category,
-                file
-            );
+        progressBar.style.width = "40%";
+        progressBar.textContent = "Uploading file...";
 
 
-        /*--------------------------------------
-        Check Result
-        --------------------------------------*/
-
-        if (!result.success) {
-
-            throw result.error;
-        }
-
-
-        /*--------------------------------------
-        Upload Complete
-        --------------------------------------*/
-
-        showProgress(
-            100,
-            "100%"
+        await uploadSingleFile(
+            title,
+            description,
+            category,
+            file
         );
 
 
-        showMessage(
-            "success",
-            "File uploaded successfully."
-        );
+        /*----------------------------------
+        Success
+        ----------------------------------*/
+
+        progressBar.style.width = "100%";
+        progressBar.textContent = "100%";
 
 
-        /*--------------------------------------
-        Reset Form
-        --------------------------------------*/
+        statusMsg.innerHTML = `
+            <div class="alert alert-success">
+                File uploaded successfully.
+            </div>
+        `;
+
+
+        /*----------------------------------
+        Reset form
+        ----------------------------------*/
 
         form.reset();
 
 
-        /*--------------------------------------
-        Hide Progress
-        --------------------------------------*/
+        /*----------------------------------
+        Hide progress
+        ----------------------------------*/
 
         setTimeout(() => {
 
-            hideProgress();
+            progressWrap.style.display = "none";
+
+            progressBar.style.width = "0%";
+
+            progressBar.textContent = "0%";
 
         }, 800);
 
 
-        /*--------------------------------------
-        Refresh Existing Files
-        --------------------------------------*/
+        /*----------------------------------
+        Reload files
+        ----------------------------------*/
 
         await loadFiles();
+
 
     }
     catch (error) {
@@ -657,82 +640,24 @@ form.addEventListener("submit", async (e) => {
         );
 
 
-        showMessage(
-            "danger",
-            error?.message ||
-            "Failed to upload file."
-        );
+        statusMsg.innerHTML = `
+            <div class="alert alert-danger">
+                ${
+                    error?.message ||
+                    "Failed to upload file."
+                }
+            </div>
+        `;
 
 
-        hideProgress();
+        progressWrap.style.display = "none";
 
     }
     finally {
 
-        /*--------------------------------------
-        Always Re-enable Button
-        --------------------------------------*/
-
         submitBtn.disabled = false;
 
     }
-
-});
-
-// Create notification automatically
-
-await addDoc(
-    collection(db, "notifications"),
-    {
-
-        title: `New ${category} Uploaded`,
-
-        message: title,
-
-        resourceId: docRef.id,
-
-        category: category,
-
-        createdAt: serverTimestamp(),
-
-        active: true
-
-    }
-);
-
-
-	/*====================================
-CREATE USER NOTIFICATION
-====================================*/
-
-await addDoc(
-    collection(db, "userNotifications"),
-    {
-
-        resourceId: docRef.id,
-
-        createdAt: serverTimestamp(),
-
-        readBy: []
-
-    }
-);
-    progressBar.style.width = "100%";
-
-    progressBar.textContent = "100%";
-
-    statusMsg.innerHTML =
-    `<div class="alert alert-success">
-        File uploaded successfully.
-    </div>`;
-
-    form.reset();
-
-    progressWrap.style.display = "none";
-
-    submitBtn.disabled = false;
-
-    loadFiles();
 
 });
 async function loadFiles() {
