@@ -258,123 +258,27 @@ import { db } from "./assets/js/firebase.js";
 import { supabase } from "./assets/js/supabase.js";
 
 import {
-    collection,
-    addDoc,
-    deleteDoc,
-    doc,
-    serverTimestamp,
-    query,
-    orderBy,
-    getDocs,
-    where
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  serverTimestamp,
+  query,
+  orderBy,
+  getDocs,
+  where,
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
-
-/*==================================================
-DOM ELEMENTS
-==================================================*/
 
 const form = document.getElementById("uploadForm");
 const submitBtn = document.getElementById("submitBtn");
-
 const progressWrap = document.getElementById("progressWrap");
 const progressBar = document.getElementById("progressBar");
 const statusMsg = document.getElementById("statusMsg");
-
 const fileList = document.getElementById("fileList");
-
-/* Bulk Upload */
-
-const bulkFiles = document.getElementById("bulkFiles");
-const bulkCount = document.getElementById("bulkCount");
-const bulkFileList = document.getElementById("bulkFileList");
-const bulkUploadBtn = document.getElementById("bulkUploadBtn");
-const bulkCategory = document.getElementById("bulkCategory");
-
-/*==================================================
-FIREBASE COLLECTIONS
-==================================================*/
-
-const RESOURCE_COLLECTION = "resources";
-const NOTIFICATION_COLLECTION = "notifications";
-const USER_NOTIFICATION_COLLECTION = "userNotifications";
-
-/*==================================================
-SUPABASE
-==================================================*/
-
-const STORAGE_BUCKET = "resources";
-
-/*==================================================
-COMMON UI HELPERS
-==================================================*/
-
-function showMessage(type, message) {
-
-    statusMsg.innerHTML = `
-        <div class="alert alert-${type}" role="alert">
-            ${message}
-        </div>
-    `;
-}
-
-
-/*==================================================
-SHOW UPLOAD PROGRESS
-==================================================*/
-
-function showProgress(percent, text = "") {
-
-    const safePercent =
-        Math.max(
-            0,
-            Math.min(100, Number(percent) || 0)
-        );
-
-    progressWrap.style.display = "block";
-
-    progressBar.style.width =
-        `${safePercent}%`;
-
-    progressBar.setAttribute(
-        "aria-valuenow",
-        safePercent
-    );
-
-    progressBar.textContent =
-        text || `${safePercent}%`;
-}
-
-
-/*==================================================
-HIDE UPLOAD PROGRESS
-==================================================*/
-
-function hideProgress() {
-
-    progressWrap.style.display = "none";
-
-    progressBar.style.width = "0%";
-
-    progressBar.setAttribute(
-        "aria-valuenow",
-        "0"
-    );
-
-    progressBar.textContent = "0%";
-}
-/*==================================================
-NEXT PART:
-uploadSingleFile()
-==================================================*/
 
 /*====================================
 COMMON FILE UPLOAD FUNCTION
 ====================================*/
-
-/*==================================================
-COMMON FILE UPLOAD FUNCTION
-Used by BOTH Single Upload and Bulk Upload
-==================================================*/
 
 async function uploadSingleFile(
     title,
@@ -383,284 +287,201 @@ async function uploadSingleFile(
     file
 ) {
 
-    try {
+    // We will move the upload code here
 
-        /*------------------------------------------
-        Create Storage Path
-        ------------------------------------------*/
+	const fileName =
+`${Date.now()}_${file.name}`;
 
-        const fileName = `${Date.now()}_${file.name}`;
-        const storagePath = `${category}/${fileName}`;
+const storagePath =
+`${category}/${fileName}`;
 
-        /*------------------------------------------
-        Upload to Supabase
-        ------------------------------------------*/
+const { error } =
+await supabase.storage
+.from("resources")
+.upload(
+    storagePath,
+    file
+);
 
-        const { error: uploadError } = await supabase.storage
-            .from(STORAGE_BUCKET)
-            .upload(storagePath, file);
+if (error) {
 
-        if (uploadError) {
-            throw uploadError;
-        }
-
-        /*------------------------------------------
-        Get Public URL
-        ------------------------------------------*/
-
-        const { data } = supabase.storage
-            .from(STORAGE_BUCKET)
-            .getPublicUrl(storagePath);
-
-        const fileURL = data.publicUrl;
-
-        /*------------------------------------------
-        Save Resource
-        ------------------------------------------*/
-
-        const docRef = await addDoc(
-            collection(db, RESOURCE_COLLECTION),
-            {
-
-                title,
-
-                description,
-
-                category,
-
-                fileURL,
-
-                storagePath,
-
-                fileType: file.type,
-
-                size: file.size,
-
-                downloads: 0,
-
-                uploadedAt: serverTimestamp()
-
-            }
-        );
-
-        /*------------------------------------------
-        Create Notification
-        ------------------------------------------*/
-
-        await addDoc(
-            collection(db, NOTIFICATION_COLLECTION),
-            {
-
-                title: `New ${category} Uploaded`,
-
-                message: title,
-
-                resourceId: docRef.id,
-
-                category,
-
-                createdAt: serverTimestamp(),
-
-                active: true
-
-            }
-        );
-
-        /*------------------------------------------
-        Create User Notification
-        ------------------------------------------*/
-
-        await addDoc(
-            collection(db, USER_NOTIFICATION_COLLECTION),
-            {
-
-                resourceId: docRef.id,
-
-                createdAt: serverTimestamp(),
-
-                readBy: []
-
-            }
-        );
-
-        /*------------------------------------------
-        Success
-        ------------------------------------------*/
-
-        return {
-
-            success: true,
-
-            id: docRef.id,
-
-            fileURL,
-
-            storagePath
-
-        };
-
-    }
-    catch (error) {
-
-        console.error("Upload Error:", error);
-
-        return {
-
-            success: false,
-
-            error
-
-        };
-
-    }
+    throw error;
 
 }
-/*==================================================
-SINGLE FILE UPLOAD
-==================================================*/
+	const { data } =
+    supabase.storage
+    .from("resources")
+    .getPublicUrl(storagePath);
 
-/*====================================
-SINGLE FILE UPLOAD
-====================================*/
+const fileURL = data.publicUrl;
+
+const docRef = await addDoc(
+    collection(db, "resources"),
+    {
+
+        title,
+
+        description,
+
+        category,
+
+        fileURL,
+
+        storagePath,
+
+        fileType: file.type,
+
+        size: file.size,
+
+        downloads: 0,
+
+        uploadedAt: serverTimestamp()
+
+    }
+);
+}
 
 form.addEventListener("submit", async (e) => {
 
     e.preventDefault();
 
-    const title =
-        document.getElementById("title").value.trim();
+    const title = document.getElementById("title").value.trim();
 
-    const description =
-        document.getElementById("description").value.trim();
+    const description = document.getElementById("description").value.trim();
 
-    const category =
-        document.getElementById("category").value;
+    const category = document.getElementById("category").value;
 
-    const file =
-        document.getElementById("fileInput").files[0];
-
-
-    /*----------------------------------
-    Validate file
-    ----------------------------------*/
+    const file = document.getElementById("fileInput").files[0];
 
     if (!file) {
 
-        statusMsg.innerHTML = `
-            <div class="alert alert-danger">
-                Please select a file.
-            </div>
-        `;
+        alert("Please choose a file.");
 
         return;
+
     }
-
-
-    /*----------------------------------
-    Disable button
-    ----------------------------------*/
 
     submitBtn.disabled = true;
 
     statusMsg.innerHTML = "";
 
     progressWrap.style.display = "block";
+
     progressBar.style.width = "10%";
+
     progressBar.textContent = "Uploading...";
 
+    const storagePath =
+        `${category}/${Date.now()}_${file.name}`;
 
-    try {
+    const { error } =
+        await supabase.storage
+        .from("resources")
+        .upload(storagePath, file);
 
-        /*----------------------------------
-        Use common upload function
-        ----------------------------------*/
+    if (error) {
 
-        progressBar.style.width = "40%";
-        progressBar.textContent = "Uploading file...";
-
-const result = await uploadSingleFile(
-    title,
-    description,
-    category,
-    file
-);
-
-if (!result.success) {
-    throw result.error;
-}
-
-
-        /*----------------------------------
-        Success
-        ----------------------------------*/
-
-        progressBar.style.width = "100%";
-        progressBar.textContent = "100%";
-
-
-        statusMsg.innerHTML = `
-            <div class="alert alert-success">
-                File uploaded successfully.
-            </div>
-        `;
-
-
-        /*----------------------------------
-        Reset form
-        ----------------------------------*/
-
-        form.reset();
-
-
-        /*----------------------------------
-        Hide progress
-        ----------------------------------*/
-
-        setTimeout(() => {
-
-            progressWrap.style.display = "none";
-
-            progressBar.style.width = "0%";
-
-            progressBar.textContent = "0%";
-
-        }, 800);
-
-
-        /*----------------------------------
-        Reload files
-        ----------------------------------*/
-
-        await loadFiles();
-
-
-    }
-    catch (error) {
-
-        console.error(
-            "Single Upload Error:",
-            error
-        );
-
-
-        statusMsg.innerHTML = `
-            <div class="alert alert-danger">
-                ${
-                    error?.message ||
-                    "Failed to upload file."
-                }
-            </div>
-        `;
-
+        statusMsg.innerHTML =
+        `<div class="alert alert-danger">
+            ${error.message}
+        </div>`;
 
         progressWrap.style.display = "none";
 
-    }
-    finally {
-
         submitBtn.disabled = false;
 
+        return;
+
     }
+
+    progressBar.style.width = "80%";
+
+    const { data } =
+        supabase.storage
+        .from("resources")
+        .getPublicUrl(storagePath);
+
+    const fileURL = data.publicUrl;
+
+   const docRef = await addDoc(
+    collection(db, "resources"),
+    {
+
+        title,
+
+        description,
+
+        category,
+
+        fileURL,
+
+        storagePath,
+
+        fileType: file.type,
+
+        size: file.size,
+
+        downloads: 0,
+
+        uploadedAt: serverTimestamp()
+
+    }
+);
+
+// Create notification automatically
+
+await addDoc(
+    collection(db, "notifications"),
+    {
+
+        title: `New ${category} Uploaded`,
+
+        message: title,
+
+        resourceId: docRef.id,
+
+        category: category,
+
+        createdAt: serverTimestamp(),
+
+        active: true
+
+    }
+);
+
+
+	/*====================================
+CREATE USER NOTIFICATION
+====================================*/
+
+await addDoc(
+    collection(db, "userNotifications"),
+    {
+
+        resourceId: docRef.id,
+
+        createdAt: serverTimestamp(),
+
+        readBy: []
+
+    }
+);
+    progressBar.style.width = "100%";
+
+    progressBar.textContent = "100%";
+
+    statusMsg.innerHTML =
+    `<div class="alert alert-success">
+        File uploaded successfully.
+    </div>`;
+
+    form.reset();
+
+    progressWrap.style.display = "none";
+
+    submitBtn.disabled = false;
+
+    loadFiles();
 
 });
 async function loadFiles() {
@@ -748,148 +569,95 @@ async function loadFiles() {
         const deleteBtn =
         row.querySelector(".btn-delete");
 
-        deleteBtn.addEventListener("click", async () => {
+        deleteBtn.addEventListener(
+            "click",
+            async () => {
+			                if (!confirm(`Delete "${item.title}"?`)) {
 
-    if (!confirm(`Delete "${item.title}"?`)) {
-        return;
-    }
+                    return;
 
-    deleteBtn.disabled = true;
-    deleteBtn.textContent = "Deleting...";
+                }
 
-    try {
+                try {
 
-        /*------------------------------------------
-        1. Delete file from Supabase
-        ------------------------------------------*/
+					console.log("Deleting Storage Path:", item.storagePath);
 
-        if (item.storagePath) {
-
-            const { error: storageError } =
-                await supabase.storage
-                    .from(STORAGE_BUCKET)
+                    const { error } =
+                    await supabase.storage
+                    .from("resources")
                     .remove([item.storagePath]);
+					console.log("Supabase delete error:", error);
 
-            if (storageError) {
-                throw storageError;
+                    if (error) {
+
+                        console.warn(
+                            "Storage delete error:",
+                            error.message
+                        );
+
+                    }
+
+                } catch (err) {
+
+                    console.warn(err);
+
+                }
+
+              /*====================================
+DELETE RELATED S
+====================================*/
+
+console.log("Resource document ID:", docSnap.id);
+
+const notificationQuery = query(
+    collection(db, "notifications"),
+    where("resourceId", "==", docSnap.id)
+);
+
+const notificationSnap = await getDocs(notificationQuery);
+
+console.log("Notifications found:", notificationSnap.size);
+
+for (const notificationDoc of notificationSnap.docs) {
+
+    console.log("Deleting notification:", notificationDoc.id);
+
+    await deleteDoc(
+        doc(db, "notifications", notificationDoc.id)
+    );
+
+}
+
+/*====================================
+DELETE RESOURCE
+====================================*/
+
+await deleteDoc(
+
+    doc(
+        db,
+        "resources",
+        docSnap.id
+    )
+
+);
+
+                statusMsg.innerHTML =
+                `<div class="alert alert-success">
+                    File deleted successfully.
+                </div>`;
+
+                loadFiles();
+
             }
-        }
 
-
-        /*------------------------------------------
-        2. Delete resource from Firestore
-        ------------------------------------------*/
-
-        await deleteDoc(
-            doc(
-                db,
-                RESOURCE_COLLECTION,
-                docSnap.id
-            )
         );
 
+        fileList.appendChild(row);
 
-        /*------------------------------------------
-        3. Delete related notifications
-        ------------------------------------------*/
+    });
 
-        const notificationQuery = query(
-            collection(
-                db,
-                NOTIFICATION_COLLECTION
-            ),
-            where(
-                "resourceId",
-                "==",
-                docSnap.id
-            )
-        );
-
-        const notificationSnap =
-            await getDocs(notificationQuery);
-
-
-        for (const notificationDoc
-            of notificationSnap.docs) {
-
-            await deleteDoc(
-                notificationDoc.ref
-            );
-        }
-
-
-        /*------------------------------------------
-        4. Delete related user notifications
-        ------------------------------------------*/
-
-        const userNotificationQuery = query(
-            collection(
-                db,
-                USER_NOTIFICATION_COLLECTION
-            ),
-            where(
-                "resourceId",
-                "==",
-                docSnap.id
-            )
-        );
-
-        const userNotificationSnap =
-            await getDocs(
-                userNotificationQuery
-            );
-
-
-        for (const userNotificationDoc
-            of userNotificationSnap.docs) {
-
-            await deleteDoc(
-                userNotificationDoc.ref
-            );
-        }
-
-
-        /*------------------------------------------
-        5. Success
-        ------------------------------------------*/
-
-        showMessage(
-            "success",
-            "File deleted successfully."
-        );
-
-
-        /*------------------------------------------
-        6. Refresh file list
-        ------------------------------------------*/
-
-        await loadFiles();
-
-    }
-    catch (error) {
-
-        console.error(
-            "Delete Error:",
-            error
-        );
-
-        showMessage(
-            "danger",
-            error?.message ||
-            "Failed to delete file."
-        );
-
-
-        /*------------------------------------------
-        Re-enable button if deletion failed
-        ------------------------------------------*/
-
-        deleteBtn.disabled = false;
-        deleteBtn.textContent = "Delete";
-    }
-
-});
-	}
+}
 loadFiles();
 
 /*====================================
@@ -910,450 +678,110 @@ document.getElementById("bulkUploadBtn");
 const bulkCategory =
 document.getElementById("bulkCategory");	
 
-/*==================================================
-BULK FILE SELECTION
-==================================================*/
-
-bulkFiles.addEventListener("change", () => {
-
-    const files = Array.from(bulkFiles.files);
-
-    /*------------------------------------------
-    No files selected
-    ------------------------------------------*/
-
-    if (files.length === 0) {
-
-        bulkCount.textContent = "0 files selected";
+bulkFiles.addEventListener(
+    "change",
+    () => {
 
         bulkFileList.innerHTML = "";
-
-        bulkUploadBtn.disabled = true;
-
-        return;
-    }
-
-
-    /*------------------------------------------
-    Show file count
-    ------------------------------------------*/
-
-    bulkCount.textContent =
-        `${files.length} file${files.length === 1 ? "" : "s"} selected`;
-
-
-    /*------------------------------------------
-    Display selected files
-    ------------------------------------------*/
-
-    bulkFileList.innerHTML = "";
-
-
-    files.forEach((file, index) => {
-
-        const item = document.createElement("div");
-
-        item.className =
-            "list-group-item d-flex justify-content-between align-items-center";
-
-
-        item.innerHTML = `
-
-            <div>
-
-                <strong>
-                    ${file.name}
-                </strong>
-
-                <br>
-
-                <small class="text-muted">
-
-                    ${(file.size / 1024 / 1024).toFixed(2)}
-                    MB
-
-                </small>
-
-            </div>
-
-            <span class="badge bg-secondary">
-                ${index + 1}
-            </span>
-
-        `;
-
-
-        bulkFileList.appendChild(item);
-
-    });
-
-
-    /*------------------------------------------
-    Enable Bulk Upload
-    ------------------------------------------*/
-
-    bulkUploadBtn.disabled = false;
-
-});
-	/*====================================
-BULK UPLOAD TO SUPABASE and firebase
-====================================*/
-
-/*==================================================
-BULK FILE UPLOAD
-==================================================*/
-
-bulkUploadBtn.addEventListener("click", async () => {
-
-    const files = Array.from(bulkFiles.files);
-
-    const category = bulkCategory.value;
-
-
-    /*------------------------------------------
-    Validate files
-    ------------------------------------------*/
-
-    if (files.length === 0) {
-
-        showMessage(
-            "danger",
-            "Please select at least one file."
-        );
-
-        return;
-    }
-
-
-    /*------------------------------------------
-    Validate category
-    ------------------------------------------*/
-
-    if (!category) {
-
-        showMessage(
-            "danger",
-            "Please select a category."
-        );
-
-        return;
-    }
-
-
-    /*------------------------------------------
-    Disable button
-    ------------------------------------------*/
-
-    bulkUploadBtn.disabled = true;
-
-    statusMsg.innerHTML = "";
-
-
-    let successCount = 0;
-    let failedCount = 0;
-
-    const failedFiles = [];
-
-
-    /*------------------------------------------
-    Show progress area
-    ------------------------------------------*/
-
-    progressWrap.style.display = "block";
-
-    progressBar.style.width = "0%";
-
-    progressBar.textContent = "0%";
-
-
-    try {
-
-        /*--------------------------------------
-        Upload files one by one
-        --------------------------------------*/
-
-        for (let i = 0; i < files.length; i++) {
-
-            const file = files[i];
-
-            const currentNumber = i + 1;
-
-            const totalFiles = files.length;
-
-
-            /*----------------------------------
-            Calculate progress
-            ----------------------------------*/
-
-            const progress =
-                Math.round(
-                    (i / totalFiles) * 100
-                );
-
-
-            showProgress(
-                progress,
-                `${currentNumber} / ${totalFiles}`
-            );
-
-
-            /*----------------------------------
-            Create title
-
-            Remove file extension.
-            ----------------------------------*/
-
-            const title =
-                file.name.replace(
-                    /\.[^/.]+$/,
-                    ""
-                );
-
-
-            /*----------------------------------
-            Description
-            ----------------------------------*/
-
-            const description =
-                `Uploaded via Bulk Upload`;
-
-
-            try {
-
-                /*--------------------------------
-                IMPORTANT
-
-                Use the SAME upload function
-                as Single Upload.
-
-                This automatically performs:
-
-                1. Supabase upload
-                2. Resource creation
-                3. Notification creation
-                4. User notification creation
-                --------------------------------*/
-
-                const result =
-                    await uploadSingleFile(
-                        title,
-                        description,
-                        category,
-                        file
-                    );
-
-
-                /*--------------------------------
-                Check result
-                --------------------------------*/
-
-                if (!result.success) {
-
-                    throw result.error;
-                }
-
-
-                /*--------------------------------
-                File successful
-                --------------------------------*/
-
-                successCount++;
-
-
-            }
-            catch (fileError) {
-
-                failedCount++;
-
-                failedFiles.push({
-                    name: file.name,
-                    error:
-                        fileError?.message ||
-                        "Upload failed"
-                });
-
-
-                console.error(
-                    `Bulk upload failed: ${file.name}`,
-                    fileError
-                );
-
-            }
-
-
-            /*----------------------------------
-            Update progress AFTER file
-            ----------------------------------*/
-
-            const completedProgress =
-                Math.round(
-                    (currentNumber / totalFiles) * 100
-                );
-
-
-            showProgress(
-                completedProgress,
-                `${currentNumber} / ${totalFiles}`
-            );
-
-        }
-
-
-        /*--------------------------------------
-        All files processed
-        --------------------------------------*/
-
-        progressBar.style.width = "100%";
-
-        progressBar.textContent = "100%";
-
-
-        /*--------------------------------------
-        Build result message
-        --------------------------------------*/
-
-        let message = `
-            <strong>Bulk upload completed.</strong>
-            <br>
-            Successfully uploaded:
-            ${successCount}
-            <br>
-            Failed:
-            ${failedCount}
-        `;
-
-
-        /*--------------------------------------
-        Show failed files
-        --------------------------------------*/
-
-        if (failedFiles.length > 0) {
-
-            message += `
-                <br><br>
-                <strong>Failed files:</strong>
-                <ul class="mb-0 mt-2">
-            `;
-
-
-            failedFiles.forEach((failed) => {
-
-                message += `
-                    <li>
-                        ${failed.name}
-                        ${
-                            failed.error
-                                ? ` - ${failed.error}`
-                                : ""
-                        }
-                    </li>
-                `;
-
-            });
-
-
-            message += `</ul>`;
-
-        }
-
-
-        /*--------------------------------------
-        Message type
-        --------------------------------------*/
-
-        if (failedCount === 0) {
-
-            showMessage(
-                "success",
-                message
-            );
-
-        }
-        else if (successCount > 0) {
-
-            showMessage(
-                "warning",
-                message
-            );
-
-        }
-        else {
-
-            showMessage(
-                "danger",
-                message
-            );
-
-        }
-
-
-        /*--------------------------------------
-        Reset bulk form
-        --------------------------------------*/
-
-        bulkFiles.value = "";
 
         bulkCount.textContent =
-            "0 files selected";
+        bulkFiles.files.length;
 
-        bulkFileList.innerHTML = "";
+        if (bulkFiles.files.length === 0) {
 
+            bulkUploadBtn.disabled = true;
 
-        /*--------------------------------------
-        Disable upload button
-        --------------------------------------*/
+            return;
+
+        }
+
+        bulkUploadBtn.disabled = false;
+
+        [...bulkFiles.files].forEach(file => {
+
+            bulkFileList.innerHTML += `
+
+<div class="list-group-item d-flex justify-content-between">
+
+<span>${file.name}</span>
+
+<span class="text-muted">
+
+${formatFileSize(file.size)}
+
+</span>
+
+</div>
+
+`;
+
+        });
+
+    }
+);
+	/*====================================
+BULK UPLOAD TO SUPABASE
+====================================*/
+
+bulkUploadBtn.addEventListener(
+    "click",
+    async () => {
+
+        if (bulkFiles.files.length === 0) {
+
+            alert("Please select files.");
+
+            return;
+
+        }
 
         bulkUploadBtn.disabled = true;
 
+        statusMsg.innerHTML =
+        `<div class="alert alert-info">
+            Uploading files...
+        </div>`;
 
-        /*--------------------------------------
-        Refresh resources
-        --------------------------------------*/
+        for (const file of bulkFiles.files) {
 
-        await loadFiles();
+            const fileName =
+            `${Date.now()}_${file.name}`;
 
+            const storagePath =
+            `${bulkCategory.value}/${fileName}`;
 
-        /*--------------------------------------
-        Hide progress after short delay
-        --------------------------------------*/
+            const { error } =
+            await supabase.storage
+            .from("resources")
+            .upload(
+                storagePath,
+                file
+            );
 
-        setTimeout(() => {
+            if (error) {
 
-            hideProgress();
+                console.error(error);
 
-        }, 1200);
+            } else {
 
-    }
-    catch (error) {
+                console.log(
+                    "Uploaded:",
+                    storagePath
+                );
 
-        console.error(
-            "Bulk Upload Error:",
-            error
-        );
+            }
 
+        }
 
-        showMessage(
-            "danger",
-            error?.message ||
-            "Bulk upload failed."
-        );
+        statusMsg.innerHTML =
+        `<div class="alert alert-success">
+            Files uploaded successfully to Supabase.
+        </div>`;
 
-
-        hideProgress();
-
-    }
-    finally {
-
-        /*--------------------------------------
-        Always re-enable button if appropriate
-        --------------------------------------*/
-
-        bulkUploadBtn.disabled =
-            bulkFiles.files.length === 0;
+        bulkUploadBtn.disabled = false;
 
     }
-
-});
+);
 	
 </script>
 
