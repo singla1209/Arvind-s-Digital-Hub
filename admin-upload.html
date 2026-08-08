@@ -578,13 +578,16 @@ form.addEventListener("submit", async (e) => {
         progressBar.style.width = "40%";
         progressBar.textContent = "Uploading file...";
 
+const result = await uploadSingleFile(
+    title,
+    description,
+    category,
+    file
+);
 
-        await uploadSingleFile(
-            title,
-            description,
-            category,
-            file
-        );
+if (!result.success) {
+    throw result.error;
+}
 
 
         /*----------------------------------
