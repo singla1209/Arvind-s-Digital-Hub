@@ -233,8 +233,9 @@ snap.forEach((docSnap) => {
       return;
     }
 
-     updateResources();
+    
     loadCategories();
+     updateResources();
     
   } catch (error) {
     console.error("Failed to load resources:", error);
