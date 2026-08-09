@@ -1,6 +1,6 @@
 /*==================================================
 ACCOUNTS EXPERT
-assets/js/resources.js
+assets/js/library.js
 Loads documents/downloads from Firestore + Storage
 and renders them as cards on the dashboard.
 ==================================================*/
