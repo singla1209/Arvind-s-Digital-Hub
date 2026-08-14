@@ -825,24 +825,60 @@ line-height:1.7;
 
 }
 
-/*========================
+/*==================================================
 PROFESSIONAL COMPACT FOOTER
-========================*/
+Supports existing .footer and new .site-footer
+==================================================*/
 
-.footer{
+.footer,
+.site-footer{
 
     margin-top:40px;
+
     background:#111827;
+
     color:#ffffff;
-
-    padding:22px 20px 15px;
-
-    text-align:center;
 
 }
 
 
-/* FOOTER LOGO */
+/*========================
+FOOTER MAIN
+========================*/
+
+.footer-main{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:22px 25px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:30px;
+
+}
+
+
+/*========================
+FOOTER BRAND
+========================*/
+
+.footer-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
 
 .footer-logo{
 
@@ -851,9 +887,8 @@ PROFESSIONAL COMPACT FOOTER
 
     object-fit:contain;
 
-    margin:0 auto 8px;
-
     background:#ffffff;
+
     padding:6px;
 
     border-radius:12px;
@@ -861,57 +896,56 @@ PROFESSIONAL COMPACT FOOTER
 }
 
 
-/* FOOTER HEADING */
+.footer-brand h5{
 
-.footer h5{
+    margin:0 0 4px;
+
+    color:#ffffff;
 
     font-size:17px;
-    font-weight:700;
 
-    margin:0 0 5px;
+    font-weight:700;
 
 }
 
 
-/* FOOTER DESCRIPTION */
+.footer-brand p{
 
-.footer p{
-
-    font-size:13px;
+    margin:0;
 
     color:#9ca3af;
 
-    line-height:1.5;
+    font-size:13px;
 
-    margin:0 auto;
+    line-height:1.5;
 
 }
 
 
-/* SOCIAL ICONS */
+/*========================
+SOCIAL ICONS
+========================*/
 
-.footer .social-icons{
+.footer-social{
 
     display:flex;
 
-    justify-content:center;
     align-items:center;
 
     gap:10px;
 
-    margin-top:12px;
-
 }
 
 
-.footer .social-icons a{
+.footer-social a{
 
-    width:34px;
-    height:34px;
+    width:36px;
+    height:36px;
 
     display:flex;
 
     align-items:center;
+
     justify-content:center;
 
     border-radius:50%;
@@ -927,7 +961,7 @@ PROFESSIONAL COMPACT FOOTER
 }
 
 
-.footer .social-icons a:hover{
+.footer-social a:hover{
 
     background:#0d6efd;
 
@@ -938,19 +972,147 @@ PROFESSIONAL COMPACT FOOTER
 }
 
 
-/* COPYRIGHT */
+/*========================
+FOOTER BOTTOM
+========================*/
 
-.footer .copyright{
+.footer-bottom{
 
-    margin-top:12px;
+    max-width:1200px;
 
-    padding-top:10px;
+    margin:auto;
+
+    padding:11px 25px;
 
     border-top:1px solid rgba(255,255,255,.08);
 
-    font-size:12px;
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
 
     color:#9ca3af;
+
+    font-size:12px;
+
+}
+
+
+/*========================
+MOBILE
+========================*/
+
+@media(max-width:768px){
+
+    .footer,
+    .site-footer{
+
+        margin-top:30px;
+
+    }
+
+
+    .footer-main{
+
+        padding:20px;
+
+        flex-direction:column;
+
+        text-align:center;
+
+        gap:16px;
+
+    }
+
+
+    .footer-brand{
+
+        flex-direction:column;
+
+        gap:8px;
+
+    }
+
+
+    .footer-brand p{
+
+        max-width:320px;
+
+    }
+
+
+    .footer-social{
+
+        margin-top:2px;
+
+    }
+
+
+    .footer-bottom{
+
+        padding:11px 20px;
+
+        flex-direction:column;
+
+        gap:4px;
+
+        text-align:center;
+
+    }
+
+}
+
+
+/*========================
+SMALL MOBILE
+========================*/
+
+@media(max-width:576px){
+
+    .footer,
+    .site-footer{
+
+        margin-top:25px;
+
+    }
+
+
+    .footer-main{
+
+        padding:18px 12px;
+
+    }
+
+
+    .footer-logo{
+
+        width:48px;
+        height:48px;
+
+    }
+
+
+    .footer-brand h5{
+
+        font-size:16px;
+
+    }
+
+
+    .footer-brand p{
+
+        font-size:12px;
+
+    }
+
+
+    .footer-social a{
+
+        width:32px;
+        height:32px;
+
+    }
 
 }
 
