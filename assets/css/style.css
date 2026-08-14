@@ -992,52 +992,11 @@ margin-top:10px;
 
 }
 
-/*========================
-SOCIAL ICONS
-========================*/
 
-.social-icons{
 
-display:flex;
-justify-content:center;
-gap:16px;
-margin-top:25px;
 
-}
 
-.social-icons a{
 
-width:48px;
-height:48px;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#1f2937;
-color:#fff;
-font-size:18px;
-transition:.35s;
-
-}
-
-.social-icons a:hover{
-
-background:#0d6efd;
-transform:translateY(-5px);
-
-}
-
-/*========================
-COPYRIGHT
-========================*/
-
-.copyright{
-
-margin-top:35px;
-font-size:14px;
-color:#9ca3af;
-
-}
 
 /*========================
 WHATSAPP BUTTON
