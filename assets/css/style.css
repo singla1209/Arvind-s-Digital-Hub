@@ -1527,27 +1527,6 @@ height:180px;
 width:280px;
 }
 
-.bottom-nav{
-height:68px;
-}
-
-.bottom-nav a span{
-font-size:11px;
-}
-
-.whatsapp-btn{
-width:54px;
-height:54px;
-bottom:85px;
-}
-
-#backToTop{
-width:46px;
-height:46px;
-bottom:85px;
-}
-
-}
 
 /*========================
 SMALL MOBILE
@@ -1610,6 +1589,29 @@ font-size:16px;
 }
 
 }
+
+.bottom-nav{
+height:68px;
+}
+
+.bottom-nav a span{
+font-size:11px;
+}
+
+.whatsapp-btn{
+width:54px;
+height:54px;
+bottom:85px;
+}
+
+#backToTop{
+width:46px;
+height:46px;
+bottom:85px;
+}
+
+}
+
 
 /*========================
 LARGE SCREEN
