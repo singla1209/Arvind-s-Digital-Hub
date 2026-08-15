@@ -184,6 +184,58 @@ padding-bottom:90px;
 }
 
 /*========================
+BOTTOM NAVIGATION
+========================*/
+
+.bottom-nav{
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:68px;
+    display:none;
+    align-items:center;
+    justify-content:space-around;
+    background:#ffffff;
+    border-top:1px solid #e5e7eb;
+    box-shadow:0 -5px 20px rgba(0,0,0,.08);
+    z-index:9999;
+}
+
+.bottom-nav a{
+    flex:1;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    color:#6b7280;
+    text-decoration:none;
+    font-size:12px;
+    font-weight:500;
+}
+
+.bottom-nav a i{
+    font-size:20px;
+}
+
+.bottom-nav a span{
+    font-size:11px;
+}
+
+.bottom-nav a.active,
+.bottom-nav a:hover{
+    color:#0d6efd;
+}
+
+@media (max-width:768px){
+    .bottom-nav{
+        display:flex;
+    }
+}
+
+/*========================
 COMMON TITLES
 ========================*/
 
@@ -826,396 +878,165 @@ line-height:1.7;
 }
 
 /*==================================================
+/*==================================================
 PROFESSIONAL COMPACT FOOTER
-Supports existing .footer and new .site-footer
 ==================================================*/
 
 .footer,
 .site-footer{
-
     margin-top:40px;
-
     background:#111827;
-
     color:#ffffff;
-
 }
-
-
-/*========================
-FOOTER MAIN
-========================*/
 
 .footer-main{
-
     max-width:1200px;
-
     margin:auto;
-
     padding:22px 25px;
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
     gap:30px;
-
 }
-
-
-/*========================
-FOOTER BRAND
-========================*/
 
 .footer-brand{
-
     display:flex;
-
     align-items:center;
-
     gap:14px;
-
 }
-
 
 .footer-logo{
-
     width:52px;
     height:52px;
-
     object-fit:contain;
-
     background:#ffffff;
-
     padding:6px;
-
     border-radius:12px;
-
 }
-
 
 .footer-brand h5{
-
     margin:0 0 4px;
-
     color:#ffffff;
-
     font-size:17px;
-
     font-weight:700;
-
 }
-
 
 .footer-brand p{
-
     margin:0;
-
     color:#9ca3af;
-
     font-size:13px;
-
     line-height:1.5;
-
 }
-
-
-/*========================
-SOCIAL ICONS
-========================*/
 
 .footer-social{
-
     display:flex;
-
     align-items:center;
-
     gap:10px;
-
 }
-
 
 .footer-social a{
-
     width:36px;
     height:36px;
-
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
     border-radius:50%;
-
     color:#d1d5db;
-
     background:rgba(255,255,255,.08);
-
     text-decoration:none;
-
     transition:.25s;
-
 }
-
 
 .footer-social a:hover{
-
     background:#0d6efd;
-
     color:#ffffff;
-
     transform:translateY(-2px);
-
 }
-
-
-/*========================
-FOOTER BOTTOM
-========================*/
 
 .footer-bottom{
-
     max-width:1200px;
-
     margin:auto;
-
     padding:11px 25px;
-
     border-top:1px solid rgba(255,255,255,.08);
-
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
     color:#9ca3af;
-
     font-size:12px;
-
 }
-
-
-/*========================
-MOBILE
-========================*/
-
-@media(max-width:768px){
-
-    .footer,
-    .site-footer{
-
-        margin-top:30px;
-
-    }
-
-
-    .footer-main{
-
-        padding:20px;
-
-        flex-direction:column;
-
-        text-align:center;
-
-        gap:16px;
-
-    }
-
-
-    .footer-brand{
-
-        flex-direction:column;
-
-        gap:8px;
-
-    }
-
-
-    .footer-brand p{
-
-        max-width:320px;
-
-    }
-
-
-    .footer-social{
-
-        margin-top:2px;
-
-    }
-
-
-    .footer-bottom{
-
-        padding:11px 20px;
-
-        flex-direction:column;
-
-        gap:4px;
-
-        text-align:center;
-
-    }
-
-}
-
-
-/*========================
-SMALL MOBILE
-========================*/
-
-@media(max-width:576px){
-
-    .footer,
-    .site-footer{
-
-        margin-top:25px;
-
-    }
-
-
-    .footer-main{
-
-        padding:18px 12px;
-
-    }
-
-
-    .footer-logo{
-
-        width:48px;
-        height:48px;
-
-    }
-
-
-    .footer-brand h5{
-
-        font-size:16px;
-
-    }
-
-
-    .footer-brand p{
-
-        font-size:12px;
-
-    }
-
-
-    .footer-social a{
-
-        width:32px;
-        height:32px;
-
-    }
-
-}
-
-
-/*========================
-TABLET
-========================*/
 
 @media (max-width:992px){
-
     .footer{
-
         padding:22px 20px 15px;
-
     }
-
 }
 
-
-/*========================
-MOBILE
-========================*/
-
 @media (max-width:768px){
-
-    .footer{
-
+    .footer,
+    .site-footer{
         margin-top:30px;
+    }
 
-        padding:20px 15px 12px;
+    .footer-main{
+        padding:20px;
+        flex-direction:column;
+        text-align:center;
+        gap:16px;
+    }
 
+    .footer-brand{
+        flex-direction:column;
+        gap:8px;
+    }
+
+    .footer-brand p{
+        max-width:320px;
+    }
+
+    .footer-bottom{
+        padding:11px 20px;
+        flex-direction:column;
+        gap:4px;
+        text-align:center;
     }
 
     .footer-logo{
-
         width:48px;
         height:48px;
-
     }
 
     .footer h5{
-
         font-size:16px;
-
     }
 
     .footer p{
-
         font-size:12px;
-
     }
-
-    .footer .social-icons{
-
-        margin-top:10px;
-
-    }
-
-    .footer .copyright{
-
-        margin-top:10px;
-
-    }
-
 }
-
-
-/*========================
-SMALL MOBILE
-========================*/
 
 @media (max-width:576px){
-
-    .footer{
-
-        padding:18px 12px 10px;
-
+    .footer,
+    .site-footer{
+        margin-top:25px;
     }
 
-    .footer h5{
+    .footer-main{
+        padding:18px 12px;
+    }
 
+    .footer-brand h5{
         font-size:16px;
-
     }
 
-    .footer p{
-
+    .footer-brand p{
         font-size:12px;
-
     }
 
-    .footer .social-icons a{
-
+    .footer-social a{
         width:32px;
         height:32px;
-
     }
-
 }
-
-
-
-/*========================
 WHATSAPP BUTTON
 ========================*/
 
@@ -1465,155 +1286,135 @@ transform:translateY(-2px);
 
 
 /*========================
-MOBILE
+RESPONSIVE DESIGN
 ========================*/
 
 @media (max-width:768px){
 
-.topbar{
-height:60px;
+    .topbar{
+        height:60px;
+    }
+
+    .main-content{
+        padding-top:78px;
+        padding-bottom:88px;
+    }
+
+    .topbar h5{
+        font-size:18px;
+    }
+
+    .banner-img{
+        height:180px;
+    }
+
+    .course-card{
+        padding:15px;
+        border-radius:16px;
+    }
+
+    .course-card img{
+        width:75px;
+        height:75px;
+    }
+
+    .course-card h6{
+        font-size:16px;
+    }
+
+    .course-card p{
+        font-size:13px;
+    }
+
+    .course-mini-card{
+        padding:12px;
+        gap:12px;
+    }
+
+    .course-mini-card img{
+        width:60px;
+        height:60px;
+    }
+
+    .course-mini-card h6{
+        font-size:15px;
+    }
+
+    .featured-section .card-img-top{
+        height:180px;
+    }
+
+    .sidebar{
+        width:280px;
+    }
+
+    .whatsapp-btn{
+        width:54px;
+        height:54px;
+        bottom:85px;
+    }
+
+    #backToTop{
+        width:46px;
+        height:46px;
+        bottom:85px;
+    }
 }
-
-.main-content{
-padding-top:78px;
-padding-bottom:88px;
-}
-
-.topbar h5{
-font-size:18px;
-}
-
-.banner-img{
-height:180px;
-}
-
-.course-card{
-padding:15px;
-border-radius:16px;
-}
-
-.course-card img{
-width:75px;
-height:75px;
-}
-
-.course-card h6{
-font-size:16px;
-}
-
-.course-card p{
-font-size:13px;
-}
-
-.course-mini-card{
-padding:12px;
-gap:12px;
-}
-
-.course-mini-card img{
-width:60px;
-height:60px;
-}
-
-.course-mini-card h6{
-font-size:15px;
-}
-
-.featured-section .card-img-top{
-height:180px;
-}
-
-.sidebar{
-width:280px;
-}
-
-
-/*========================
-SMALL MOBILE
-========================*/
 
 @media (max-width:576px){
 
-.banner-img{
-height:160px;
+    .banner-img{
+        height:160px;
+    }
+
+    .section-heading h5{
+        font-size:18px;
+    }
+
+    .course-card{
+        padding:14px;
+    }
+
+    .course-card img{
+        width:68px;
+        height:68px;
+    }
+
+    .course-card h6{
+        font-size:15px;
+    }
+
+    .course-card p{
+        font-size:12px;
+    }
+
+    .course-mini-card{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .course-mini-card img{
+        margin:auto;
+    }
+
+    .stat-card h2{
+        font-size:28px;
+    }
+
+    .stat-card p{
+        font-size:13px;
+    }
+
+    .social-icons{
+        gap:12px;
+    }
+
+    .social-icons a{
+        width:42px;
+        height:42px;
+        font-size:16px;
+    }
 }
-
-.section-heading h5{
-font-size:18px;
-}
-
-
-
-.course-card{
-padding:14px;
-}
-
-.course-card img{
-width:68px;
-height:68px;
-}
-
-.course-card h6{
-font-size:15px;
-}
-
-.course-card p{
-font-size:12px;
-}
-
-.course-mini-card{
-flex-direction:column;
-text-align:center;
-}
-
-.course-mini-card img{
-margin:auto;
-}
-
-.stat-card h2{
-font-size:28px;
-}
-
-.stat-card p{
-font-size:13px;
-}
-
-.social-icons{
-gap:12px;
-}
-
-.social-icons a{
-width:42px;
-height:42px;
-font-size:16px;
-}
-
-}
-
-.bottom-nav{
-height:68px;
-}
-
-.bottom-nav a span{
-font-size:11px;
-}
-
-.whatsapp-btn{
-width:54px;
-height:54px;
-bottom:85px;
-}
-
-#backToTop{
-width:46px;
-height:46px;
-bottom:85px;
-}
-
-}
-
-
-/*========================
 LARGE SCREEN
 ========================*/
 
