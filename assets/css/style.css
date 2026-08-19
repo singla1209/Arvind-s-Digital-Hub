@@ -323,6 +323,10 @@ visibility:visible;
 SIDEBAR
 ========================*/
 
+/*========================
+SIDEBAR
+========================*/
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -330,6 +334,7 @@ SIDEBAR
 
     width: 85vw;
     max-width: 320px;
+
     height: 100vh;
     height: 100dvh;
 
@@ -357,6 +362,7 @@ SIDEBAR
     transform: translateX(0);
     -webkit-transform: translateX(0);
 }
+
 
 .sidebar-header{
 background:linear-gradient(135deg,#0d6efd,#4f8cff);
@@ -1724,6 +1730,10 @@ transition:background .3s,color .3s,border .3s;
 /* ==================================================
    MOBILE / ANDROID WEBVIEW SIDEBAR FIX
    ================================================== */
+
+/*========================
+ANDROID WEBVIEW SIDEBAR FIX
+========================*/
 
 @media (max-width: 768px) {
 
