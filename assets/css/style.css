@@ -1721,6 +1721,26 @@ transition:background .3s,color .3s,border .3s;
 
 }
 
+/* ==================================================
+   MOBILE / ANDROID WEBVIEW SIDEBAR FIX
+   ================================================== */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 85vw !important;
+        max-width: 320px !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+    }
+
+    .sidebar.active {
+        transform: translateX(0) !important;
+        -webkit-transform: translateX(0) !important;
+    }
+
+}
+
 /*========================
 END
 ========================*/
