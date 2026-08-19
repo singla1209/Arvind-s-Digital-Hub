@@ -72,32 +72,26 @@ BACK TO TOP
 
 const backBtn = document.getElementById("backToTop");
 
-window.addEventListener("scroll",()=>{
+if (backBtn) {
 
-if(window.scrollY>350){
+    window.addEventListener("scroll", () => {
 
-backBtn.style.display="block";
+        if (window.scrollY > 350) {
+            backBtn.style.display = "block";
+        } else {
+            backBtn.style.display = "none";
+        }
 
-}else{
+    });
 
-backBtn.style.display="none";
+    backBtn.onclick = () => {
 
-}
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
 
-});
-
-if(backBtn){
-
-backBtn.onclick=()=>{
-
-window.scrollTo({
-
-top:0,
-behavior:"smooth"
-
-});
-
-};
+    };
 
 }
 
