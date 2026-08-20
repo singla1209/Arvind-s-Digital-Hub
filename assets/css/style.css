@@ -1060,6 +1060,7 @@ PROFESSIONAL COMPACT FOOTER
         height:32px;
     }
 }
+/*========================
 WHATSAPP BUTTON
 ========================*/
 
@@ -1438,6 +1439,7 @@ RESPONSIVE DESIGN
         font-size:16px;
     }
 }
+/*========================
 LARGE SCREEN
 ========================*/
 
@@ -1629,7 +1631,6 @@ DOWNLOAD ITEM
 ========================*/
 
 .download-item{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
